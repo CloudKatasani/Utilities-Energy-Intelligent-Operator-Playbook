@@ -1,0 +1,5375 @@
+{
+ "version": "0.1-draft",
+ "industry": "utilities",
+ "referenceProfile": "generic synthetic reference Utility (see spec §13)",
+ "motions": [
+  {
+   "id": "engineer",
+   "name": "Engineer with AI"
+  },
+  {
+   "id": "operate",
+   "name": "Operate with AI"
+  },
+  {
+   "id": "decide-act",
+   "name": "Decide and Act with AI"
+  },
+  {
+   "id": "govern",
+   "name": "Govern, secure and assure with AI (control plane)"
+  }
+ ],
+ "autonomyLevels": [
+  {
+   "level": "L1",
+   "name": "Observe / Assist"
+  },
+  {
+   "level": "L2",
+   "name": "Propose"
+  },
+  {
+   "level": "L3",
+   "name": "Act with approval"
+  },
+  {
+   "level": "L4",
+   "name": "Act and notify"
+  }
+ ],
+ "otSafetyRule": "No agent operates, or is promoted to operate, grid, plant or gas control devices (switching, breakers, set-points, valves, de-energisation). Any agent or process whose action would change a grid, plant, storage or gas device is capped at L2.",
+ "domains": [
+  {
+   "id": "generation",
+   "layer": "L1",
+   "name": "Generation & Energy Supply",
+   "summary": "Run, maintain and transition the generation fleet and buy, sell and hedge energy."
+  },
+  {
+   "id": "grid",
+   "layer": "L2",
+   "name": "Grid & Asset Operations",
+   "summary": "Plan, operate, maintain and harden transmission, distribution and gas networks."
+  },
+  {
+   "id": "customer",
+   "layer": "L3",
+   "name": "Customer & Commercial",
+   "summary": "Meter-to-cash, customer service, energy programs and new or large-load connections."
+  },
+  {
+   "id": "enterprise",
+   "layer": "L4",
+   "name": "Enterprise & Enablement",
+   "summary": "Safety, regulation and rate cases, supply chain, finance, workforce, IT/OT and cyber."
+  }
+ ],
+ "areas": [
+  {
+   "id": "gen-ops",
+   "domainId": "generation",
+   "name": "Generation Fleet Operations & Performance",
+   "summary": "Dispatchable, renewable and storage assets run safely, efficiently and in line with market and reliability commitments."
+  },
+  {
+   "id": "gen-maint",
+   "domainId": "generation",
+   "name": "Generation Maintenance & Reliability",
+   "summary": "Plant equipment is maintained by condition and risk, and outages are planned and executed on time."
+  },
+  {
+   "id": "trading",
+   "domainId": "generation",
+   "name": "Energy Trading, Fuel & Market Operations",
+   "summary": "Load and renewables are forecast, energy is bid, scheduled, hedged and settled accurately."
+  },
+  {
+   "id": "transition",
+   "domainId": "generation",
+   "name": "Generation Portfolio & Energy Transition",
+   "summary": "Resource planning, retirements, renewables and storage development and clean-energy targets."
+  },
+  {
+   "id": "grid-plan",
+   "domainId": "grid",
+   "name": "Grid Planning & Interconnection",
+   "summary": "The grid is planned for load growth, electrification, DER and large loads, and interconnection requests are studied quickly."
+  },
+  {
+   "id": "grid-ops",
+   "domainId": "grid",
+   "name": "Grid & Control Centre Operations",
+   "summary": "Control rooms see, predict and restore the grid faster, with operators in command of every switching action."
+  },
+  {
+   "id": "asset-mgmt",
+   "domainId": "grid",
+   "name": "Asset Management & Inspection",
+   "summary": "Assets are inspected, risk-ranked and replaced on condition and consequence, not age alone."
+  },
+  {
+   "id": "resilience",
+   "domainId": "grid",
+   "name": "Vegetation, Wildfire & Storm Resilience",
+   "summary": "Wildfire and storm risk is predicted, mitigated and communicated, with people deciding every de-energisation."
+  },
+  {
+   "id": "field-ops",
+   "domainId": "grid",
+   "name": "Field Operations & Work Management",
+   "summary": "Work is planned, bundled and dispatched to the right crew with the right materials, safely."
+  },
+  {
+   "id": "gas-ops",
+   "domainId": "grid",
+   "name": "Gas Network Operations & Integrity",
+   "summary": "Gas networks are monitored, maintained and kept leak-free, with integrity programs evidenced to regulators."
+  },
+  {
+   "id": "meter-to-cash",
+   "domainId": "customer",
+   "name": "Metering, Billing & Revenue",
+   "summary": "Every meter read is valid, every bill is right first time and revenue is protected."
+  },
+  {
+   "id": "customer-care",
+   "domainId": "customer",
+   "name": "Customer Service & Experience",
+   "summary": "Customers get answers, help and outage information on any channel, with fairness and affordability built in."
+  },
+  {
+   "id": "programs",
+   "domainId": "customer",
+   "name": "Energy Programs, DER & Electrification",
+   "summary": "Efficiency, demand response, EV and solar programs reach the right customers and deliver measured savings."
+  },
+  {
+   "id": "large-load",
+   "domainId": "customer",
+   "name": "New Connections & Large Load",
+   "summary": "New service and large loads, including data centres, are connected quickly, safely and fairly."
+  },
+  {
+   "id": "safety",
+   "domainId": "enterprise",
+   "name": "Health, Safety & Environment",
+   "summary": "Every worker goes home safe: hazards are anticipated, controls verified and precursors to serious injury acted on."
+  },
+  {
+   "id": "regulatory",
+   "domainId": "enterprise",
+   "name": "Regulatory, Rate Case & Compliance",
+   "summary": "Rate cases, data requests and reliability standards are evidenced from one trusted source."
+  },
+  {
+   "id": "supply",
+   "domainId": "enterprise",
+   "name": "Supply Chain & Procurement",
+   "summary": "Critical materials such as transformers, meters and cable are planned, sourced and available when work needs them."
+  },
+  {
+   "id": "corporate",
+   "domainId": "enterprise",
+   "name": "Finance, Capital Planning & Workforce",
+   "summary": "Capital and O&M are planned for rate base and affordability, and the workforce is skilled for the transition."
+  },
+  {
+   "id": "it-ot",
+   "domainId": "enterprise",
+   "name": "IT/OT, Data Platforms & Cybersecurity",
+   "summary": "Utility data is trusted and reusable across IT and OT, and the grid is defended."
+  }
+ ],
+ "subAreas": [
+  {
+   "id": "thermal-perf",
+   "name": "Thermal & Hydro Plant Performance",
+   "areaId": "gen-ops",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Heat rate, availability, emissions and dispatch performance of gas, coal and hydro units.",
+   "kpis": [
+    "Net heat rate",
+    "Equivalent availability factor",
+    "Forced outage rate (EFOR)"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-001",
+    "UP-002"
+   ]
+  },
+  {
+   "id": "renewables-ops",
+   "name": "Wind, Solar & Storage Operations",
+   "areaId": "gen-ops",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Availability, curtailment and performance of wind, solar and battery fleets.",
+   "kpis": [
+    "Energy-based availability",
+    "Curtailment MWh",
+    "Battery round-trip efficiency"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-003",
+    "UP-004"
+   ]
+  },
+  {
+   "id": "plant-compliance",
+   "name": "Emissions & Environmental Compliance",
+   "areaId": "gen-ops",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Continuous emissions monitoring, permits, water and ash obligations.",
+   "kpis": [
+    "Emissions exceedances",
+    "CEMS data availability",
+    "Permit deviations"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-005",
+    "UP-006"
+   ]
+  },
+  {
+   "id": "gen-pdm",
+   "name": "Predictive Maintenance (rotating equipment)",
+   "areaId": "gen-maint",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Turbines, generators, pumps, fans and transformers at the plant.",
+   "kpis": [
+    "Unplanned outage hours",
+    "Maintenance cost per MWh",
+    "Mean time between failures"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-007",
+    "UP-008"
+   ]
+  },
+  {
+   "id": "outage-plan",
+   "name": "Planned Outage Management",
+   "areaId": "gen-maint",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Scope, schedule and execute plant outages and turnarounds.",
+   "kpis": [
+    "Outage duration vs plan",
+    "Outage cost vs budget",
+    "Scope growth %"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-009",
+    "UP-010"
+   ]
+  },
+  {
+   "id": "gen-engineering",
+   "name": "Plant Engineering & Knowledge",
+   "areaId": "gen-maint",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Engineering changes, procedures and equipment knowledge.",
+   "kpis": [
+    "Procedure currency",
+    "Engineering change cycle time",
+    "Repeat failures"
+   ],
+   "family": "data-intelligence",
+   "processIds": [
+    "UP-011",
+    "UP-012"
+   ]
+  },
+  {
+   "id": "forecasting",
+   "name": "Load, Price & Renewables Forecasting",
+   "areaId": "trading",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Short-term load, wind/solar output and price forecasts.",
+   "kpis": [
+    "Day-ahead load MAPE",
+    "Renewable forecast error",
+    "Imbalance cost"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-013",
+    "UP-014"
+   ]
+  },
+  {
+   "id": "bidding",
+   "name": "Bidding, Scheduling & Settlement",
+   "areaId": "trading",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Market offers, schedules and ISO/RTO settlement reconciliation.",
+   "kpis": [
+    "Settlement disputes",
+    "Bid compliance",
+    "Market revenue vs plan"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-015",
+    "UP-016"
+   ]
+  },
+  {
+   "id": "fuel-risk",
+   "name": "Fuel, Hedging & Risk",
+   "areaId": "trading",
+   "domainId": "generation",
+   "commodity": "both",
+   "description": "Fuel procurement, gas supply, hedging and credit risk.",
+   "kpis": [
+    "Fuel cost vs benchmark",
+    "Value at risk",
+    "Counterparty exposure"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-017",
+    "UP-018"
+   ]
+  },
+  {
+   "id": "irp",
+   "name": "Integrated Resource Planning",
+   "areaId": "transition",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Long-term demand, resource adequacy and portfolio scenarios.",
+   "kpis": [
+    "Reserve margin",
+    "Portfolio cost per MWh",
+    "Emissions trajectory"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-019",
+    "UP-020"
+   ]
+  },
+  {
+   "id": "project-dev",
+   "name": "Renewables & Storage Project Development",
+   "areaId": "transition",
+   "domainId": "generation",
+   "commodity": "electric",
+   "description": "Siting, permitting and delivery of new generation and storage.",
+   "kpis": [
+    "Project schedule variance",
+    "Capex per MW",
+    "Permits on time"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-021",
+    "UP-022"
+   ]
+  },
+  {
+   "id": "load-growth",
+   "name": "Load Growth & Distribution Planning",
+   "areaId": "grid-plan",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Feeder and substation capacity planning with EV, heat-pump and DER forecasts.",
+   "kpis": [
+    "Feeders above 80% loading",
+    "Planning cycle time",
+    "Capex per MW added"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-023",
+    "UP-024"
+   ]
+  },
+  {
+   "id": "interconnection",
+   "name": "Generation & DER Interconnection",
+   "areaId": "grid-plan",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Interconnection application intake, studies and agreements.",
+   "kpis": [
+    "Queue time to agreement",
+    "Study cycle time",
+    "Withdrawal rate"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-025",
+    "UP-026"
+   ]
+  },
+  {
+   "id": "transmission-plan",
+   "name": "Transmission Planning",
+   "areaId": "grid-plan",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Reliability, economic and policy-driven transmission planning.",
+   "kpis": [
+    "Planning studies completed",
+    "Congestion cost",
+    "Projects in service on time"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-027",
+    "UP-028"
+   ]
+  },
+  {
+   "id": "outage-mgmt",
+   "name": "Outage Management & Restoration",
+   "areaId": "grid-ops",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "OMS, outage prediction, FLISR, crew dispatch and estimated time of restoration.",
+   "kpis": [
+    "SAIDI",
+    "SAIFI",
+    "CAIDI",
+    "ETR accuracy"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-029",
+    "UP-030",
+    "UP-031"
+   ]
+  },
+  {
+   "id": "adms-derms",
+   "name": "ADMS, DERMS & Grid Optimisation",
+   "areaId": "grid-ops",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Voltage optimisation, DER dispatch and network model management.",
+   "kpis": [
+    "Voltage violations",
+    "Conservation voltage reduction MWh",
+    "DER dispatched MW"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-032",
+    "UP-033"
+   ]
+  },
+  {
+   "id": "transmission-ops",
+   "name": "Transmission & System Operations",
+   "areaId": "grid-ops",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "EMS, situational awareness, outage coordination and reliability compliance.",
+   "kpis": [
+    "Transmission availability",
+    "Operator alarms per hour",
+    "Reliability events"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-034",
+    "UP-035"
+   ]
+  },
+  {
+   "id": "asset-health",
+   "name": "Asset Health & Risk",
+   "areaId": "asset-mgmt",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Transformers, breakers, poles, cables and lines: health index and risk of failure.",
+   "kpis": [
+    "Asset failure rate",
+    "Risk-weighted spend",
+    "Health index coverage"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-036",
+    "UP-037"
+   ]
+  },
+  {
+   "id": "inspection",
+   "name": "Drone, LiDAR & Visual Inspection",
+   "areaId": "asset-mgmt",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Aerial, ground and thermal inspection of lines, poles and substations.",
+   "kpis": [
+    "Inspection cost per mile",
+    "Defects found per mile",
+    "Inspection backlog"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-038",
+    "UP-039"
+   ]
+  },
+  {
+   "id": "network-model",
+   "name": "GIS & Network Model Quality",
+   "areaId": "asset-mgmt",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Connectivity, phasing and asset records that ADMS, OMS and planning depend on.",
+   "kpis": [
+    "GIS connectivity errors",
+    "Phase accuracy %",
+    "As-built backlog"
+   ],
+   "family": "data-intelligence",
+   "processIds": [
+    "UP-040",
+    "UP-041"
+   ]
+  },
+  {
+   "id": "vegetation",
+   "name": "Vegetation Management",
+   "areaId": "resilience",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Cycle and risk-based trimming, hazard trees and contractor performance.",
+   "kpis": [
+    "Tree-caused outages",
+    "Cost per mile trimmed",
+    "Hazard trees remediated"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-042",
+    "UP-043"
+   ]
+  },
+  {
+   "id": "wildfire",
+   "name": "Wildfire Mitigation & PSPS Support",
+   "areaId": "resilience",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Fire-weather risk, ignition prevention, PSPS decision support and post-event patrols.",
+   "kpis": [
+    "Ignitions",
+    "PSPS customers affected",
+    "Notification timeliness"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-044",
+    "UP-045"
+   ]
+  },
+  {
+   "id": "storm",
+   "name": "Storm Preparedness & Mutual Assistance",
+   "areaId": "resilience",
+   "domainId": "grid",
+   "commodity": "electric",
+   "description": "Storm damage prediction, crew and material staging and mutual assistance.",
+   "kpis": [
+    "Restoration time (major events)",
+    "Crews staged vs needed",
+    "Storm cost per customer"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-046",
+    "UP-047"
+   ]
+  },
+  {
+   "id": "work-planning",
+   "name": "Work Planning & Scheduling",
+   "areaId": "field-ops",
+   "domainId": "grid",
+   "commodity": "both",
+   "description": "Work order creation, bundling, scheduling and permitting.",
+   "kpis": [
+    "Schedule attainment",
+    "Work backlog",
+    "Wrench time %"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-048",
+    "UP-049"
+   ]
+  },
+  {
+   "id": "dispatch",
+   "name": "Crew Dispatch & Mobile Workforce",
+   "areaId": "field-ops",
+   "domainId": "grid",
+   "commodity": "both",
+   "description": "Emergency and routine dispatch, mobile work and field data capture.",
+   "kpis": [
+    "First-time completion",
+    "Response time to emergencies",
+    "Repeat visits"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-050",
+    "UP-051"
+   ]
+  },
+  {
+   "id": "contractors",
+   "name": "Contractor & Design-Build Management",
+   "areaId": "field-ops",
+   "domainId": "grid",
+   "commodity": "both",
+   "description": "Contractor work quality, invoicing and performance.",
+   "kpis": [
+    "Contractor invoice accuracy",
+    "Rework rate",
+    "Unit cost vs benchmark"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-052",
+    "UP-053"
+   ]
+  },
+  {
+   "id": "leak",
+   "name": "Leak Detection & Survey",
+   "areaId": "gas-ops",
+   "domainId": "grid",
+   "commodity": "gas",
+   "description": "Leak surveys, advanced mobile leak detection and grading.",
+   "kpis": [
+    "Leaks per mile",
+    "Hazardous leak response time",
+    "Leak backlog"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-054",
+    "UP-055"
+   ]
+  },
+  {
+   "id": "integrity",
+   "name": "Pipeline Integrity Management",
+   "areaId": "gas-ops",
+   "domainId": "grid",
+   "commodity": "gas",
+   "description": "Threat assessment, inspections and integrity management plans.",
+   "kpis": [
+    "Integrity assessments on time",
+    "Risk-ranked mains replaced",
+    "Excavation damages per 1,000 tickets"
+   ],
+   "family": "grid-operations",
+   "processIds": [
+    "UP-056",
+    "UP-057"
+   ]
+  },
+  {
+   "id": "gas-control",
+   "name": "Gas Control & Supply",
+   "areaId": "gas-ops",
+   "domainId": "grid",
+   "commodity": "gas",
+   "description": "Pressure, flow, storage and supply balancing.",
+   "kpis": [
+    "Low-pressure events",
+    "Unaccounted-for gas %",
+    "Forecast accuracy"
+   ],
+   "family": "generation-markets",
+   "processIds": [
+    "UP-058",
+    "UP-059"
+   ]
+  },
+  {
+   "id": "ami",
+   "name": "AMI & Meter Data Management",
+   "areaId": "meter-to-cash",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Smart meter networks, interval data validation, estimation and editing.",
+   "kpis": [
+    "Read success rate",
+    "Estimated reads %",
+    "Meter events actioned"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-060",
+    "UP-061"
+   ]
+  },
+  {
+   "id": "billing",
+   "name": "Billing & Bill Presentment",
+   "areaId": "meter-to-cash",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Bill calculation, exceptions, rate changes and bill presentment.",
+   "kpis": [
+    "Bills held for exceptions",
+    "Bill accuracy",
+    "Rebills %"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-062",
+    "UP-063"
+   ]
+  },
+  {
+   "id": "revenue-protection",
+   "name": "Revenue Protection & Energy Theft",
+   "areaId": "meter-to-cash",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Theft, tampering, unbilled usage and meter-to-bill reconciliation.",
+   "kpis": [
+    "Revenue recovered",
+    "Unbilled accounts",
+    "Theft cases confirmed"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-064",
+    "UP-065"
+   ]
+  },
+  {
+   "id": "contact-centre",
+   "name": "Contact Centre & Digital Care",
+   "areaId": "customer-care",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Phone, chat, app and web self-service and advisor assist.",
+   "kpis": [
+    "Self-service containment",
+    "First-contact resolution",
+    "Cost per contact"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-066",
+    "UP-067"
+   ]
+  },
+  {
+   "id": "high-bill",
+   "name": "High-Bill & Usage Insights",
+   "areaId": "customer-care",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Explaining bills and usage with interval data, weather and rates.",
+   "kpis": [
+    "High-bill complaints",
+    "Bill-related calls",
+    "Complaint escalations to regulator"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-068",
+    "UP-069"
+   ]
+  },
+  {
+   "id": "collections",
+   "name": "Payments, Collections & Affordability",
+   "areaId": "customer-care",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Payment arrangements, assistance programs, arrears and disconnection protections.",
+   "kpis": [
+    "Arrears balance",
+    "Bad debt % of revenue",
+    "Assistance enrolment"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-070",
+    "UP-071"
+   ]
+  },
+  {
+   "id": "efficiency-dr",
+   "name": "Efficiency & Demand Response",
+   "areaId": "programs",
+   "domainId": "customer",
+   "commodity": "electric",
+   "description": "Program targeting, enrolment, event dispatch and measurement and verification.",
+   "kpis": [
+    "Program MWh / MW",
+    "Cost per kWh saved",
+    "Enrolment rate"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-072",
+    "UP-073"
+   ]
+  },
+  {
+   "id": "ev-der",
+   "name": "EV, Solar & Battery Customers",
+   "areaId": "programs",
+   "domainId": "customer",
+   "commodity": "electric",
+   "description": "EV rates and charging, rooftop solar and home batteries.",
+   "kpis": [
+    "EV customers on managed charging",
+    "DER applications processed",
+    "Net-metering billing accuracy"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-074",
+    "UP-075"
+   ]
+  },
+  {
+   "id": "new-service",
+   "name": "New Service & Connections",
+   "areaId": "large-load",
+   "domainId": "customer",
+   "commodity": "both",
+   "description": "Residential and commercial new service requests through energisation.",
+   "kpis": [
+    "Days to connect",
+    "Requests on time",
+    "Rework on designs"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-076",
+    "UP-077"
+   ]
+  },
+  {
+   "id": "large-load-intake",
+   "name": "Large Load & Data Centre Requests",
+   "areaId": "large-load",
+   "domainId": "customer",
+   "commodity": "electric",
+   "description": "Load requests from 20 MW to 1 GW+: feasibility, studies, tariffs and agreements.",
+   "kpis": [
+    "Time to feasibility answer",
+    "MW in large-load queue",
+    "Study cycle time"
+   ],
+   "family": "customer-commercial",
+   "processIds": [
+    "UP-078",
+    "UP-079"
+   ]
+  },
+  {
+   "id": "field-safety",
+   "name": "Field Safety & Pre-Job Briefing",
+   "areaId": "safety",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Job hazard analysis, tailboards, energised work, traffic and confined space.",
+   "kpis": [
+    "SIF / SIF-precursor events",
+    "Recordable incident rate",
+    "Tailboards completed"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-080",
+    "UP-081"
+   ]
+  },
+  {
+   "id": "incident",
+   "name": "Incident & Observation Management",
+   "areaId": "safety",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Incident reporting, investigation, corrective actions and learning.",
+   "kpis": [
+    "Corrective actions closed on time",
+    "Repeat incidents",
+    "Investigation cycle time"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-082",
+    "UP-083"
+   ]
+  },
+  {
+   "id": "environment",
+   "name": "Environmental Management",
+   "areaId": "safety",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Spills, waste, avian protection, cultural and environmental permits.",
+   "kpis": [
+    "Reportable spills",
+    "Permit violations",
+    "Environmental reviews on time"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-084",
+    "UP-085"
+   ]
+  },
+  {
+   "id": "rate-case",
+   "name": "Rate Case & Regulatory Filings",
+   "areaId": "regulatory",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Rate cases, riders, performance-based metrics and regulator data requests.",
+   "kpis": [
+    "Data request cycle time",
+    "Disallowances",
+    "Filing preparation effort"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-086",
+    "UP-087"
+   ]
+  },
+  {
+   "id": "reliability-standards",
+   "name": "Reliability Standards & NERC CIP",
+   "areaId": "regulatory",
+   "domainId": "enterprise",
+   "commodity": "electric",
+   "description": "Reliability and critical-infrastructure protection standards, evidence and audits.",
+   "kpis": [
+    "Potential non-compliance findings",
+    "Evidence collection effort",
+    "Audit readiness"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-088",
+    "UP-089"
+   ]
+  },
+  {
+   "id": "performance-metrics",
+   "name": "Performance Metrics & Reporting",
+   "areaId": "regulatory",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Reliability (IEEE 1366), customer and safety metrics reported to regulators.",
+   "kpis": [
+    "Metric restatements",
+    "Reporting cycle time",
+    "Metrics with lineage"
+   ],
+   "family": "data-intelligence",
+   "processIds": [
+    "UP-090",
+    "UP-091"
+   ]
+  },
+  {
+   "id": "long-lead",
+   "name": "Long-Lead Materials Planning",
+   "areaId": "supply",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Transformers, breakers, switchgear, meters and cable demand and lead times.",
+   "kpis": [
+    "Stock-outs on critical items",
+    "Lead time vs plan",
+    "Inventory turns"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-092",
+    "UP-093"
+   ]
+  },
+  {
+   "id": "procurement",
+   "name": "Sourcing & Contracts",
+   "areaId": "supply",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Sourcing events, contracts and spend.",
+   "kpis": [
+    "Spend under contract",
+    "Savings realised",
+    "Contract cycle time"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-094",
+    "UP-095"
+   ]
+  },
+  {
+   "id": "capital",
+   "name": "Capital Planning & Portfolio",
+   "areaId": "corporate",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Capital plan, project prioritisation and execution.",
+   "kpis": [
+    "Capital plan execution %",
+    "Risk reduction per $",
+    "Project cost variance"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-096",
+    "UP-097"
+   ]
+  },
+  {
+   "id": "finance",
+   "name": "Finance, O&M & Affordability",
+   "areaId": "corporate",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "O&M budgets, cost per customer, affordability and close.",
+   "kpis": [
+    "O&M per customer",
+    "Forecast accuracy",
+    "Close cycle days"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-098",
+    "UP-099"
+   ]
+  },
+  {
+   "id": "workforce",
+   "name": "Workforce & Skills",
+   "areaId": "corporate",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Lineworker pipeline, skills, knowledge transfer and mutual assistance.",
+   "kpis": [
+    "Qualified workforce gap",
+    "Time to competency",
+    "Knowledge captured"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-100",
+    "UP-101"
+   ]
+  },
+  {
+   "id": "data-platform",
+   "name": "Data Platforms & AI Enablement",
+   "areaId": "it-ot",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Enterprise data platform, data products, semantic layer and AI services.",
+   "kpis": [
+    "Certified data products",
+    "Time from intent to insight",
+    "AI use cases in production"
+   ],
+   "family": "data-intelligence",
+   "processIds": [
+    "UP-102",
+    "UP-103"
+   ]
+  },
+  {
+   "id": "it-ot-integration",
+   "name": "IT/OT Integration & Historian",
+   "areaId": "it-ot",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "SCADA, historian, OMS/ADMS and enterprise integration under OT security zones.",
+   "kpis": [
+    "Historian tag quality",
+    "Integration incidents",
+    "Data latency"
+   ],
+   "family": "data-intelligence",
+   "processIds": [
+    "UP-104",
+    "UP-105"
+   ]
+  },
+  {
+   "id": "cyber",
+   "name": "Cybersecurity (IT & OT)",
+   "areaId": "it-ot",
+   "domainId": "enterprise",
+   "commodity": "both",
+   "description": "Security operations, OT asset visibility, vulnerability and access management.",
+   "kpis": [
+    "Mean time to detect",
+    "OT assets with visibility",
+    "Critical vulnerabilities open"
+   ],
+   "family": "enterprise-enablement",
+   "processIds": [
+    "UP-106",
+    "UP-107"
+   ]
+  }
+ ],
+ "families": [
+  {
+   "id": "customer-commercial",
+   "name": "Customer & commercial agents",
+   "colorToken": "--customer",
+   "flagshipAgents": [
+    "UA-CC-01",
+    "UA-CC-02",
+    "UA-CC-03",
+    "UA-CC-04",
+    "UA-CC-05"
+   ],
+   "processCount": 20
+  },
+  {
+   "id": "grid-operations",
+   "name": "Grid & asset operations agents",
+   "colorToken": "--network",
+   "flagshipAgents": [
+    "UA-GO-01",
+    "UA-GO-02",
+    "UA-GO-03",
+    "UA-GO-04",
+    "UA-GO-05",
+    "UA-GO-06",
+    "UA-GO-07"
+   ],
+   "processCount": 31
+  },
+  {
+   "id": "generation-markets",
+   "name": "Generation & energy markets agents",
+   "colorToken": "--oss",
+   "flagshipAgents": [
+    "UA-GM-01",
+    "UA-GM-02",
+    "UA-GM-03",
+    "UA-GM-04",
+    "UA-GM-05"
+   ],
+   "processCount": 20
+  },
+  {
+   "id": "data-intelligence",
+   "name": "Data & intelligence agents",
+   "colorToken": "--sky",
+   "flagshipAgents": [
+    "UA-DI-01",
+    "UA-DI-02",
+    "UA-DI-03",
+    "UA-DI-04",
+    "UA-DI-05",
+    "UA-DI-06",
+    "UA-DI-07",
+    "UA-DI-08",
+    "UA-DI-09",
+    "UA-DI-10",
+    "UA-DI-11",
+    "UA-DI-12",
+    "UA-DI-13"
+   ],
+   "processCount": 10
+  },
+  {
+   "id": "enterprise-enablement",
+   "name": "Enterprise, safety & regulatory agents",
+   "colorToken": "--bss",
+   "flagshipAgents": [
+    "UA-EE-01",
+    "UA-EE-02",
+    "UA-EE-03",
+    "UA-EE-04",
+    "UA-EE-05",
+    "UA-EE-06"
+   ],
+   "processCount": 26
+  }
+ ],
+ "flagshipAgents": [
+  {
+   "id": "UA-CC-01",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Outage Communication & ETR Agent",
+   "mission": "Tells every affected customer what is happening, when power will be back and what to do, on their preferred channel.",
+   "trigger": "Outage created, ETR changed or restoration confirmed",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-CUS-01 Customer 360",
+    "UDP-CUS-05 Contact Preferences & Consent"
+   ],
+   "actions": [
+    "draft_notification",
+    "target_customers",
+    "update_etr",
+    "confirm_restoration"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Customer communications lead",
+   "guardrails": [
+    "Only ETRs produced by the restoration model or a dispatcher",
+    "Medical-baseline and critical-care customers contacted first"
+   ],
+   "willNot": [
+    "Promise a restoration time a dispatcher has not confirmed",
+    "Message customers who opted out"
+   ],
+   "kpis": [
+    "ETR accuracy",
+    "Outage calls per outage",
+    "Customer satisfaction during outages"
+   ],
+   "demoPrompt": "How many customers on feeder 12-04 are still out, and what have we told them?",
+   "operatingArea": "customer-care"
+  },
+  {
+   "id": "UA-CC-02",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "High-Bill & Usage Explainer Agent",
+   "mission": "Explains any bill change with interval usage, weather, rate and billing-days evidence, and suggests ways to lower the next one.",
+   "trigger": "High-bill contact, complaint or mid-cycle alert",
+   "dataProducts": [
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-CUS-03 Billing & Payments",
+    "UDP-CUS-04 Rates & Tariffs"
+   ],
+   "actions": [
+    "explain_bill",
+    "compare_weather",
+    "detect_anomaly",
+    "recommend_program"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Billing supervisor (adjustments)",
+   "guardrails": [
+    "Explanations cite interval data and the rate applied",
+    "Adjustments only through billing policy"
+   ],
+   "willNot": [
+    "Change a rate or tariff",
+    "Waive charges outside policy"
+   ],
+   "kpis": [
+    "High-bill complaints",
+    "Regulator escalations",
+    "Bill-related calls"
+   ],
+   "demoPrompt": "Why is my July bill $96 higher than last year?",
+   "operatingArea": "customer-care"
+  },
+  {
+   "id": "UA-CC-03",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Payment Assistance & Affordability Agent",
+   "mission": "Finds the right payment arrangement or assistance program for customers in arrears, within regulatory protections.",
+   "trigger": "Arrears threshold, customer request or disconnection list",
+   "dataProducts": [
+    "UDP-CUS-03 Billing & Payments",
+    "UDP-CUS-06 Assistance & Protections",
+    "UDP-CUS-01 Customer 360"
+   ],
+   "actions": [
+    "assess_eligibility",
+    "offer_arrangement",
+    "enrol_program",
+    "check_protections"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Credit & collections lead",
+   "guardrails": [
+    "Medical, weather and seasonal disconnection protections checked on every account",
+    "Arrangement terms within tariff rules"
+   ],
+   "willNot": [
+    "Schedule a disconnection",
+    "Disclose another account holder's data"
+   ],
+   "kpis": [
+    "Arrangements kept",
+    "Bad debt % of revenue",
+    "Assistance enrolment"
+   ],
+   "demoPrompt": "Which customers in arrears qualify for assistance before the next disconnection cycle?",
+   "operatingArea": "customer-care"
+  },
+  {
+   "id": "UA-CC-04",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Energy Program & EV Advisor Agent",
+   "mission": "Matches customers to efficiency, demand-response, EV and solar programs and rates that save them money and relieve the grid.",
+   "trigger": "Campaign cycle, EV detected or customer request",
+   "dataProducts": [
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-CUS-07 Programs & Enrolment",
+    "UDP-GRD-04 Feeder Capacity & Hosting"
+   ],
+   "actions": [
+    "score_fit",
+    "recommend_program",
+    "enrol_customer",
+    "forecast_impact"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Programs manager",
+   "guardrails": [
+    "Recommend only approved programs and rates",
+    "Consent required for marketing contact"
+   ],
+   "willNot": [
+    "Enrol a customer without consent",
+    "Promise savings beyond the program's measured range"
+   ],
+   "kpis": [
+    "Program enrolment yield",
+    "MW enrolled in demand response",
+    "Managed-charging share"
+   ],
+   "demoPrompt": "Which customers on constrained feeders should we invite to the EV managed-charging program?",
+   "operatingArea": "programs"
+  },
+  {
+   "id": "UA-CC-05",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Large Load & New Connection Agent",
+   "mission": "Screens new service and large-load requests (including data centres), gives a fast feasibility answer and drafts the next steps.",
+   "trigger": "New service request or large-load inquiry",
+   "dataProducts": [
+    "UDP-GRD-04 Feeder Capacity & Hosting",
+    "UDP-GRD-05 Transmission Capacity",
+    "UDP-CUS-08 Connection Requests"
+   ],
+   "actions": [
+    "validate_request",
+    "screen_capacity",
+    "estimate_timeline",
+    "draft_agreement"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Large-load account manager",
+   "guardrails": [
+    "Feasibility is indicative until engineering signs off",
+    "Large-load tariff and collateral rules applied"
+   ],
+   "willNot": [
+    "Commit capacity or dates",
+    "Share other customers' requests"
+   ],
+   "kpis": [
+    "Time to feasibility answer",
+    "MW connected",
+    "Days to connect"
+   ],
+   "demoPrompt": "Can we serve a 300 MW data centre near the Valley 345 kV substation by 2028?",
+   "operatingArea": "large-load"
+  },
+  {
+   "id": "UA-GO-01",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Outage Prediction & Storm Staging Agent",
+   "mission": "Predicts where storms will cause outages and recommends crew, material and mutual-assistance staging.",
+   "trigger": "Severe weather forecast 72 hours out",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-GRD-06 Weather & Fire Risk",
+    "UDP-ENT-03 Workforce & Crews"
+   ],
+   "actions": [
+    "predict_damage",
+    "recommend_staging",
+    "estimate_cost",
+    "brief_leaders"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Emergency operations director",
+   "guardrails": [
+    "Staging recommendations only; crews released by people"
+   ],
+   "willNot": [
+    "Request mutual assistance",
+    "Commit contractor spend"
+   ],
+   "kpis": [
+    "Restoration time (major events)",
+    "Crews staged vs needed",
+    "Storm cost per customer"
+   ],
+   "demoPrompt": "What damage should we expect from Thursday's storm and where should crews stage?",
+   "operatingArea": "resilience"
+  },
+  {
+   "id": "UA-GO-02",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Fault Location & Restoration Advisor",
+   "mission": "Combines AMI last-gasp, SCADA and fault indicators to locate faults and recommend isolation and restoration switching for the operator.",
+   "trigger": "Feeder lockout or AMI outage cluster",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-GRD-02 Network Connectivity Model",
+    "UDP-GRD-03 Grid Events & SCADA"
+   ],
+   "actions": [
+    "locate_fault",
+    "recommend_switching",
+    "estimate_cmi",
+    "update_oms"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Distribution system operator",
+   "guardrails": [
+    "Switching is always executed by a qualified operator",
+    "Plans checked against the as-operated network model"
+   ],
+   "willNot": [
+    "Operate any switch, breaker or device",
+    "Clear tags or holds"
+   ],
+   "kpis": [
+    "Customer minutes interrupted",
+    "Time to isolate",
+    "Patrol miles"
+   ],
+   "demoPrompt": "Feeder 12-04 locked out — where is the fault and how do we restore most customers fastest?",
+   "operatingArea": "grid-ops"
+  },
+  {
+   "id": "UA-GO-03",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Asset Health & Risk Agent",
+   "mission": "Scores the health and failure risk of transformers, breakers, poles and cables and ranks interventions by risk reduced per dollar.",
+   "trigger": "New inspection, test result or loading event",
+   "dataProducts": [
+    "UDP-GRD-07 Asset Registry & Health",
+    "UDP-GRD-03 Grid Events & SCADA",
+    "UDP-ENT-02 Work Orders"
+   ],
+   "actions": [
+    "score_health",
+    "forecast_failure",
+    "rank_interventions",
+    "create_work_request"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Asset management lead",
+   "guardrails": [
+    "Every score explains its drivers",
+    "Capital changes go through the planning cycle"
+   ],
+   "willNot": [
+    "Defer safety-critical work",
+    "Change capital budgets"
+   ],
+   "kpis": [
+    "In-service failures",
+    "Risk reduced per $",
+    "Health index coverage"
+   ],
+   "demoPrompt": "Which substation transformers are most likely to fail this summer?",
+   "operatingArea": "asset-mgmt"
+  },
+  {
+   "id": "UA-GO-04",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Drone & Visual Inspection Agent",
+   "mission": "Finds defects in drone, LiDAR and thermal imagery and turns confirmed defects into prioritised work.",
+   "trigger": "Imagery uploaded from an inspection flight",
+   "dataProducts": [
+    "UDP-GRD-08 Inspection Imagery & Findings",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "detect_defects",
+    "rank_severity",
+    "request_review",
+    "create_work_order"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Inspection supervisor",
+   "guardrails": [
+    "High-severity findings reviewed by a qualified inspector",
+    "Images stored with location and time stamp"
+   ],
+   "willNot": [
+    "Close a defect without inspector review"
+   ],
+   "kpis": [
+    "Defects found per mile",
+    "Image review time",
+    "Defect-to-repair days"
+   ],
+   "demoPrompt": "What did last week's transmission line flights find on the Coastal 230 kV line?",
+   "operatingArea": "asset-mgmt"
+  },
+  {
+   "id": "UA-GO-05",
+   "family": "grid-operations",
+   "motion": "decide-act",
+   "name": "Vegetation & Wildfire Risk Agent",
+   "mission": "Scores span-level vegetation and fire-weather risk, builds risk-based trim plans and prepares PSPS decision packs for people to decide.",
+   "trigger": "Fire-weather forecast, new imagery or plan cycle",
+   "dataProducts": [
+    "UDP-GRD-06 Weather & Fire Risk",
+    "UDP-GRD-09 Vegetation Spans",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "score_span_risk",
+    "build_trim_plan",
+    "prepare_psps_pack",
+    "plan_patrols"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Wildfire mitigation officer",
+   "guardrails": [
+    "De-energisation decisions are made only by authorised people",
+    "Customer impact (incl. medical baseline) shown in every pack"
+   ],
+   "willNot": [
+    "Recommend or execute de-energisation on its own",
+    "Change fire-weather thresholds"
+   ],
+   "kpis": [
+    "Tree-caused outages",
+    "Ignitions",
+    "Vegetation cost per mile"
+   ],
+   "demoPrompt": "Which circuits are in the highest fire-risk tier for tomorrow's red-flag warning?",
+   "operatingArea": "resilience"
+  },
+  {
+   "id": "UA-GO-06",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Work Bundling & Crew Dispatch Agent",
+   "mission": "Bundles nearby work, schedules crews by skill, permit and material availability, and dispatches emergencies to the best crew.",
+   "trigger": "Weekly schedule or new emergency job",
+   "dataProducts": [
+    "UDP-ENT-02 Work Orders",
+    "UDP-ENT-03 Workforce & Crews",
+    "UDP-ENT-04 Materials & Inventory"
+   ],
+   "actions": [
+    "bundle_work",
+    "schedule_crews",
+    "dispatch_emergency",
+    "brief_crew"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Work management supervisor",
+   "guardrails": [
+    "Crew qualifications and hours-of-service limits enforced"
+   ],
+   "willNot": [
+    "Override safety holds",
+    "Dispatch an unqualified crew"
+   ],
+   "kpis": [
+    "Jobs per crew-day",
+    "Schedule attainment",
+    "Emergency response time"
+   ],
+   "demoPrompt": "Bundle next week's pole replacements in the Central region by crew and permits.",
+   "operatingArea": "field-ops"
+  },
+  {
+   "id": "UA-GO-07",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Gas Leak & Integrity Agent",
+   "mission": "Grades and prioritises leak indications, scores excavation-damage risk and ranks pipe segments by integrity threat.",
+   "trigger": "Leak survey upload or one-call ticket",
+   "dataProducts": [
+    "UDP-GAS-01 Gas Leaks & Surveys",
+    "UDP-GAS-02 Pipe Segments & Integrity",
+    "UDP-GAS-03 One-Call Tickets"
+   ],
+   "actions": [
+    "grade_leak",
+    "prioritise_repairs",
+    "score_ticket_risk",
+    "rank_segments"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Gas operations supervisor",
+   "guardrails": [
+    "Hazardous leak response follows the emergency procedure, not the agent",
+    "Grading reviewed by a qualified technician"
+   ],
+   "willNot": [
+    "Downgrade a hazardous leak",
+    "Close a ticket"
+   ],
+   "kpis": [
+    "Hazardous leak response time",
+    "Leak backlog",
+    "Excavation damages per 1,000 tickets"
+   ],
+   "demoPrompt": "Which open leaks and excavation tickets need attention first today?",
+   "operatingArea": "gas-ops"
+  },
+  {
+   "id": "UA-GM-01",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Plant Performance & Heat Rate Agent",
+   "mission": "Detects heat-rate drift and performance losses across the fleet and recommends corrections to operators.",
+   "trigger": "Heat-rate deviation or daily performance run",
+   "dataProducts": [
+    "UDP-GEN-01 Unit Performance",
+    "UDP-GEN-02 Plant Historian"
+   ],
+   "actions": [
+    "detect_drift",
+    "explain_losses",
+    "recommend_setpoint"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Plant operations manager",
+   "guardrails": [
+    "Set-point changes made by operators within operating limits"
+   ],
+   "willNot": [
+    "Change control-system set-points"
+   ],
+   "kpis": [
+    "Net heat rate",
+    "Fuel cost per MWh",
+    "Equivalent availability"
+   ],
+   "demoPrompt": "Why did Unit 2's heat rate rise this week?",
+   "operatingArea": "gen-ops"
+  },
+  {
+   "id": "UA-GM-02",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Generation Predictive Maintenance Agent",
+   "mission": "Spots early signs of equipment failure from historian data and raises evidence-backed work requests.",
+   "trigger": "Anomaly score above threshold",
+   "dataProducts": [
+    "UDP-GEN-02 Plant Historian",
+    "UDP-ENT-02 Work Orders",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "detect_anomaly",
+    "diagnose",
+    "create_work_request"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Plant maintenance manager",
+   "guardrails": [
+    "Work requests carry the sensor evidence"
+   ],
+   "willNot": [
+    "Take a unit offline"
+   ],
+   "kpis": [
+    "Forced outage rate",
+    "Unplanned outage hours",
+    "Maintenance cost per MWh"
+   ],
+   "demoPrompt": "Which rotating equipment is trending toward failure across the fleet?",
+   "operatingArea": "gen-maint"
+  },
+  {
+   "id": "UA-GM-03",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Load & Renewables Forecasting Agent",
+   "mission": "Forecasts load, wind and solar output with weather, DER and electrification signals.",
+   "trigger": "Forecast cycle or weather update",
+   "dataProducts": [
+    "UDP-MKT-01 Load & Weather",
+    "UDP-GEN-01 Unit Performance",
+    "UDP-CUS-02 AMI Interval Usage"
+   ],
+   "actions": [
+    "forecast_load",
+    "forecast_renewables",
+    "explain_error"
+   ],
+   "autonomyDefault": "L4",
+   "autonomyMax": "L4",
+   "approver": "Forecasting lead",
+   "guardrails": [
+    "Forecasts published with confidence bands",
+    "Human review on extreme-weather days"
+   ],
+   "willNot": [
+    "Submit market bids"
+   ],
+   "kpis": [
+    "Day-ahead load MAPE",
+    "Renewable forecast error",
+    "Imbalance cost"
+   ],
+   "demoPrompt": "What is tomorrow's peak load forecast and how confident are we?",
+   "operatingArea": "trading"
+  },
+  {
+   "id": "UA-GM-04",
+   "family": "generation-markets",
+   "motion": "decide-act",
+   "name": "Market Bidding & Settlement Agent",
+   "mission": "Prepares unit offers within the approved strategy and reconciles ISO/RTO settlements to internal data.",
+   "trigger": "Bid window or settlement statement",
+   "dataProducts": [
+    "UDP-MKT-02 Market Bids & Settlements",
+    "UDP-GEN-01 Unit Performance",
+    "UDP-MKT-01 Load & Weather"
+   ],
+   "actions": [
+    "prepare_offers",
+    "check_constraints",
+    "reconcile_settlement",
+    "raise_dispute"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Trading desk lead",
+   "guardrails": [
+    "Offers within approved risk limits and market rules",
+    "Disputes filed by people"
+   ],
+   "willNot": [
+    "Submit offers outside strategy",
+    "Trade on its own account"
+   ],
+   "kpis": [
+    "Settlement disputes won",
+    "Market margin vs plan",
+    "Bid compliance"
+   ],
+   "demoPrompt": "Where did last month's settlement differ from our meter data?",
+   "operatingArea": "trading"
+  },
+  {
+   "id": "UA-GM-05",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Battery Storage Dispatch Agent",
+   "mission": "Optimises battery charge and discharge against prices, grid constraints and state-of-health limits.",
+   "trigger": "Day-ahead and real-time price updates",
+   "dataProducts": [
+    "UDP-GEN-03 Storage Assets",
+    "UDP-MKT-02 Market Bids & Settlements",
+    "UDP-GRD-04 Feeder Capacity & Hosting"
+   ],
+   "actions": [
+    "propose_schedule",
+    "respect_soh_limits",
+    "report_value"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Storage portfolio manager",
+   "guardrails": [
+    "Schedules executed by the EMS/operator, not the agent",
+    "Degradation limits always respected"
+   ],
+   "willNot": [
+    "Exceed warranty cycle limits"
+   ],
+   "kpis": [
+    "Arbitrage revenue",
+    "Availability",
+    "Degradation vs plan"
+   ],
+   "demoPrompt": "How much value did our batteries capture during last week's heat wave?",
+   "operatingArea": "gen-ops"
+  },
+  {
+   "id": "UA-DI-01",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Data Product Discovery Agent",
+   "mission": "Turns business intent plus report and KPI lineage from the BI estate into a ranked, evidence-backed data-product backlog.",
+   "trigger": "New intent or BI rationalisation run",
+   "dataProducts": [
+    "Report & KPI lineage",
+    "Catalog metadata",
+    "Business glossary"
+   ],
+   "actions": [
+    "parse_intent",
+    "mine_kpi_lineage",
+    "rank_candidates",
+    "draft_product_spec"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Data product portfolio lead",
+   "guardrails": [
+    "Propose-only",
+    "Every recommendation cites lineage evidence"
+   ],
+   "willNot": [
+    "Publish products",
+    "Create pipelines"
+   ],
+   "kpis": [
+    "Intent-to-product time",
+    "Duplicate KPI definitions retired"
+   ],
+   "demoPrompt": "We need to cut SAIDI — which data products do we need?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-02",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Source-to-Target Mapping Agent",
+   "mission": "Maps CIS, MDMS, OMS, GIS, EAM and historian sources to the utility data model (CIM-aligned) with confidence scores.",
+   "trigger": "New source or schema drift",
+   "dataProducts": [
+    "Source schemas (CIS, MDMS, OMS, ADMS, GIS, EAM, historian)",
+    "Utility canonical model (CIM-aligned)",
+    "Glossary"
+   ],
+   "actions": [
+    "profile_source",
+    "propose_mapping",
+    "classify_sensitive"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data architect",
+   "guardrails": [
+    "Mappings below 0.8 confidence need review",
+    "Customer energy usage data and CEII auto-classified"
+   ],
+   "willNot": [
+    "Deploy pipelines",
+    "Change the canonical model"
+   ],
+   "kpis": [
+    "Mapping effort hours",
+    "Mapping acceptance rate"
+   ],
+   "demoPrompt": "Map the new MDMS interval feed to Customer 360 and the outage data product.",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-03",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Data Quality Rules Agent",
+   "mission": "Generates and backtests quality rules for critical data elements such as meter IDs, premise-to-transformer links and outage times.",
+   "trigger": "New product, CDE or quality incident",
+   "dataProducts": [
+    "Profiling results",
+    "CDE register",
+    "Business rules"
+   ],
+   "actions": [
+    "profile_data",
+    "generate_rules",
+    "backtest_rules"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data steward",
+   "guardrails": [
+    "Rules backtested on 13 months before activation"
+   ],
+   "willNot": [
+    "Silently relax thresholds"
+   ],
+   "kpis": [
+    "CDE rule coverage",
+    "False-positive rate"
+   ],
+   "demoPrompt": "Create quality rules for meter-to-transformer connectivity and outage start/end times.",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-04",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Pipeline & Code Generation Agent",
+   "mission": "Generates and tests transformation code from approved mappings and opens a pull request for human merge.",
+   "trigger": "Mapping approved",
+   "dataProducts": [
+    "Approved mappings",
+    "Target model",
+    "Coding standards"
+   ],
+   "actions": [
+    "generate_code",
+    "generate_tests",
+    "open_pull_request"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data engineering lead",
+   "guardrails": [
+    "Human-approved pull requests only",
+    "CI tests must pass"
+   ],
+   "willNot": [
+    "Push to production directly"
+   ],
+   "kpis": [
+    "Build cycle time",
+    "Test coverage"
+   ],
+   "demoPrompt": "Generate the Silver-to-Gold model for outage events with major-event-day flags.",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-05",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Semantic Model Builder Agent",
+   "mission": "Builds semantic views and verified queries for certified KPIs such as SAIDI, SAIFI, CAIDI, O&M per customer and bad debt.",
+   "trigger": "KPI certified or product published",
+   "dataProducts": [
+    "Certified KPIs",
+    "Gold models",
+    "Glossary"
+   ],
+   "actions": [
+    "draft_semantic_view",
+    "add_synonyms",
+    "generate_verified_queries",
+    "evaluate_questions"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Semantic steward",
+   "guardrails": [
+    "Every metric references a certified KPI definition (e.g. IEEE 1366)"
+   ],
+   "willNot": [
+    "Publish uncertified metrics"
+   ],
+   "kpis": [
+    "Evaluation accuracy",
+    "Time to semantic view"
+   ],
+   "demoPrompt": "Build the semantic view for reliability metrics with and without major event days.",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-06",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "GIS & Network Model Quality Agent",
+   "mission": "Finds connectivity, phasing and asset-record errors using AMI voltage correlation and as-built reconciliation.",
+   "trigger": "Nightly model check or work order closed",
+   "dataProducts": [
+    "UDP-GRD-02 Network Connectivity Model",
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-ENT-02 Work Orders"
+   ],
+   "actions": [
+    "correlate_voltage",
+    "detect_errors",
+    "propose_fix",
+    "open_gis_task"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "GIS manager",
+   "guardrails": [
+    "Fixes applied by GIS editors after review"
+   ],
+   "willNot": [
+    "Edit the operational model directly"
+   ],
+   "kpis": [
+    "Connectivity errors open",
+    "Phase accuracy",
+    "As-built backlog"
+   ],
+   "demoPrompt": "Which meters are probably connected to the wrong transformer in the Metro region?",
+   "operatingArea": "asset-mgmt"
+  },
+  {
+   "id": "UA-DI-07",
+   "family": "data-intelligence",
+   "motion": "operate",
+   "name": "Data Quality & Healing Agent",
+   "mission": "Monitors data products, detects freshness and quality breaches and applies catalogued fixes before consumers notice.",
+   "trigger": "Freshness SLA miss, rule breach or schema drift",
+   "dataProducts": [
+    "Data product observability",
+    "Pipeline metadata",
+    "Lineage graph"
+   ],
+   "actions": [
+    "detect_anomaly",
+    "trace_lineage",
+    "apply_fix",
+    "notify_owner"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Data product owner",
+   "guardrails": [
+    "Auto-fix only for catalogued patterns",
+    "Consumers notified"
+   ],
+   "willNot": [
+    "Delete data",
+    "Bypass certification"
+   ],
+   "kpis": [
+    "Data incident MTTR",
+    "L1/L2 tickets avoided"
+   ],
+   "demoPrompt": "The AMI interval feed is late this morning — what broke and who is affected?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-08",
+   "family": "data-intelligence",
+   "motion": "operate",
+   "name": "Platform FinOps Agent",
+   "mission": "Attributes compute, storage and model cost to data products, agents and outcomes and recommends savings.",
+   "trigger": "Daily cost run or budget threshold",
+   "dataProducts": [
+    "Platform usage metadata",
+    "Agent run logs"
+   ],
+   "actions": [
+    "attribute_cost",
+    "detect_waste",
+    "recommend_rightsizing"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Platform owner",
+   "guardrails": [
+    "Changes within approved budget envelopes"
+   ],
+   "willNot": [
+    "Suspend production workloads"
+   ],
+   "kpis": [
+    "Cost per outcome",
+    "Idle compute",
+    "Savings realised"
+   ],
+   "demoPrompt": "Which workloads cost the most per outage restored this month?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-09",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Ask the Utility Agent",
+   "mission": "Answers business questions over certified data products with a full 'how I answered' trace, refusing when evidence is missing.",
+   "trigger": "Question in chat, BI or mobile",
+   "dataProducts": [
+    "Certified data products",
+    "Semantic views",
+    "Context layer"
+   ],
+   "actions": [
+    "resolve_terms",
+    "apply_rules",
+    "generate_sql",
+    "check_access",
+    "cite_sources"
+   ],
+   "autonomyDefault": "L1",
+   "autonomyMax": "L2",
+   "approver": "n/a (read-only)",
+   "guardrails": [
+    "Row and column policies applied",
+    "Refuses rather than answers without evidence"
+   ],
+   "willNot": [
+    "Answer from uncertified sources",
+    "Reveal customer energy usage data or CEII to uncleared roles"
+   ],
+   "kpis": [
+    "Questions answered with citations",
+    "Refusal rate",
+    "Analyst hours deflected"
+   ],
+   "demoPrompt": "What was SAIDI excluding major event days last quarter by region?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-10",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Marketplace Concierge Agent",
+   "mission": "Helps users find, preview and request the right data product or agent.",
+   "trigger": "Marketplace search or data question",
+   "dataProducts": [
+    "Data product registry",
+    "Agent registry",
+    "Glossary"
+   ],
+   "actions": [
+    "search_catalog",
+    "preview_sample",
+    "start_request"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "n/a (self-service)",
+   "guardrails": [
+    "Previews use masked samples only"
+   ],
+   "willNot": [
+    "Grant access"
+   ],
+   "kpis": [
+    "Time to find data",
+    "Self-service request rate"
+   ],
+   "demoPrompt": "I need feeder loading by month for the Valley region — where do I get it?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-11",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Executive Insight Briefing Agent",
+   "mission": "Produces a weekly, cited briefing on reliability, safety, customer, cost and capital-plan KPIs with drivers and actions.",
+   "trigger": "Weekly schedule or KPI threshold breach",
+   "dataProducts": [
+    "Certified KPIs",
+    "Semantic views",
+    "Agent outcomes"
+   ],
+   "actions": [
+    "detect_movements",
+    "explain_drivers",
+    "draft_briefing"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Chief of staff",
+   "guardrails": [
+    "Certified KPIs only; every claim cited"
+   ],
+   "willNot": [
+    "Speculate beyond evidence"
+   ],
+   "kpis": [
+    "Briefing prep time",
+    "Executive adoption"
+   ],
+   "demoPrompt": "Brief me on reliability, safety and O&M per customer last week.",
+   "operatingArea": "corporate"
+  },
+  {
+   "id": "UA-DI-12",
+   "family": "data-intelligence",
+   "motion": "govern",
+   "name": "Agent Evaluation & Promotion Agent",
+   "mission": "Runs evaluation suites, tracks acceptance and recommends promoting or demoting each agent's autonomy.",
+   "trigger": "Nightly evaluation or threshold crossed",
+   "dataProducts": [
+    "Agent evidence trail",
+    "Evaluation suites",
+    "Approval decisions"
+   ],
+   "actions": [
+    "run_evals",
+    "compute_acceptance",
+    "recommend_promotion"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "AI governance board",
+   "guardrails": [
+    "Promotion by human decision only",
+    "OT-facing agents capped at L2"
+   ],
+   "willNot": [
+    "Change an agent's autonomy itself"
+   ],
+   "kpis": [
+    "Agents at target autonomy",
+    "Regressions caught"
+   ],
+   "demoPrompt": "Which agents are eligible for promotion this month?",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-DI-13",
+   "family": "data-intelligence",
+   "motion": "govern",
+   "name": "Access Request Agent",
+   "mission": "Evaluates access requests against purpose, role and classification; auto-approves within policy and routes the rest.",
+   "trigger": "Access request submitted",
+   "dataProducts": [
+    "Access policies",
+    "Data classification",
+    "Role catalog"
+   ],
+   "actions": [
+    "evaluate_purpose",
+    "auto_approve",
+    "route_to_owner",
+    "provision_access"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Data product owner (exceptions)",
+   "guardrails": [
+    "Customer energy usage data, CEII and critical-infrastructure data always need owner approval",
+    "Access time-boxed"
+   ],
+   "willNot": [
+    "Approve restricted data without the owner"
+   ],
+   "kpis": [
+    "Median time to access",
+    "Policy exceptions"
+   ],
+   "demoPrompt": "Request read access to Outage & Reliability 360 for a performance report.",
+   "operatingArea": "it-ot"
+  },
+  {
+   "id": "UA-EE-01",
+   "family": "enterprise-enablement",
+   "motion": "decide-act",
+   "name": "Field Safety Briefing Agent",
+   "mission": "Builds a job-specific pre-job briefing from work type, location, weather, energy sources and past incidents, and answers crew safety questions.",
+   "trigger": "Job dispatched or crew question",
+   "dataProducts": [
+    "UDP-ENT-02 Work Orders",
+    "UDP-ENT-05 Safety Observations & Incidents",
+    "UDP-GRD-06 Weather & Fire Risk"
+   ],
+   "actions": [
+    "identify_hazards",
+    "draft_briefing",
+    "recall_lessons",
+    "answer_question"
+   ],
+   "autonomyDefault": "L1",
+   "autonomyMax": "L2",
+   "approver": "Crew leader",
+   "guardrails": [
+    "Briefing supports, never replaces, the crew's own tailboard",
+    "High-energy hazards always listed first"
+   ],
+   "willNot": [
+    "Approve energised work",
+    "Waive a safety procedure"
+   ],
+   "kpis": [
+    "SIF-precursor events",
+    "Tailboard completeness",
+    "Recordable incident rate"
+   ],
+   "demoPrompt": "Brief my crew on tomorrow's underground cable splice at Main and 4th.",
+   "operatingArea": "safety"
+  },
+  {
+   "id": "UA-EE-02",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Rate Case & Data Request Agent",
+   "mission": "Drafts responses to regulator data requests and checks filings for inconsistent numbers, all from certified data.",
+   "trigger": "Data request or filing draft",
+   "dataProducts": [
+    "Certified KPIs",
+    "Prior responses library",
+    "UDP-ENT-06 Capital & O&M"
+   ],
+   "actions": [
+    "find_evidence",
+    "draft_response",
+    "check_consistency"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Regulatory affairs lead",
+   "guardrails": [
+    "Every figure traces to a certified source",
+    "Responses reviewed by the witness"
+   ],
+   "willNot": [
+    "Submit filings"
+   ],
+   "kpis": [
+    "Data request cycle time",
+    "Errata filed"
+   ],
+   "demoPrompt": "Draft the response to staff's data request on vegetation spend per mile since 2022.",
+   "operatingArea": "regulatory"
+  },
+  {
+   "id": "UA-EE-03",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Critical-Infrastructure Compliance Evidence Agent",
+   "mission": "Collects and indexes reliability and cyber-standards evidence continuously and flags gaps before audits.",
+   "trigger": "Control test cycle or configuration change",
+   "dataProducts": [
+    "Compliance evidence store",
+    "Access logs",
+    "Change records"
+   ],
+   "actions": [
+    "collect_evidence",
+    "test_controls",
+    "flag_gaps"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Compliance officer",
+   "guardrails": [
+    "Read-only on critical-infrastructure systems",
+    "Evidence handled under information-protection rules"
+   ],
+   "willNot": [
+    "Change system configurations"
+   ],
+   "kpis": [
+    "Evidence collection effort",
+    "Potential non-compliance findings"
+   ],
+   "demoPrompt": "Are we audit-ready for the critical-infrastructure protection controls this quarter?",
+   "operatingArea": "regulatory"
+  },
+  {
+   "id": "UA-EE-04",
+   "family": "enterprise-enablement",
+   "motion": "operate",
+   "name": "Long-Lead Materials Agent",
+   "mission": "Forecasts transformer, meter, cable and switchgear demand from the capital plan, failures and storms, and re-plans when suppliers slip.",
+   "trigger": "Planning cycle or supplier delay",
+   "dataProducts": [
+    "UDP-ENT-04 Materials & Inventory",
+    "UDP-ENT-06 Capital & O&M",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "forecast_demand",
+    "monitor_suppliers",
+    "replan_allocation"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Supply chain planner",
+   "guardrails": [
+    "Allocation changes within budget"
+   ],
+   "willNot": [
+    "Place purchase orders"
+   ],
+   "kpis": [
+    "Critical stock-outs",
+    "Jobs delayed for materials"
+   ],
+   "demoPrompt": "Will we have enough pad-mount transformers for the Q1 new-service backlog?",
+   "operatingArea": "supply"
+  },
+  {
+   "id": "UA-EE-05",
+   "family": "enterprise-enablement",
+   "motion": "decide-act",
+   "name": "Capital Plan Optimisation Agent",
+   "mission": "Ranks capital projects by risk reduced, reliability gained and customer bill impact within budget and resource limits.",
+   "trigger": "Capital planning cycle",
+   "dataProducts": [
+    "UDP-ENT-06 Capital & O&M",
+    "UDP-GRD-07 Asset Registry & Health",
+    "UDP-GRD-01 Outage & Reliability 360"
+   ],
+   "actions": [
+    "score_projects",
+    "optimise_portfolio",
+    "estimate_bill_impact"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Capital planning director",
+   "guardrails": [
+    "Portfolio decisions made by the investment committee"
+   ],
+   "willNot": [
+    "Approve spend"
+   ],
+   "kpis": [
+    "Risk reduced per $",
+    "Capital plan execution",
+    "Bill impact"
+   ],
+   "demoPrompt": "What portfolio gives the most SAIDI improvement for the same capital budget?",
+   "operatingArea": "corporate"
+  },
+  {
+   "id": "UA-EE-06",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Customer Data Privacy & Consent Agent",
+   "mission": "Checks that consent and customer-data-sharing rules propagate to every system, partner and agent that uses customer energy data.",
+   "trigger": "Consent change or new data use",
+   "dataProducts": [
+    "UDP-CUS-05 Contact Preferences & Consent",
+    "Data access logs",
+    "Third-party sharing register"
+   ],
+   "actions": [
+    "trace_consent",
+    "detect_violation",
+    "open_remediation"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Privacy officer",
+   "guardrails": [
+    "Read-only on customer records"
+   ],
+   "willNot": [
+    "Change a customer's consent"
+   ],
+   "kpis": [
+    "Consent violations",
+    "Time to propagate"
+   ],
+   "demoPrompt": "Has every system honoured the data-sharing opt-outs received last week?",
+   "operatingArea": "regulatory"
+  }
+ ],
+ "dataProducts": [
+  {
+   "id": "UDP-CUS-01",
+   "name": "Customer 360",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-01",
+    "UA-CC-03"
+   ]
+  },
+  {
+   "id": "UDP-CUS-02",
+   "name": "AMI Interval Usage",
+   "domain": "Customer",
+   "classification": "CEUD",
+   "agents": [
+    "UA-CC-02",
+    "UA-CC-04",
+    "UA-GM-03",
+    "UA-DI-06"
+   ]
+  },
+  {
+   "id": "UDP-CUS-03",
+   "name": "Billing & Payments",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-02",
+    "UA-CC-03"
+   ]
+  },
+  {
+   "id": "UDP-CUS-04",
+   "name": "Rates & Tariffs",
+   "domain": "Customer",
+   "classification": "Internal",
+   "agents": [
+    "UA-CC-02"
+   ]
+  },
+  {
+   "id": "UDP-CUS-05",
+   "name": "Contact Preferences & Consent",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-01",
+    "UA-EE-06"
+   ]
+  },
+  {
+   "id": "UDP-CUS-06",
+   "name": "Assistance & Protections",
+   "domain": "Customer",
+   "classification": "PII-Sensitive",
+   "agents": [
+    "UA-CC-03"
+   ]
+  },
+  {
+   "id": "UDP-CUS-07",
+   "name": "Programs & Enrolment",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-04"
+   ]
+  },
+  {
+   "id": "UDP-CUS-08",
+   "name": "Connection Requests",
+   "domain": "Customer",
+   "classification": "Confidential",
+   "agents": [
+    "UA-CC-05"
+   ]
+  },
+  {
+   "id": "UDP-GRD-01",
+   "name": "Outage & Reliability 360",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-CC-01",
+    "UA-GO-01",
+    "UA-GO-02",
+    "UA-EE-05"
+   ]
+  },
+  {
+   "id": "UDP-GRD-02",
+   "name": "Network Connectivity Model",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-02",
+    "UA-DI-06"
+   ]
+  },
+  {
+   "id": "UDP-GRD-03",
+   "name": "Grid Events & SCADA",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-02",
+    "UA-GO-03"
+   ]
+  },
+  {
+   "id": "UDP-GRD-04",
+   "name": "Feeder Capacity & Hosting",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-CC-04",
+    "UA-CC-05",
+    "UA-GM-05"
+   ]
+  },
+  {
+   "id": "UDP-GRD-05",
+   "name": "Transmission Capacity",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-CC-05"
+   ]
+  },
+  {
+   "id": "UDP-GRD-06",
+   "name": "Weather & Fire Risk",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-01",
+    "UA-GO-05",
+    "UA-EE-01"
+   ]
+  },
+  {
+   "id": "UDP-GRD-07",
+   "name": "Asset Registry & Health",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-03",
+    "UA-GO-04",
+    "UA-GO-05",
+    "UA-GM-02",
+    "UA-EE-04",
+    "UA-EE-05"
+   ]
+  },
+  {
+   "id": "UDP-GRD-08",
+   "name": "Inspection Imagery & Findings",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-04"
+   ]
+  },
+  {
+   "id": "UDP-GRD-09",
+   "name": "Vegetation Spans",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-05"
+   ]
+  },
+  {
+   "id": "UDP-GAS-01",
+   "name": "Gas Leaks & Surveys",
+   "domain": "Gas",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-07"
+   ]
+  },
+  {
+   "id": "UDP-GAS-02",
+   "name": "Pipe Segments & Integrity",
+   "domain": "Gas",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-07"
+   ]
+  },
+  {
+   "id": "UDP-GAS-03",
+   "name": "One-Call Tickets",
+   "domain": "Gas",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-07"
+   ]
+  },
+  {
+   "id": "UDP-GEN-01",
+   "name": "Unit Performance",
+   "domain": "Generation",
+   "classification": "Confidential",
+   "agents": [
+    "UA-GM-01",
+    "UA-GM-03",
+    "UA-GM-04"
+   ]
+  },
+  {
+   "id": "UDP-GEN-02",
+   "name": "Plant Historian",
+   "domain": "Generation",
+   "classification": "CEII",
+   "agents": [
+    "UA-GM-01",
+    "UA-GM-02"
+   ]
+  },
+  {
+   "id": "UDP-GEN-03",
+   "name": "Storage Assets",
+   "domain": "Generation",
+   "classification": "Confidential",
+   "agents": [
+    "UA-GM-05"
+   ]
+  },
+  {
+   "id": "UDP-MKT-01",
+   "name": "Load & Weather",
+   "domain": "Markets",
+   "classification": "Internal",
+   "agents": [
+    "UA-GM-03",
+    "UA-GM-04"
+   ]
+  },
+  {
+   "id": "UDP-MKT-02",
+   "name": "Market Bids & Settlements",
+   "domain": "Markets",
+   "classification": "Market-Sensitive",
+   "agents": [
+    "UA-GM-04",
+    "UA-GM-05"
+   ]
+  },
+  {
+   "id": "UDP-ENT-02",
+   "name": "Work Orders",
+   "domain": "Enterprise",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-03",
+    "UA-GO-06",
+    "UA-GM-02",
+    "UA-DI-06",
+    "UA-EE-01"
+   ]
+  },
+  {
+   "id": "UDP-ENT-03",
+   "name": "Workforce & Crews",
+   "domain": "Enterprise",
+   "classification": "PII",
+   "agents": [
+    "UA-GO-01",
+    "UA-GO-06"
+   ]
+  },
+  {
+   "id": "UDP-ENT-04",
+   "name": "Materials & Inventory",
+   "domain": "Enterprise",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-06",
+    "UA-EE-04"
+   ]
+  },
+  {
+   "id": "UDP-ENT-05",
+   "name": "Safety Observations & Incidents",
+   "domain": "Enterprise",
+   "classification": "Confidential",
+   "agents": [
+    "UA-EE-01"
+   ]
+  },
+  {
+   "id": "UDP-ENT-06",
+   "name": "Capital & O&M",
+   "domain": "Enterprise",
+   "classification": "Confidential",
+   "agents": [
+    "UA-EE-02",
+    "UA-EE-04",
+    "UA-EE-05"
+   ]
+  },
+  {
+   "id": "UDP-AGT-01",
+   "name": "Agent Evidence Trail",
+   "domain": "Platform",
+   "classification": "Internal",
+   "agents": []
+  }
+ ],
+ "processCatalog": [
+  {
+   "id": "UP-001",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Thermal & Hydro Plant Performance",
+   "commodity": "electric",
+   "process": "Performance monitoring",
+   "subProcess": "Detect heat-rate drift and recommend set-point corrections",
+   "agentPattern": "Optimisation agent",
+   "trigger": "Heat-rate deviation above threshold for 2 hours",
+   "autonomy": "L2",
+   "valueLever": "Fuel cost",
+   "estimatedImpact": "0.5–1.5% heat-rate improvement [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Net heat rate",
+    "Equivalent availability factor",
+    "Forced outage rate (EFOR)"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-002",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Thermal & Hydro Plant Performance",
+   "commodity": "electric",
+   "process": "Shift handover",
+   "subProcess": "Draft shift logs and handover summaries from historian and operator notes",
+   "agentPattern": "Reporting copilot",
+   "trigger": "End of shift",
+   "autonomy": "L1",
+   "valueLever": "Operator productivity",
+   "estimatedImpact": "30–50% less log time [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Net heat rate",
+    "Equivalent availability factor",
+    "Forced outage rate (EFOR)"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-003",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Wind, Solar & Storage Operations",
+   "commodity": "electric",
+   "process": "Underperformance detection",
+   "subProcess": "Compare actual vs expected output per turbine or inverter",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Daily performance run",
+   "autonomy": "L4",
+   "valueLever": "Energy yield",
+   "estimatedImpact": "1–3% yield recovered [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Energy-based availability",
+    "Curtailment MWh",
+    "Battery round-trip efficiency"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-004",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Wind, Solar & Storage Operations",
+   "commodity": "electric",
+   "process": "Storage dispatch",
+   "subProcess": "Optimise battery charge/discharge against price and grid signals",
+   "agentPattern": "Optimisation agent",
+   "trigger": "Day-ahead and real-time price update",
+   "autonomy": "L2",
+   "valueLever": "Market revenue",
+   "estimatedImpact": "5–15% more arbitrage value [validate]",
+   "readiness": "12-18mo",
+   "motion": "operate",
+   "kpis": [
+    "Energy-based availability",
+    "Curtailment MWh",
+    "Battery round-trip efficiency"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-005",
+   "family": "enterprise-enablement",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Emissions & Environmental Compliance",
+   "commodity": "electric",
+   "process": "CEMS data validation",
+   "subProcess": "Validate emissions data and flag substitution periods",
+   "agentPattern": "Validation agent",
+   "trigger": "Hourly CEMS feed",
+   "autonomy": "L3",
+   "valueLever": "Compliance risk",
+   "estimatedImpact": "Fewer reporting corrections [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Emissions exceedances",
+    "CEMS data availability",
+    "Permit deviations"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-006",
+   "family": "enterprise-enablement",
+   "domainId": "generation",
+   "operatingArea": "Generation Fleet Operations & Performance",
+   "subArea": "Emissions & Environmental Compliance",
+   "commodity": "electric",
+   "process": "Permit tracking",
+   "subProcess": "Track permit conditions and draft compliance reports",
+   "agentPattern": "Compliance copilot",
+   "trigger": "Reporting deadline",
+   "autonomy": "L1",
+   "valueLever": "Compliance effort",
+   "estimatedImpact": "Days saved per report [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Emissions exceedances",
+    "CEMS data availability",
+    "Permit deviations"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-007",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Predictive Maintenance (rotating equipment)",
+   "commodity": "electric",
+   "process": "Anomaly detection",
+   "subProcess": "Detect vibration and temperature anomalies from historian tags",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Model score above threshold",
+   "autonomy": "L3",
+   "valueLever": "Avoided forced outages",
+   "estimatedImpact": "10–20% fewer forced outages [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Unplanned outage hours",
+    "Maintenance cost per MWh",
+    "Mean time between failures"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-008",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Predictive Maintenance (rotating equipment)",
+   "commodity": "electric",
+   "process": "Work recommendation",
+   "subProcess": "Create a prioritised work request with evidence and parts list",
+   "agentPattern": "Planning agent",
+   "trigger": "Confirmed anomaly",
+   "autonomy": "L2",
+   "valueLever": "Maintenance productivity",
+   "estimatedImpact": "Faster planning cycle [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Unplanned outage hours",
+    "Maintenance cost per MWh",
+    "Mean time between failures"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-009",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Planned Outage Management",
+   "commodity": "electric",
+   "process": "Scope optimisation",
+   "subProcess": "Recommend outage scope from condition data and risk",
+   "agentPattern": "Planning agent",
+   "trigger": "Outage scoping window",
+   "autonomy": "L2",
+   "valueLever": "Outage cost",
+   "estimatedImpact": "5–10% outage cost reduction [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Outage duration vs plan",
+    "Outage cost vs budget",
+    "Scope growth %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-010",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Planned Outage Management",
+   "commodity": "electric",
+   "process": "Schedule risk",
+   "subProcess": "Predict critical-path slippage from progress data",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Daily outage progress update",
+   "autonomy": "L2",
+   "valueLever": "Outage duration",
+   "estimatedImpact": "Fewer overrun days [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Outage duration vs plan",
+    "Outage cost vs budget",
+    "Scope growth %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-011",
+   "family": "data-intelligence",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Plant Engineering & Knowledge",
+   "commodity": "electric",
+   "process": "Knowledge retrieval",
+   "subProcess": "Answer equipment questions from manuals, procedures and work history",
+   "agentPattern": "Knowledge copilot",
+   "trigger": "Technician or engineer question",
+   "autonomy": "L1",
+   "valueLever": "Engineering productivity",
+   "estimatedImpact": "20–40% faster troubleshooting [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Procedure currency",
+    "Engineering change cycle time",
+    "Repeat failures"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-012",
+   "family": "data-intelligence",
+   "domainId": "generation",
+   "operatingArea": "Generation Maintenance & Reliability",
+   "subArea": "Plant Engineering & Knowledge",
+   "commodity": "electric",
+   "process": "Root-cause support",
+   "subProcess": "Draft root-cause analyses from event data and history",
+   "agentPattern": "Analysis copilot",
+   "trigger": "Significant equipment event",
+   "autonomy": "L1",
+   "valueLever": "Repeat failures",
+   "estimatedImpact": "Fewer repeat events [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Procedure currency",
+    "Engineering change cycle time",
+    "Repeat failures"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-013",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Load, Price & Renewables Forecasting",
+   "commodity": "electric",
+   "process": "Load forecasting",
+   "subProcess": "Produce day-ahead and intraday load forecasts with weather and DER overlays",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Forecast cycle or weather update",
+   "autonomy": "L4",
+   "valueLever": "Imbalance cost",
+   "estimatedImpact": "10–25% lower forecast error [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Day-ahead load MAPE",
+    "Renewable forecast error",
+    "Imbalance cost"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-014",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Load, Price & Renewables Forecasting",
+   "commodity": "electric",
+   "process": "Renewables forecasting",
+   "subProcess": "Forecast wind and solar output per site",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Weather model refresh",
+   "autonomy": "L4",
+   "valueLever": "Imbalance cost",
+   "estimatedImpact": "Lower curtailment and imbalance [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Day-ahead load MAPE",
+    "Renewable forecast error",
+    "Imbalance cost"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-015",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Bidding, Scheduling & Settlement",
+   "commodity": "electric",
+   "process": "Bid preparation",
+   "subProcess": "Prepare unit offers within approved strategy and constraints",
+   "agentPattern": "Decisioning agent",
+   "trigger": "Market bid window",
+   "autonomy": "L3",
+   "valueLever": "Market margin",
+   "estimatedImpact": "Margin uplift [validate]",
+   "readiness": "12-18mo",
+   "motion": "decide-act",
+   "kpis": [
+    "Settlement disputes",
+    "Bid compliance",
+    "Market revenue vs plan"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-016",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Bidding, Scheduling & Settlement",
+   "commodity": "electric",
+   "process": "Settlement reconciliation",
+   "subProcess": "Reconcile ISO settlement statements to internal meter and schedule data",
+   "agentPattern": "Reconciliation agent",
+   "trigger": "Settlement statement published",
+   "autonomy": "L4",
+   "valueLever": "Revenue recovery",
+   "estimatedImpact": "Recovered settlement errors [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Settlement disputes",
+    "Bid compliance",
+    "Market revenue vs plan"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-017",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Fuel, Hedging & Risk",
+   "commodity": "both",
+   "process": "Exposure monitoring",
+   "subProcess": "Monitor positions and limits and explain breaches",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Position update",
+   "autonomy": "L2",
+   "valueLever": "Risk control",
+   "estimatedImpact": "Faster limit-breach response [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Fuel cost vs benchmark",
+    "Value at risk",
+    "Counterparty exposure"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-018",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Energy Trading, Fuel & Market Operations",
+   "subArea": "Fuel, Hedging & Risk",
+   "commodity": "both",
+   "process": "Gas nomination",
+   "subProcess": "Recommend gas nominations from forecast burn and storage",
+   "agentPattern": "Planning agent",
+   "trigger": "Nomination cycle",
+   "autonomy": "L2",
+   "valueLever": "Fuel cost",
+   "estimatedImpact": "Lower balancing penalties [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Fuel cost vs benchmark",
+    "Value at risk",
+    "Counterparty exposure"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-019",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Portfolio & Energy Transition",
+   "subArea": "Integrated Resource Planning",
+   "commodity": "electric",
+   "process": "Scenario analysis",
+   "subProcess": "Run what-if portfolio scenarios on demand, fuel and policy assumptions",
+   "agentPattern": "Simulation agent",
+   "trigger": "Planning cycle",
+   "autonomy": "L2",
+   "valueLever": "Planning productivity",
+   "estimatedImpact": "Weeks to days per scenario set [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Reserve margin",
+    "Portfolio cost per MWh",
+    "Emissions trajectory"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-020",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Portfolio & Energy Transition",
+   "subArea": "Integrated Resource Planning",
+   "commodity": "electric",
+   "process": "Assumption tracking",
+   "subProcess": "Track and source every planning assumption for regulator review",
+   "agentPattern": "Documentation agent",
+   "trigger": "IRP filing preparation",
+   "autonomy": "L1",
+   "valueLever": "Regulatory risk",
+   "estimatedImpact": "Fewer data requests [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Reserve margin",
+    "Portfolio cost per MWh",
+    "Emissions trajectory"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-021",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Portfolio & Energy Transition",
+   "subArea": "Renewables & Storage Project Development",
+   "commodity": "electric",
+   "process": "Site screening",
+   "subProcess": "Score candidate sites on land, interconnection and environmental constraints",
+   "agentPattern": "Analytics agent",
+   "trigger": "New project pipeline entry",
+   "autonomy": "L2",
+   "valueLever": "Development cost",
+   "estimatedImpact": "Faster site selection [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Project schedule variance",
+    "Capex per MW",
+    "Permits on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-022",
+   "family": "generation-markets",
+   "domainId": "generation",
+   "operatingArea": "Generation Portfolio & Energy Transition",
+   "subArea": "Renewables & Storage Project Development",
+   "commodity": "electric",
+   "process": "Permit tracking",
+   "subProcess": "Track permit status and draft responses",
+   "agentPattern": "Workflow copilot",
+   "trigger": "Permit milestone",
+   "autonomy": "L1",
+   "valueLever": "Schedule",
+   "estimatedImpact": "Fewer permitting delays [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Project schedule variance",
+    "Capex per MW",
+    "Permits on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-023",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Load Growth & Distribution Planning",
+   "commodity": "electric",
+   "process": "Hosting capacity",
+   "subProcess": "Calculate DER hosting capacity per feeder from the network model",
+   "agentPattern": "Analysis agent",
+   "trigger": "Monthly model refresh",
+   "autonomy": "L3",
+   "valueLever": "Interconnection speed",
+   "estimatedImpact": "Hosting maps refreshed monthly not yearly [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Feeders above 80% loading",
+    "Planning cycle time",
+    "Capex per MW added"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-024",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Load Growth & Distribution Planning",
+   "commodity": "electric",
+   "process": "Spatial load forecast",
+   "subProcess": "Forecast feeder-level load with EV and electrification adoption",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Planning cycle",
+   "autonomy": "L2",
+   "valueLever": "Capex timing",
+   "estimatedImpact": "10–20% capex deferral [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Feeders above 80% loading",
+    "Planning cycle time",
+    "Capex per MW added"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-025",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Generation & DER Interconnection",
+   "commodity": "electric",
+   "process": "Application completeness",
+   "subProcess": "Check interconnection applications for completeness and errors",
+   "agentPattern": "Validation agent",
+   "trigger": "Application received",
+   "autonomy": "L4",
+   "valueLever": "Queue speed",
+   "estimatedImpact": "30–50% fewer deficiency notices [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Queue time to agreement",
+    "Study cycle time",
+    "Withdrawal rate"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-026",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Generation & DER Interconnection",
+   "commodity": "electric",
+   "process": "Study automation",
+   "subProcess": "Run screening power-flow studies and draft results",
+   "agentPattern": "Engineering agent",
+   "trigger": "Application deemed complete",
+   "autonomy": "L3",
+   "valueLever": "Study cycle time",
+   "estimatedImpact": "Weeks to days for screening [validate]",
+   "readiness": "12-18mo",
+   "motion": "engineer",
+   "kpis": [
+    "Queue time to agreement",
+    "Study cycle time",
+    "Withdrawal rate"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-027",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Transmission Planning",
+   "commodity": "electric",
+   "process": "Contingency screening",
+   "subProcess": "Screen N-1 contingencies across planning cases",
+   "agentPattern": "Engineering agent",
+   "trigger": "New planning case",
+   "autonomy": "L2",
+   "valueLever": "Engineering productivity",
+   "estimatedImpact": "Faster study turnaround [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Planning studies completed",
+    "Congestion cost",
+    "Projects in service on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-028",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid Planning & Interconnection",
+   "subArea": "Transmission Planning",
+   "commodity": "electric",
+   "process": "Study documentation",
+   "subProcess": "Draft planning study reports with traceable assumptions",
+   "agentPattern": "Documentation copilot",
+   "trigger": "Study complete",
+   "autonomy": "L1",
+   "valueLever": "Regulatory readiness",
+   "estimatedImpact": "Days saved per study [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Planning studies completed",
+    "Congestion cost",
+    "Projects in service on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-029",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "Outage Management & Restoration",
+   "commodity": "electric",
+   "process": "Outage prediction",
+   "subProcess": "Predict outage location from AMI last-gasp, calls and SCADA",
+   "agentPattern": "Correlation agent",
+   "trigger": "AMI last-gasp events or call cluster",
+   "autonomy": "L4",
+   "valueLever": "Restoration speed",
+   "estimatedImpact": "Faster outage confirmation [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "SAIDI",
+    "SAIFI",
+    "CAIDI",
+    "ETR accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-030",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "Outage Management & Restoration",
+   "commodity": "electric",
+   "process": "ETR estimation",
+   "subProcess": "Estimate restoration times from damage, crews and history",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Outage created or updated",
+   "autonomy": "L3",
+   "valueLever": "Customer experience",
+   "estimatedImpact": "ETR accuracy +20–30 pts [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "SAIDI",
+    "SAIFI",
+    "CAIDI",
+    "ETR accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-031",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "Outage Management & Restoration",
+   "commodity": "electric",
+   "process": "FLISR advisory",
+   "subProcess": "Recommend fault isolation and restoration switching plans",
+   "agentPattern": "Advisory agent",
+   "trigger": "Feeder lockout",
+   "autonomy": "L2",
+   "valueLever": "Customer minutes interrupted",
+   "estimatedImpact": "10–30% fewer CMI on automated feeders [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "SAIDI",
+    "SAIFI",
+    "CAIDI",
+    "ETR accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-032",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "ADMS, DERMS & Grid Optimisation",
+   "commodity": "electric",
+   "process": "Volt/VAR optimisation",
+   "subProcess": "Recommend voltage set-points to cut losses within limits",
+   "agentPattern": "Optimisation agent",
+   "trigger": "Load change or schedule",
+   "autonomy": "L2",
+   "valueLever": "Energy savings",
+   "estimatedImpact": "1–3% energy reduction on CVR feeders [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Voltage violations",
+    "Conservation voltage reduction MWh",
+    "DER dispatched MW"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-033",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "ADMS, DERMS & Grid Optimisation",
+   "commodity": "electric",
+   "process": "DER flexibility",
+   "subProcess": "Forecast and recommend DER and demand response dispatch",
+   "agentPattern": "Decisioning agent",
+   "trigger": "Peak or constraint forecast",
+   "autonomy": "L2",
+   "valueLever": "Peak capacity",
+   "estimatedImpact": "Peak MW avoided [validate]",
+   "readiness": "12-18mo",
+   "motion": "decide-act",
+   "kpis": [
+    "Voltage violations",
+    "Conservation voltage reduction MWh",
+    "DER dispatched MW"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-034",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "Transmission & System Operations",
+   "commodity": "electric",
+   "process": "Alarm rationalisation",
+   "subProcess": "Group and prioritise EMS alarms during events",
+   "agentPattern": "Triage agent",
+   "trigger": "Alarm flood",
+   "autonomy": "L2",
+   "valueLever": "Operator workload",
+   "estimatedImpact": "50%+ fewer alarms to review [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Transmission availability",
+    "Operator alarms per hour",
+    "Reliability events"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-035",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Grid & Control Centre Operations",
+   "subArea": "Transmission & System Operations",
+   "commodity": "electric",
+   "process": "Outage coordination",
+   "subProcess": "Check planned outage requests for conflicts and risk",
+   "agentPattern": "Validation agent",
+   "trigger": "Outage request submitted",
+   "autonomy": "L2",
+   "valueLever": "Reliability risk",
+   "estimatedImpact": "Fewer coordination conflicts [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Transmission availability",
+    "Operator alarms per hour",
+    "Reliability events"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-036",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "Asset Health & Risk",
+   "commodity": "electric",
+   "process": "Health index",
+   "subProcess": "Score asset health from inspections, tests, loading and age",
+   "agentPattern": "Analytics agent",
+   "trigger": "New inspection or test result",
+   "autonomy": "L4",
+   "valueLever": "Avoided failures",
+   "estimatedImpact": "10–20% fewer in-service failures [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Asset failure rate",
+    "Risk-weighted spend",
+    "Health index coverage"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-037",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "Asset Health & Risk",
+   "commodity": "electric",
+   "process": "Replacement planning",
+   "subProcess": "Rank replacements by risk reduction per dollar",
+   "agentPattern": "Optimisation agent",
+   "trigger": "Capital planning cycle",
+   "autonomy": "L2",
+   "valueLever": "Capex efficiency",
+   "estimatedImpact": "5–15% more risk reduced per dollar [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Asset failure rate",
+    "Risk-weighted spend",
+    "Health index coverage"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-038",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "Drone, LiDAR & Visual Inspection",
+   "commodity": "electric",
+   "process": "Defect detection",
+   "subProcess": "Detect defects in drone and thermal imagery",
+   "agentPattern": "Vision inspection agent",
+   "trigger": "Imagery uploaded",
+   "autonomy": "L3",
+   "valueLever": "Inspection productivity",
+   "estimatedImpact": "50–70% less image review time [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Inspection cost per mile",
+    "Defects found per mile",
+    "Inspection backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-039",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "Drone, LiDAR & Visual Inspection",
+   "commodity": "electric",
+   "process": "Work creation",
+   "subProcess": "Create prioritised corrective work orders from confirmed defects",
+   "agentPattern": "Workflow agent",
+   "trigger": "Defect confirmed by inspector",
+   "autonomy": "L3",
+   "valueLever": "Backlog reduction",
+   "estimatedImpact": "Faster defect-to-work cycle [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Inspection cost per mile",
+    "Defects found per mile",
+    "Inspection backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-040",
+   "family": "data-intelligence",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "GIS & Network Model Quality",
+   "commodity": "electric",
+   "process": "Connectivity validation",
+   "subProcess": "Detect GIS connectivity and phasing errors using AMI voltage correlation",
+   "agentPattern": "Data quality agent",
+   "trigger": "Nightly model check",
+   "autonomy": "L3",
+   "valueLever": "Model accuracy",
+   "estimatedImpact": "Error backlog down 30–50% [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "GIS connectivity errors",
+    "Phase accuracy %",
+    "As-built backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-041",
+   "family": "data-intelligence",
+   "domainId": "grid",
+   "operatingArea": "Asset Management & Inspection",
+   "subArea": "GIS & Network Model Quality",
+   "commodity": "electric",
+   "process": "As-built reconciliation",
+   "subProcess": "Reconcile field as-builts with GIS and EAM records",
+   "agentPattern": "Reconciliation agent",
+   "trigger": "Work order closed",
+   "autonomy": "L2",
+   "valueLever": "Data currency",
+   "estimatedImpact": "As-built backlog cleared faster [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "GIS connectivity errors",
+    "Phase accuracy %",
+    "As-built backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-042",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Vegetation Management",
+   "commodity": "electric",
+   "process": "Encroachment risk",
+   "subProcess": "Score span-level vegetation risk from satellite and LiDAR",
+   "agentPattern": "Analytics agent",
+   "trigger": "New imagery or growth model run",
+   "autonomy": "L3",
+   "valueLever": "Outage reduction",
+   "estimatedImpact": "10–20% fewer tree-caused outages [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Tree-caused outages",
+    "Cost per mile trimmed",
+    "Hazard trees remediated"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-043",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Vegetation Management",
+   "commodity": "electric",
+   "process": "Work plan optimisation",
+   "subProcess": "Build trim plans by risk, not fixed cycle",
+   "agentPattern": "Planning agent",
+   "trigger": "Annual or quarterly plan",
+   "autonomy": "L2",
+   "valueLever": "Vegetation spend",
+   "estimatedImpact": "5–15% spend optimised [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Tree-caused outages",
+    "Cost per mile trimmed",
+    "Hazard trees remediated"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-044",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Wildfire Mitigation & PSPS Support",
+   "commodity": "electric",
+   "process": "Fire-risk scoring",
+   "subProcess": "Score circuit risk from weather, fuel and asset condition",
+   "agentPattern": "Risk agent",
+   "trigger": "Fire-weather forecast",
+   "autonomy": "L2",
+   "valueLever": "Ignition risk",
+   "estimatedImpact": "Better-targeted de-energisation scope [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Ignitions",
+    "PSPS customers affected",
+    "Notification timeliness"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-045",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Wildfire Mitigation & PSPS Support",
+   "commodity": "electric",
+   "process": "Customer notification",
+   "subProcess": "Draft and time PSPS notifications, prioritising medical-baseline customers",
+   "agentPattern": "Communication agent",
+   "trigger": "PSPS watch declared by a human",
+   "autonomy": "L3",
+   "valueLever": "Customer safety",
+   "estimatedImpact": "100% notification on time [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Ignitions",
+    "PSPS customers affected",
+    "Notification timeliness"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-046",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Storm Preparedness & Mutual Assistance",
+   "commodity": "electric",
+   "process": "Damage prediction",
+   "subProcess": "Predict outages and damage by area 72 hours ahead",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Severe weather forecast",
+   "autonomy": "L2",
+   "valueLever": "Restoration cost",
+   "estimatedImpact": "10–20% better crew staging [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Restoration time (major events)",
+    "Crews staged vs needed",
+    "Storm cost per customer"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-047",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Vegetation, Wildfire & Storm Resilience",
+   "subArea": "Storm Preparedness & Mutual Assistance",
+   "commodity": "electric",
+   "process": "Storm cost capture",
+   "subProcess": "Capture and classify storm costs for regulatory recovery",
+   "agentPattern": "Documentation agent",
+   "trigger": "Storm event declared",
+   "autonomy": "L3",
+   "valueLever": "Cost recovery",
+   "estimatedImpact": "Faster, cleaner recovery filings [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Restoration time (major events)",
+    "Crews staged vs needed",
+    "Storm cost per customer"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-048",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Work Planning & Scheduling",
+   "commodity": "both",
+   "process": "Work bundling",
+   "subProcess": "Bundle nearby work orders and schedule by crew skills and permits",
+   "agentPattern": "Scheduling agent",
+   "trigger": "Weekly scheduling cycle",
+   "autonomy": "L3",
+   "valueLever": "Crew productivity",
+   "estimatedImpact": "10–15% more jobs per crew [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Schedule attainment",
+    "Work backlog",
+    "Wrench time %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-049",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Work Planning & Scheduling",
+   "commodity": "both",
+   "process": "Estimate generation",
+   "subProcess": "Draft job estimates and material lists from design and history",
+   "agentPattern": "Design copilot",
+   "trigger": "New job request",
+   "autonomy": "L2",
+   "valueLever": "Design productivity",
+   "estimatedImpact": "30–50% faster estimates [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Schedule attainment",
+    "Work backlog",
+    "Wrench time %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-050",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Crew Dispatch & Mobile Workforce",
+   "commodity": "both",
+   "process": "Dispatch optimisation",
+   "subProcess": "Recommend the best crew for emergency and routine jobs",
+   "agentPattern": "Dispatch agent",
+   "trigger": "New or reprioritised job",
+   "autonomy": "L3",
+   "valueLever": "Response time",
+   "estimatedImpact": "Faster emergency response [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "First-time completion",
+    "Response time to emergencies",
+    "Repeat visits"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-051",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Crew Dispatch & Mobile Workforce",
+   "commodity": "both",
+   "process": "Field assistant",
+   "subProcess": "Answer field questions from standards, maps and work history",
+   "agentPattern": "Field copilot",
+   "trigger": "Technician question on mobile",
+   "autonomy": "L1",
+   "valueLever": "Field productivity",
+   "estimatedImpact": "Fewer call-backs to office [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "First-time completion",
+    "Response time to emergencies",
+    "Repeat visits"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-052",
+   "family": "enterprise-enablement",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Contractor & Design-Build Management",
+   "commodity": "both",
+   "process": "Invoice validation",
+   "subProcess": "Validate contractor invoices against completed units",
+   "agentPattern": "Reconciliation agent",
+   "trigger": "Invoice received",
+   "autonomy": "L3",
+   "valueLever": "Contract spend",
+   "estimatedImpact": "2–5% invoice leakage recovered [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Contractor invoice accuracy",
+    "Rework rate",
+    "Unit cost vs benchmark"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-053",
+   "family": "enterprise-enablement",
+   "domainId": "grid",
+   "operatingArea": "Field Operations & Work Management",
+   "subArea": "Contractor & Design-Build Management",
+   "commodity": "both",
+   "process": "Quality audit sampling",
+   "subProcess": "Select jobs for quality audit by risk",
+   "agentPattern": "Analytics agent",
+   "trigger": "Weekly audit plan",
+   "autonomy": "L2",
+   "valueLever": "Rework",
+   "estimatedImpact": "Fewer rework jobs [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Contractor invoice accuracy",
+    "Rework rate",
+    "Unit cost vs benchmark"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-054",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Leak Detection & Survey",
+   "commodity": "gas",
+   "process": "Leak prioritisation",
+   "subProcess": "Grade and prioritise leak indications from survey data",
+   "agentPattern": "Triage agent",
+   "trigger": "Survey results uploaded",
+   "autonomy": "L2",
+   "valueLever": "Safety risk",
+   "estimatedImpact": "Faster hazardous-leak repair [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Leaks per mile",
+    "Hazardous leak response time",
+    "Leak backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-055",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Leak Detection & Survey",
+   "commodity": "gas",
+   "process": "Emissions estimation",
+   "subProcess": "Estimate methane emissions from leak and survey data",
+   "agentPattern": "Analytics agent",
+   "trigger": "Monthly reporting cycle",
+   "autonomy": "L2",
+   "valueLever": "Emissions reporting",
+   "estimatedImpact": "More accurate methane reporting [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Leaks per mile",
+    "Hazardous leak response time",
+    "Leak backlog"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-056",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Pipeline Integrity Management",
+   "commodity": "gas",
+   "process": "Threat assessment",
+   "subProcess": "Rank pipe segments by integrity threat",
+   "agentPattern": "Risk agent",
+   "trigger": "New inspection or incident data",
+   "autonomy": "L2",
+   "valueLever": "Risk reduction",
+   "estimatedImpact": "Better-targeted replacement [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Integrity assessments on time",
+    "Risk-ranked mains replaced",
+    "Excavation damages per 1,000 tickets"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-057",
+   "family": "grid-operations",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Pipeline Integrity Management",
+   "commodity": "gas",
+   "process": "Damage prevention",
+   "subProcess": "Score one-call tickets for excavation damage risk",
+   "agentPattern": "Risk agent",
+   "trigger": "One-call ticket received",
+   "autonomy": "L3",
+   "valueLever": "Damage reduction",
+   "estimatedImpact": "10–20% fewer damages [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Integrity assessments on time",
+    "Risk-ranked mains replaced",
+    "Excavation damages per 1,000 tickets"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-058",
+   "family": "generation-markets",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Gas Control & Supply",
+   "commodity": "gas",
+   "process": "Demand forecasting",
+   "subProcess": "Forecast gas send-out by gate station",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Daily weather update",
+   "autonomy": "L4",
+   "valueLever": "Supply cost",
+   "estimatedImpact": "Lower balancing cost [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Low-pressure events",
+    "Unaccounted-for gas %",
+    "Forecast accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-059",
+   "family": "generation-markets",
+   "domainId": "grid",
+   "operatingArea": "Gas Network Operations & Integrity",
+   "subArea": "Gas Control & Supply",
+   "commodity": "gas",
+   "process": "Pressure anomaly",
+   "subProcess": "Detect pressure anomalies from SCADA and suggest causes",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Pressure outside band",
+   "autonomy": "L2",
+   "valueLever": "Safety risk",
+   "estimatedImpact": "Earlier anomaly detection [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Low-pressure events",
+    "Unaccounted-for gas %",
+    "Forecast accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-060",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "AMI & Meter Data Management",
+   "commodity": "both",
+   "process": "VEE exceptions",
+   "subProcess": "Triage meter-data validation exceptions and propose edits",
+   "agentPattern": "Validation agent",
+   "trigger": "VEE exception raised",
+   "autonomy": "L3",
+   "valueLever": "Billing accuracy",
+   "estimatedImpact": "50%+ fewer manual exceptions [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Read success rate",
+    "Estimated reads %",
+    "Meter events actioned"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-061",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "AMI & Meter Data Management",
+   "commodity": "both",
+   "process": "Meter health",
+   "subProcess": "Detect failing meters and communication issues",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Meter event pattern",
+   "autonomy": "L4",
+   "valueLever": "Truck rolls",
+   "estimatedImpact": "Fewer unnecessary field visits [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Read success rate",
+    "Estimated reads %",
+    "Meter events actioned"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-062",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "Billing & Bill Presentment",
+   "commodity": "both",
+   "process": "Bill exception resolution",
+   "subProcess": "Resolve held bills using rules and history",
+   "agentPattern": "Workflow agent",
+   "trigger": "Bill held in CIS",
+   "autonomy": "L3",
+   "valueLever": "Billing cost",
+   "estimatedImpact": "30–50% fewer manual bill touches [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Bills held for exceptions",
+    "Bill accuracy",
+    "Rebills %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-063",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "Billing & Bill Presentment",
+   "commodity": "both",
+   "process": "Rate change testing",
+   "subProcess": "Generate test cases for new rates and riders",
+   "agentPattern": "Test agent",
+   "trigger": "Rate change approved",
+   "autonomy": "L3",
+   "valueLever": "Billing errors",
+   "estimatedImpact": "Fewer post-release billing errors [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Bills held for exceptions",
+    "Bill accuracy",
+    "Rebills %"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-064",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "Revenue Protection & Energy Theft",
+   "commodity": "both",
+   "process": "Theft detection",
+   "subProcess": "Score accounts for theft from AMI, tamper and usage patterns",
+   "agentPattern": "Analytics agent",
+   "trigger": "Weekly scoring run",
+   "autonomy": "L2",
+   "valueLever": "Revenue recovery",
+   "estimatedImpact": "Recovered unbilled revenue [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Revenue recovered",
+    "Unbilled accounts",
+    "Theft cases confirmed"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-065",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Metering, Billing & Revenue",
+   "subArea": "Revenue Protection & Energy Theft",
+   "commodity": "both",
+   "process": "Consumption on inactive",
+   "subProcess": "Find consumption on inactive or vacant premises",
+   "agentPattern": "Reconciliation agent",
+   "trigger": "Daily reconciliation",
+   "autonomy": "L3",
+   "valueLever": "Revenue recovery",
+   "estimatedImpact": "Faster move-in/move-out billing [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Revenue recovered",
+    "Unbilled accounts",
+    "Theft cases confirmed"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-066",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "Contact Centre & Digital Care",
+   "commodity": "both",
+   "process": "Intent resolution",
+   "subProcess": "Understand why the customer is calling and resolve or route",
+   "agentPattern": "Resolution agent",
+   "trigger": "Inbound contact",
+   "autonomy": "L3",
+   "valueLever": "Cost to serve",
+   "estimatedImpact": "15–30% more contained contacts [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Self-service containment",
+    "First-contact resolution",
+    "Cost per contact"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-067",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "Contact Centre & Digital Care",
+   "commodity": "both",
+   "process": "Advisor assist",
+   "subProcess": "Give advisors account context, policies and next steps",
+   "agentPattern": "Copilot",
+   "trigger": "Live call or chat",
+   "autonomy": "L1",
+   "valueLever": "Handle time",
+   "estimatedImpact": "10–20% lower handle time [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Self-service containment",
+    "First-contact resolution",
+    "Cost per contact"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-068",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "High-Bill & Usage Insights",
+   "commodity": "both",
+   "process": "Bill explanation",
+   "subProcess": "Explain a bill change with usage, weather, rate and days-in-cycle evidence",
+   "agentPattern": "Explainer agent",
+   "trigger": "High-bill contact or alert",
+   "autonomy": "L2",
+   "valueLever": "Complaint volume",
+   "estimatedImpact": "20–30% fewer high-bill escalations [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "High-bill complaints",
+    "Bill-related calls",
+    "Complaint escalations to regulator"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-069",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "High-Bill & Usage Insights",
+   "commodity": "both",
+   "process": "Proactive alerts",
+   "subProcess": "Warn customers who are trending to a high bill",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Mid-cycle usage forecast",
+   "autonomy": "L4",
+   "valueLever": "Customer satisfaction",
+   "estimatedImpact": "Fewer bill-shock contacts [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "High-bill complaints",
+    "Bill-related calls",
+    "Complaint escalations to regulator"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-070",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "Payments, Collections & Affordability",
+   "commodity": "both",
+   "process": "Payment arrangement",
+   "subProcess": "Offer policy-compliant payment arrangements and assistance",
+   "agentPattern": "Negotiation agent",
+   "trigger": "Arrears or customer request",
+   "autonomy": "L3",
+   "valueLever": "Bad debt",
+   "estimatedImpact": "10–20% more arrangements kept [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Arrears balance",
+    "Bad debt % of revenue",
+    "Assistance enrolment"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-071",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Customer Service & Experience",
+   "subArea": "Payments, Collections & Affordability",
+   "commodity": "both",
+   "process": "Protection checks",
+   "subProcess": "Check every disconnection candidate for medical, weather and program protections",
+   "agentPattern": "Compliance agent",
+   "trigger": "Disconnection list generated",
+   "autonomy": "L3",
+   "valueLever": "Regulatory risk",
+   "estimatedImpact": "Zero protected-customer disconnections [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Arrears balance",
+    "Bad debt % of revenue",
+    "Assistance enrolment"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-072",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Energy Programs, DER & Electrification",
+   "subArea": "Efficiency & Demand Response",
+   "commodity": "electric",
+   "process": "Program targeting",
+   "subProcess": "Find customers most likely to benefit and enrol",
+   "agentPattern": "Decisioning agent",
+   "trigger": "Campaign cycle",
+   "autonomy": "L3",
+   "valueLever": "Program cost",
+   "estimatedImpact": "20–40% higher enrolment yield [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Program MWh / MW",
+    "Cost per kWh saved",
+    "Enrolment rate"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-073",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Energy Programs, DER & Electrification",
+   "subArea": "Efficiency & Demand Response",
+   "commodity": "electric",
+   "process": "Savings M&V",
+   "subProcess": "Estimate program savings from interval data baselines",
+   "agentPattern": "Analytics agent",
+   "trigger": "Program period close",
+   "autonomy": "L2",
+   "valueLever": "Regulatory evidence",
+   "estimatedImpact": "Faster, auditable M&V [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Program MWh / MW",
+    "Cost per kWh saved",
+    "Enrolment rate"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-074",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Energy Programs, DER & Electrification",
+   "subArea": "EV, Solar & Battery Customers",
+   "commodity": "electric",
+   "process": "EV advisor",
+   "subProcess": "Recommend the best EV rate and managed-charging plan",
+   "agentPattern": "Advisor agent",
+   "trigger": "EV detected or customer request",
+   "autonomy": "L2",
+   "valueLever": "Peak load",
+   "estimatedImpact": "More off-peak charging [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "EV customers on managed charging",
+    "DER applications processed",
+    "Net-metering billing accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-075",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "Energy Programs, DER & Electrification",
+   "subArea": "EV, Solar & Battery Customers",
+   "commodity": "electric",
+   "process": "EV detection",
+   "subProcess": "Detect likely EV charging from interval data",
+   "agentPattern": "Analytics agent",
+   "trigger": "Monthly AMI run",
+   "autonomy": "L3",
+   "valueLever": "Planning accuracy",
+   "estimatedImpact": "Better feeder planning inputs [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "EV customers on managed charging",
+    "DER applications processed",
+    "Net-metering billing accuracy"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-076",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "New Connections & Large Load",
+   "subArea": "New Service & Connections",
+   "commodity": "both",
+   "process": "Request intake",
+   "subProcess": "Validate requests and pre-fill designs from GIS and standards",
+   "agentPattern": "Intake agent",
+   "trigger": "New service request",
+   "autonomy": "L3",
+   "valueLever": "Time to connect",
+   "estimatedImpact": "20–30% faster connection [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Days to connect",
+    "Requests on time",
+    "Rework on designs"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-077",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "New Connections & Large Load",
+   "subArea": "New Service & Connections",
+   "commodity": "both",
+   "process": "Status updates",
+   "subProcess": "Proactively update customers and builders on each milestone",
+   "agentPattern": "Communication agent",
+   "trigger": "Milestone change",
+   "autonomy": "L4",
+   "valueLever": "Customer calls",
+   "estimatedImpact": "Fewer status calls [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Days to connect",
+    "Requests on time",
+    "Rework on designs"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-078",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "New Connections & Large Load",
+   "subArea": "Large Load & Data Centre Requests",
+   "commodity": "electric",
+   "process": "Feasibility screening",
+   "subProcess": "Screen large-load requests against substation and transmission capacity",
+   "agentPattern": "Engineering agent",
+   "trigger": "Large-load inquiry",
+   "autonomy": "L2",
+   "valueLever": "Time to revenue",
+   "estimatedImpact": "Weeks to days for first answer [validate]",
+   "readiness": "12-18mo",
+   "motion": "decide-act",
+   "kpis": [
+    "Time to feasibility answer",
+    "MW in large-load queue",
+    "Study cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-079",
+   "family": "customer-commercial",
+   "domainId": "customer",
+   "operatingArea": "New Connections & Large Load",
+   "subArea": "Large Load & Data Centre Requests",
+   "commodity": "electric",
+   "process": "Tariff and agreement drafting",
+   "subProcess": "Draft service agreements with large-load tariff terms and collateral",
+   "agentPattern": "Document agent",
+   "trigger": "Feasibility accepted",
+   "autonomy": "L2",
+   "valueLever": "Commercial risk",
+   "estimatedImpact": "Faster, consistent agreements [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Time to feasibility answer",
+    "MW in large-load queue",
+    "Study cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-080",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Field Safety & Pre-Job Briefing",
+   "commodity": "both",
+   "process": "Pre-job briefing",
+   "subProcess": "Generate a job-specific hazard briefing from work type, location, weather and history",
+   "agentPattern": "Safety copilot",
+   "trigger": "Job dispatched",
+   "autonomy": "L1",
+   "valueLever": "Injury prevention",
+   "estimatedImpact": "More complete hazard identification [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "SIF / SIF-precursor events",
+    "Recordable incident rate",
+    "Tailboards completed"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-081",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Field Safety & Pre-Job Briefing",
+   "commodity": "both",
+   "process": "SIF precursor detection",
+   "subProcess": "Detect serious-injury precursors in observations and near-miss reports",
+   "agentPattern": "Analytics agent",
+   "trigger": "New observation or near miss",
+   "autonomy": "L2",
+   "valueLever": "Serious injury risk",
+   "estimatedImpact": "Earlier intervention on high-energy hazards [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "SIF / SIF-precursor events",
+    "Recordable incident rate",
+    "Tailboards completed"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-082",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Incident & Observation Management",
+   "commodity": "both",
+   "process": "Incident classification",
+   "subProcess": "Classify and route incident reports and draft investigations",
+   "agentPattern": "Triage agent",
+   "trigger": "Incident reported",
+   "autonomy": "L2",
+   "valueLever": "Investigation speed",
+   "estimatedImpact": "Days saved per investigation [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Corrective actions closed on time",
+    "Repeat incidents",
+    "Investigation cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-083",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Incident & Observation Management",
+   "commodity": "both",
+   "process": "Lessons learned",
+   "subProcess": "Surface similar past incidents and controls to crews",
+   "agentPattern": "Knowledge copilot",
+   "trigger": "Work type scheduled",
+   "autonomy": "L1",
+   "valueLever": "Repeat incidents",
+   "estimatedImpact": "Fewer repeat incidents [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Corrective actions closed on time",
+    "Repeat incidents",
+    "Investigation cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-084",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Environmental Management",
+   "commodity": "both",
+   "process": "Environmental screening",
+   "subProcess": "Screen work locations for environmental and cultural constraints",
+   "agentPattern": "Screening agent",
+   "trigger": "Job planned",
+   "autonomy": "L3",
+   "valueLever": "Compliance risk",
+   "estimatedImpact": "Fewer permit violations [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Reportable spills",
+    "Permit violations",
+    "Environmental reviews on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-085",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Health, Safety & Environment",
+   "subArea": "Environmental Management",
+   "commodity": "both",
+   "process": "Spill reporting",
+   "subProcess": "Draft regulatory spill notifications with required data",
+   "agentPattern": "Document copilot",
+   "trigger": "Spill reported",
+   "autonomy": "L1",
+   "valueLever": "Compliance timeliness",
+   "estimatedImpact": "On-time notifications [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Reportable spills",
+    "Permit violations",
+    "Environmental reviews on time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-086",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Rate Case & Regulatory Filings",
+   "commodity": "both",
+   "process": "Data request response",
+   "subProcess": "Draft responses to regulator data requests from certified data and prior answers",
+   "agentPattern": "Document agent",
+   "trigger": "Data request received",
+   "autonomy": "L2",
+   "valueLever": "Regulatory effort",
+   "estimatedImpact": "30–50% faster responses [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Data request cycle time",
+    "Disallowances",
+    "Filing preparation effort"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-087",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Rate Case & Regulatory Filings",
+   "commodity": "both",
+   "process": "Testimony consistency",
+   "subProcess": "Check testimony and exhibits for inconsistent numbers",
+   "agentPattern": "Review agent",
+   "trigger": "Filing draft",
+   "autonomy": "L2",
+   "valueLever": "Regulatory risk",
+   "estimatedImpact": "Fewer corrections and errata [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Data request cycle time",
+    "Disallowances",
+    "Filing preparation effort"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-088",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Reliability Standards & NERC CIP",
+   "commodity": "electric",
+   "process": "Evidence collection",
+   "subProcess": "Collect and index compliance evidence continuously",
+   "agentPattern": "Evidence agent",
+   "trigger": "Control test cycle",
+   "autonomy": "L3",
+   "valueLever": "Audit effort",
+   "estimatedImpact": "50%+ less evidence-gathering effort [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Potential non-compliance findings",
+    "Evidence collection effort",
+    "Audit readiness"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-089",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Reliability Standards & NERC CIP",
+   "commodity": "electric",
+   "process": "Change impact",
+   "subProcess": "Assess configuration changes for standards impact",
+   "agentPattern": "Risk agent",
+   "trigger": "Change request",
+   "autonomy": "L2",
+   "valueLever": "Compliance risk",
+   "estimatedImpact": "Fewer potential violations [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Potential non-compliance findings",
+    "Evidence collection effort",
+    "Audit readiness"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-090",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Performance Metrics & Reporting",
+   "commodity": "both",
+   "process": "Metric calculation",
+   "subProcess": "Calculate SAIDI/SAIFI with and without major event days from certified outage data",
+   "agentPattern": "Calculation agent",
+   "trigger": "Reporting period close",
+   "autonomy": "L3",
+   "valueLever": "Reporting accuracy",
+   "estimatedImpact": "Zero restatements [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Metric restatements",
+    "Reporting cycle time",
+    "Metrics with lineage"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-091",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "Regulatory, Rate Case & Compliance",
+   "subArea": "Performance Metrics & Reporting",
+   "commodity": "both",
+   "process": "Variance explanation",
+   "subProcess": "Explain metric changes by region, cause and event",
+   "agentPattern": "Analytics agent",
+   "trigger": "Metric published",
+   "autonomy": "L2",
+   "valueLever": "Executive insight",
+   "estimatedImpact": "Faster performance reviews [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Metric restatements",
+    "Reporting cycle time",
+    "Metrics with lineage"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-092",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Supply Chain & Procurement",
+   "subArea": "Long-Lead Materials Planning",
+   "commodity": "both",
+   "process": "Demand forecasting",
+   "subProcess": "Forecast material demand from capital plan, failures and storms",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Monthly planning cycle",
+   "autonomy": "L2",
+   "valueLever": "Material availability",
+   "estimatedImpact": "Fewer job delays for materials [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Stock-outs on critical items",
+    "Lead time vs plan",
+    "Inventory turns"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-093",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Supply Chain & Procurement",
+   "subArea": "Long-Lead Materials Planning",
+   "commodity": "both",
+   "process": "Supplier risk",
+   "subProcess": "Monitor supplier delivery and risk signals",
+   "agentPattern": "Monitoring agent",
+   "trigger": "Supplier update or delay",
+   "autonomy": "L2",
+   "valueLever": "Schedule risk",
+   "estimatedImpact": "Earlier re-planning [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Stock-outs on critical items",
+    "Lead time vs plan",
+    "Inventory turns"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-094",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Supply Chain & Procurement",
+   "subArea": "Sourcing & Contracts",
+   "commodity": "both",
+   "process": "Spend analytics",
+   "subProcess": "Classify spend and find off-contract buying",
+   "agentPattern": "Analytics agent",
+   "trigger": "Monthly spend refresh",
+   "autonomy": "L2",
+   "valueLever": "Procurement savings",
+   "estimatedImpact": "2–5% addressable savings [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Spend under contract",
+    "Savings realised",
+    "Contract cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-095",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Supply Chain & Procurement",
+   "subArea": "Sourcing & Contracts",
+   "commodity": "both",
+   "process": "Contract review",
+   "subProcess": "Extract clauses and flag risk in supplier contracts",
+   "agentPattern": "Review copilot",
+   "trigger": "Contract received",
+   "autonomy": "L1",
+   "valueLever": "Legal effort",
+   "estimatedImpact": "60% faster review [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Spend under contract",
+    "Savings realised",
+    "Contract cycle time"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-096",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Capital Planning & Portfolio",
+   "commodity": "both",
+   "process": "Portfolio optimisation",
+   "subProcess": "Rank projects by risk, reliability and affordability under budget limits",
+   "agentPattern": "Optimisation agent",
+   "trigger": "Capital planning cycle",
+   "autonomy": "L2",
+   "valueLever": "Capital efficiency",
+   "estimatedImpact": "More reliability per dollar [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Capital plan execution %",
+    "Risk reduction per $",
+    "Project cost variance"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-097",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Capital Planning & Portfolio",
+   "commodity": "both",
+   "process": "Execution tracking",
+   "subProcess": "Predict project slippage and cost overruns",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Monthly project update",
+   "autonomy": "L2",
+   "valueLever": "Plan execution",
+   "estimatedImpact": "Earlier corrective action [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Capital plan execution %",
+    "Risk reduction per $",
+    "Project cost variance"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-098",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Finance, O&M & Affordability",
+   "commodity": "both",
+   "process": "Variance analysis",
+   "subProcess": "Explain O&M variances by driver",
+   "agentPattern": "Analytics agent",
+   "trigger": "Month-end close",
+   "autonomy": "L2",
+   "valueLever": "Finance productivity",
+   "estimatedImpact": "Days saved per close [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "O&M per customer",
+    "Forecast accuracy",
+    "Close cycle days"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-099",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Finance, O&M & Affordability",
+   "commodity": "both",
+   "process": "Affordability impact",
+   "subProcess": "Estimate bill impact of capital and O&M plans by customer class",
+   "agentPattern": "Simulation agent",
+   "trigger": "Plan or rate scenario",
+   "autonomy": "L2",
+   "valueLever": "Affordability",
+   "estimatedImpact": "Better-informed rate decisions [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "O&M per customer",
+    "Forecast accuracy",
+    "Close cycle days"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-100",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Workforce & Skills",
+   "commodity": "both",
+   "process": "Skills forecasting",
+   "subProcess": "Forecast skills gaps against capital plan and retirements",
+   "agentPattern": "Forecasting agent",
+   "trigger": "Annual workforce plan",
+   "autonomy": "L2",
+   "valueLever": "Workforce readiness",
+   "estimatedImpact": "Fewer skills bottlenecks [validate]",
+   "readiness": "now",
+   "motion": "decide-act",
+   "kpis": [
+    "Qualified workforce gap",
+    "Time to competency",
+    "Knowledge captured"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-101",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "Finance, Capital Planning & Workforce",
+   "subArea": "Workforce & Skills",
+   "commodity": "both",
+   "process": "Knowledge capture",
+   "subProcess": "Capture retiring experts' know-how into searchable guidance",
+   "agentPattern": "Knowledge copilot",
+   "trigger": "Expert interview or work record",
+   "autonomy": "L1",
+   "valueLever": "Knowledge retention",
+   "estimatedImpact": "Faster time to competency [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Qualified workforce gap",
+    "Time to competency",
+    "Knowledge captured"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-102",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "Data Platforms & AI Enablement",
+   "commodity": "both",
+   "process": "Data product discovery",
+   "subProcess": "Turn business intent and report lineage into a data-product backlog",
+   "agentPattern": "Discovery agent",
+   "trigger": "New intent or BI rationalisation run",
+   "autonomy": "L2",
+   "valueLever": "Delivery speed",
+   "estimatedImpact": "30–40% faster intent to insight [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Certified data products",
+    "Time from intent to insight",
+    "AI use cases in production"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-103",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "Data Platforms & AI Enablement",
+   "commodity": "both",
+   "process": "Pipeline generation",
+   "subProcess": "Generate and test pipelines from approved mappings",
+   "agentPattern": "Code agent",
+   "trigger": "Mapping approved",
+   "autonomy": "L2",
+   "valueLever": "Engineering productivity",
+   "estimatedImpact": "2x build velocity [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Certified data products",
+    "Time from intent to insight",
+    "AI use cases in production"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-104",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "IT/OT Integration & Historian",
+   "commodity": "both",
+   "process": "Tag quality",
+   "subProcess": "Detect stale, flat-lined or mis-scaled historian tags",
+   "agentPattern": "Data quality agent",
+   "trigger": "Hourly scan",
+   "autonomy": "L4",
+   "valueLever": "Analytics accuracy",
+   "estimatedImpact": "Fewer bad-data alarms [validate]",
+   "readiness": "now",
+   "motion": "operate",
+   "kpis": [
+    "Historian tag quality",
+    "Integration incidents",
+    "Data latency"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-105",
+   "family": "data-intelligence",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "IT/OT Integration & Historian",
+   "commodity": "both",
+   "process": "Tag mapping",
+   "subProcess": "Map historian tags to the asset hierarchy",
+   "agentPattern": "Mapping agent",
+   "trigger": "New tags or assets",
+   "autonomy": "L2",
+   "valueLever": "Engineering productivity",
+   "estimatedImpact": "60–80% of tags auto-mapped [validate]",
+   "readiness": "now",
+   "motion": "engineer",
+   "kpis": [
+    "Historian tag quality",
+    "Integration incidents",
+    "Data latency"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-106",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "Cybersecurity (IT & OT)",
+   "commodity": "both",
+   "process": "Alert triage",
+   "subProcess": "Triage SOC alerts with IT/OT context",
+   "agentPattern": "Triage agent",
+   "trigger": "Security alert",
+   "autonomy": "L2",
+   "valueLever": "Detection speed",
+   "estimatedImpact": "50% faster triage [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Mean time to detect",
+    "OT assets with visibility",
+    "Critical vulnerabilities open"
+   ],
+   "source": "BENCH",
+   "validated": false
+  },
+  {
+   "id": "UP-107",
+   "family": "enterprise-enablement",
+   "domainId": "enterprise",
+   "operatingArea": "IT/OT, Data Platforms & Cybersecurity",
+   "subArea": "Cybersecurity (IT & OT)",
+   "commodity": "both",
+   "process": "Access review",
+   "subProcess": "Prepare access reviews for critical-infrastructure systems",
+   "agentPattern": "Evidence agent",
+   "trigger": "Quarterly review",
+   "autonomy": "L3",
+   "valueLever": "Compliance",
+   "estimatedImpact": "Audit-ready access reviews [validate]",
+   "readiness": "now",
+   "motion": "govern",
+   "kpis": [
+    "Mean time to detect",
+    "OT assets with visibility",
+    "Critical vulnerabilities open"
+   ],
+   "source": "BENCH",
+   "validated": false
+  }
+ ]
+}
