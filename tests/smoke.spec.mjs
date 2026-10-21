@@ -352,6 +352,30 @@ test.describe('presenter', () => {
     await expect(page.locator('#page-content .tl-step.current')).toContainText('Brief crews safely');
   });
 
+  test('presenter menu: Mode first, then Audience lens; selections keep the menu open; Clear unselects', async ({ page }) => {
+    await open(page);
+    await page.click('#menu-btn');
+    const headings = await page.locator('#menu .menu-group h4').allInnerTexts();
+    expect(headings[0]).toMatch(/^mode/i);
+    expect(headings[1]).toMatch(/^audience lens/i);
+    await page.click('[data-audience="cfo"]');
+    await expect(page.locator('#menu')).toBeVisible();
+    await expect(page.locator('[data-audience="cfo"]')).toHaveAttribute('aria-pressed', 'true');
+    await page.click('[data-audience-clear]');
+    await expect(page.locator('#menu')).toBeVisible();
+    await expect(page.locator('#menu [data-audience][aria-pressed="true"]')).toHaveCount(0);
+    await expect(page.locator('[data-audience-clear]')).toHaveCount(0);
+    await page.click('[data-audience="coo"]');
+    await page.click('[data-audience="coo"]');
+    await expect(page.locator('#menu [data-audience][aria-pressed="true"]')).toHaveCount(0);
+    await page.click('[data-mode="client"]');
+    await page.click('[data-shift="3"]');
+    await expect(page.locator('#menu')).toBeVisible();
+    await expect(page.locator('[data-mode="client"]')).toHaveAttribute('aria-pressed', 'true');
+    await page.locator('#main .hero').click({ position: { x: 5, y: 5 } });
+    await expect(page.locator('#menu')).toBeHidden();
+  });
+
   test('every run sheet walks end to end', async ({ page }) => {
     await open(page);
     for (const rs of DATA.presenter.runSheets) {
