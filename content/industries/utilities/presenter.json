@@ -1,0 +1,48 @@
+{
+  "audiences": [
+    { "id": "ceo", "name": "CEO", "outcome": "growth", "motion": "decide-act", "scenario": "U-S3", "offerings": ["U-O11", "U-O1", "U-O5"], "emphasis": "Growth from large loads and electrification, reliability and affordability together, and a governed path to AI at scale." },
+    { "id": "coo", "name": "COO / SVP T&D Operations", "outcome": "reliability", "motion": "operate", "scenario": "U-S1", "offerings": ["U-O1", "U-O3", "U-O10"], "emphasis": "Faster restoration, risk-based maintenance and vegetation — with operators in command of every device." },
+    { "id": "cco", "name": "Chief Customer Officer", "outcome": "customer", "motion": "decide-act", "scenario": "U-S2", "offerings": ["U-O9", "U-O1", "U-O7"], "emphasis": "Explain every bill, tell the truth about restoration times and help customers who struggle." },
+    { "id": "cfo", "name": "CFO", "outcome": "affordability", "motion": "decide-act", "scenario": "U-S6", "offerings": ["U-O7", "U-O9", "U-O12"], "emphasis": "Cost to serve, bad debt and capital efficiency, with every number traced." },
+    { "id": "cio", "name": "CIO / CDO", "outcome": "reliability", "motion": "engineer", "scenario": "U-S5", "offerings": ["U-O2", "U-O4", "U-O6"], "emphasis": "One trusted data layer across CIS, MDMS, OMS, GIS, EAM and OT, and data products in days." },
+    { "id": "cso", "name": "Chief Safety Officer", "outcome": "safety", "motion": "decide-act", "scenario": "U-S1", "scenarioStep": 5, "offerings": ["U-O13", "U-O10"], "emphasis": "Every crew home safe: job-specific briefings, SIF-precursor insight and wildfire decision support for people to decide." },
+    { "id": "cro-reg", "name": "Chief Regulatory Officer", "outcome": "safety", "motion": "govern", "scenario": "U-S9", "offerings": ["U-O8", "U-O7", "U-O5"], "emphasis": "Rate-case data requests answered from certified data, and evidence on demand." },
+    { "id": "ciso", "name": "CISO / CRO", "outcome": "safety", "motion": "govern", "scenario": "U-S9", "offerings": ["U-O8", "U-O5"], "emphasis": "The OT safety rule, CEII handling, least-privilege agents and an evidence trail for every action." }
+  ],
+  "runSheets": [
+    { "id": "15", "name": "15-minute run sheet", "steps": [
+      { "route": "#/why", "title": "Why now", "minutes": 2, "talk": "Demand is growing again — data centres, electrification — while reliability, wildfire and affordability pressure rise." },
+      { "route": "#/future", "title": "Future Utility board", "minutes": 3, "talk": "Five outcomes, four domains, five agent families, one foundation — and the control plane across it all." },
+      { "route": "#/agent/UA-GO-02/run", "title": "Watch the Fault Location Advisor", "minutes": 4, "talk": "Feeder 12-04: located, planned and handed to the operator. The agent operates nothing — OT cap L2." },
+      { "route": "#/impact", "title": "Impact", "minutes": 3, "talk": "Value by outcome and motion, from levers you can change; every formula is visible." },
+      { "route": "#/proof", "title": "Proof and next step", "minutes": 3, "talk": "Offerings, scenarios and the readiness check that picks where to start." }
+    ] },
+    { "id": "30", "name": "30-minute run sheet", "steps": [
+      { "route": "#/why", "title": "Why now", "minutes": 3, "talk": "The demand, the response, the execution gap — and why trusted data decides the pace." },
+      { "route": "#/future", "title": "Future Utility board", "minutes": 4, "talk": "Click an outcome; follow it to domains, agents and the foundation." },
+      { "route": "#/subarea/outage-mgmt", "title": "Outage management drawer", "minutes": 2, "talk": "Where AI agents act, with autonomy, value lever and readiness for each process." },
+      { "route": "#/agent/UA-GO-02/run", "title": "Fault Location & Restoration Advisor", "minutes": 4, "talk": "Watch it run, then switch off Context: the plan would operate a tagged device." },
+      { "route": "#/accelerate/engineer", "title": "Engineer with AI", "minutes": 4, "talk": "From SAIDI goal to certified data product in 12 days." },
+      { "route": "#/scenario/U-S1", "title": "Storm night", "minutes": 5, "talk": "Predict, stage, locate, restore and tell customers the truth — people in command." },
+      { "route": "#/impact", "title": "Value calculator", "minutes": 4, "talk": "Change the levers; see value by outcome and by motion." },
+      { "route": "#/offering/U-O1", "title": "Grid Reliability & Outage Intelligence", "minutes": 4, "talk": "Assess, Pilot, Scale or Run — and what it takes to succeed." }
+    ] },
+    { "id": "60", "name": "60-minute run sheet", "steps": [
+      { "route": "#/why", "title": "Why now", "minutes": 4, "talk": "Market signals, with sources." },
+      { "route": "#/future", "title": "Future Utility board", "minutes": 5, "talk": "Outcomes, domains, families, foundation and the control plane." },
+      { "route": "#/outcome/reliability", "title": "Reliability & resilience", "minutes": 3, "talk": "KPI tree: SAIDI, SAIFI, CAIDI with and without major event days." },
+      { "route": "#/family/grid-operations", "title": "Grid & asset operations agents", "minutes": 4, "talk": "Seven agents; four OT-adjacent agents locked at L2." },
+      { "route": "#/agent/UA-GO-02/run", "title": "Fault Location & Restoration Advisor", "minutes": 5, "talk": "Trace, knockouts and the locked autonomy selector." },
+      { "route": "#/accelerate/engineer", "title": "Engineer with AI", "minutes": 5, "talk": "SAIDI goal to certified product." },
+      { "route": "#/accelerate/operate", "title": "Operate with AI", "minutes": 5, "talk": "Overnight at the Utility." },
+      { "route": "#/accelerate/decide-act", "title": "Decide and Act with AI", "minutes": 5, "talk": "A CFO question, then a heat-wave high bill." },
+      { "route": "#/accelerate/govern", "title": "Govern, secure and assure", "minutes": 4, "talk": "Assured by design: evidence, refusals, consent, demotion, OT-cap block." },
+      { "route": "#/layer/data", "title": "Data platform", "minutes": 4, "talk": "Nine-layer stack and the 31-product shelf." },
+      { "route": "#/scenario/U-S8", "title": "Red-flag day", "minutes": 4, "talk": "Decision pack for the officer; people decide." },
+      { "route": "#/impact", "title": "Impact and readiness", "minutes": 6, "talk": "Calculator, then the readiness check and the acceleration plan." },
+      { "route": "#/offerings", "title": "Offerings", "minutes": 3, "talk": "Thirteen offerings mapped to the motions and the control plane." },
+      { "route": "#/briefing", "title": "Executive briefing", "minutes": 3, "talk": "Export the path walked as a briefing." }
+    ] }
+  ],
+  "notesTemplate": "Presenter notes are saved in this browser only. Download them as JSON from the presenter menu."
+}

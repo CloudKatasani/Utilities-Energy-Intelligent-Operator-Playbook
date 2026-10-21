@@ -1,0 +1,1176 @@
+{
+ "_note": "31 data products (spec §8.2). Quality, freshness and sample KPIs are synthetic. rows.generator names a row generator in src/js/data/industries/utilities.js; columns are the generator's keys.",
+ "lifecycle": [
+  "Identify",
+  "Design",
+  "Build",
+  "Certify",
+  "Publish",
+  "Operate"
+ ],
+ "products": [
+  {
+   "id": "UDP-CUS-01",
+   "name": "Customer 360",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-01",
+    "UA-CC-03"
+   ],
+   "owner": "Customer data product owner",
+   "description": "One governed record per customer, premise and account: class, region, programs, protections flags and preferences, with masked identifiers.",
+   "freshness": "Daily",
+   "quality": 0.97,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Customers by class",
+    "Customers by region"
+   ],
+   "rows": {
+    "generator": "customers"
+   },
+   "sampleKpis": [
+    {
+     "label": "Electric customers",
+     "value": "3.2M"
+    },
+    {
+     "label": "Gas customers",
+     "value": "1.1M"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-02",
+   "name": "AMI Interval Usage",
+   "domain": "Customer",
+   "classification": "CEUD",
+   "agents": [
+    "UA-CC-02",
+    "UA-CC-04",
+    "UA-GM-03",
+    "UA-DI-06"
+   ],
+   "owner": "Meter data owner",
+   "description": "15-minute AMI interval usage for electric meters, validated, estimated and edited (VEE) in the MDMS.",
+   "freshness": "15 min",
+   "quality": 0.95,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Interval completeness",
+    "Estimated reads %"
+   ],
+   "rows": {
+    "generator": "ami"
+   },
+   "sampleKpis": [
+    {
+     "label": "AMI meters",
+     "value": "3.05M (95%)"
+    },
+    {
+     "label": "Interval completeness",
+     "value": "99.6%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-03",
+   "name": "Billing & Payments",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-02",
+    "UA-CC-03"
+   ],
+   "owner": "Billing data owner",
+   "description": "Bills, payments, arrears and arrangements for every account, reconciled to the ledger.",
+   "freshness": "Daily",
+   "quality": 0.96,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Bad debt % of revenue",
+    "Estimated bills %"
+   ],
+   "rows": {
+    "generator": "bills"
+   },
+   "sampleKpis": [
+    {
+     "label": "Bad debt",
+     "value": "0.9% of revenue"
+    },
+    {
+     "label": "Estimated bills",
+     "value": "2.4%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-04",
+   "name": "Rates & Tariffs",
+   "domain": "Customer",
+   "classification": "Internal",
+   "agents": [
+    "UA-CC-02"
+   ],
+   "owner": "Rates data owner",
+   "description": "Rate schedules, riders and effective dates as applied by the billing engine (synthetic rate codes only).",
+   "freshness": "On change",
+   "quality": 0.99,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Rates in force"
+   ],
+   "rows": {
+    "generator": "tariffs"
+   },
+   "sampleKpis": [
+    {
+     "label": "Rate schedules",
+     "value": "64 (synthetic)"
+    },
+    {
+     "label": "Riders",
+     "value": "118"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-05",
+   "name": "Contact Preferences & Consent",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-01",
+    "UA-EE-06"
+   ],
+   "owner": "Privacy officer",
+   "description": "Contact preferences, marketing consent and customer-data-sharing authorisations, propagated to every channel and agent.",
+   "freshness": "Near real time",
+   "quality": 0.98,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Consent propagation time"
+   ],
+   "rows": {
+    "generator": "customers"
+   },
+   "sampleKpis": [
+    {
+     "label": "Data-sharing consents",
+     "value": "31% granted"
+    },
+    {
+     "label": "Propagation",
+     "value": "< 15 min"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-06",
+   "name": "Assistance & Protections",
+   "domain": "Customer",
+   "classification": "PII-Sensitive",
+   "agents": [
+    "UA-CC-03"
+   ],
+   "owner": "Credit & collections lead",
+   "description": "Assistance enrolment, payment arrangements and disconnection protections (medical, weather, seasonal).",
+   "freshness": "Daily",
+   "quality": 0.97,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Protected-customer disconnections"
+   ],
+   "rows": {
+    "generator": "customers"
+   },
+   "sampleKpis": [
+    {
+     "label": "Medical-baseline share",
+     "value": "1.2%"
+    },
+    {
+     "label": "Protected disconnections",
+     "value": "0"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-07",
+   "name": "Programs & Enrolment",
+   "domain": "Customer",
+   "classification": "PII",
+   "agents": [
+    "UA-CC-04"
+   ],
+   "owner": "Programs manager",
+   "description": "Program eligibility, enrolment, events and measured savings for efficiency, demand response and EV programs.",
+   "freshness": "Daily",
+   "quality": 0.93,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "MW enrolled in demand response"
+   ],
+   "rows": {
+    "generator": "customers"
+   },
+   "sampleKpis": [
+    {
+     "label": "DR enrolled",
+     "value": "9% of customers"
+    },
+    {
+     "label": "EV rate",
+     "value": "5%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-CUS-08",
+   "name": "Connection Requests",
+   "domain": "Customer",
+   "classification": "Confidential",
+   "agents": [
+    "UA-CC-05"
+   ],
+   "owner": "Connections manager",
+   "description": "New service, DER and large-load requests from intake to energisation, with stages and ages.",
+   "freshness": "Hourly",
+   "quality": 0.92,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Contact-centre desktop"
+   ],
+   "certifiedKpis": [
+    "Days to connect",
+    "Time to feasibility answer"
+   ],
+   "rows": {
+    "generator": "connections"
+   },
+   "sampleKpis": [
+    {
+     "label": "Open requests",
+     "value": "2,400"
+    },
+    {
+     "label": "Large-load requests",
+     "value": "1 over 75 MW"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-01",
+   "name": "Outage & Reliability 360",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-CC-01",
+    "UA-GO-01",
+    "UA-GO-02",
+    "UA-EE-05"
+   ],
+   "owner": "Reliability data product owner",
+   "description": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags.",
+   "freshness": "15 min",
+   "quality": 0.96,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "SAIDI (excl. MED)",
+    "SAIFI",
+    "CAIDI",
+    "SAIDI (incl. MED)"
+   ],
+   "rows": {
+    "generator": "outages"
+   },
+   "sampleKpis": [
+    {
+     "label": "SAIDI excl. MED",
+     "value": "{{syn.reliability.saidiExMed}} min"
+    },
+    {
+     "label": "SAIFI",
+     "value": "{{syn.reliability.saifi|d2}}"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-02",
+   "name": "Network Connectivity Model",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-02",
+    "UA-DI-06"
+   ],
+   "owner": "GIS manager",
+   "description": "The as-operated electric connectivity model: segments, switches, phases and customer-to-transformer links, governed as a data product.",
+   "freshness": "Hourly",
+   "quality": 0.91,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Connectivity errors open",
+    "Phase accuracy"
+   ],
+   "rows": {
+    "generator": "connectivity"
+   },
+   "sampleKpis": [
+    {
+     "label": "Segments",
+     "value": "24,000 (sample)"
+    },
+    {
+     "label": "Connectivity accuracy",
+     "value": "97.8%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-03",
+   "name": "Grid Events & SCADA",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-02",
+    "UA-GO-03"
+   ],
+   "owner": "Control-room systems owner",
+   "description": "SCADA points, breaker and recloser operations, fault indicators and alarms, delivered one way from OT zones.",
+   "freshness": "1 min",
+   "quality": 0.94,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Alarm volume per event"
+   ],
+   "rows": {
+    "generator": "scada"
+   },
+   "sampleKpis": [
+    {
+     "label": "Points",
+     "value": "86,000 (sample)"
+    },
+    {
+     "label": "Latency",
+     "value": "< 60 s"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-04",
+   "name": "Feeder Capacity & Hosting",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-CC-04",
+    "UA-CC-05",
+    "UA-GM-05"
+   ],
+   "owner": "Distribution planning lead",
+   "description": "Feeder loading, hosting capacity and DER by circuit, from planning models and AMI.",
+   "freshness": "Daily",
+   "quality": 0.93,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "DER hosting capacity",
+    "Feeders above 80% loading"
+   ],
+   "rows": {
+    "generator": "feeders"
+   },
+   "sampleKpis": [
+    {
+     "label": "Feeders (sample)",
+     "value": "400"
+    },
+    {
+     "label": "Circuits",
+     "value": "2,450"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-05",
+   "name": "Transmission Capacity",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-CC-05"
+   ],
+   "owner": "Transmission planning lead",
+   "description": "Transmission paths, ratings, flows and headroom used for large-load and interconnection screening.",
+   "freshness": "Daily",
+   "quality": 0.92,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Available transfer headroom"
+   ],
+   "rows": {
+    "generator": "transmission"
+   },
+   "sampleKpis": [
+    {
+     "label": "Paths",
+     "value": "180"
+    },
+    {
+     "label": "Line-miles",
+     "value": "11,800"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-06",
+   "name": "Weather & Fire Risk",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-01",
+    "UA-GO-05",
+    "UA-EE-01"
+   ],
+   "owner": "Emergency management lead",
+   "description": "Weather forecasts and fire-risk indices by region and day (synthetic weather).",
+   "freshness": "Hourly",
+   "quality": 0.95,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Red-flag days"
+   ],
+   "rows": {
+    "generator": "weather"
+   },
+   "sampleKpis": [
+    {
+     "label": "Regions",
+     "value": "6"
+    },
+    {
+     "label": "Forecast horizon",
+     "value": "72 h"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-07",
+   "name": "Asset Registry & Health",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-03",
+    "UA-GO-04",
+    "UA-GO-05",
+    "UA-GM-02",
+    "UA-EE-04",
+    "UA-EE-05"
+   ],
+   "owner": "Asset management lead",
+   "description": "Asset registry with condition, test results, loading and health index for transformers, breakers, poles and cables.",
+   "freshness": "Daily",
+   "quality": 0.94,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Health index coverage",
+    "In-service failures"
+   ],
+   "rows": {
+    "generator": "assets"
+   },
+   "sampleKpis": [
+    {
+     "label": "Assets scored",
+     "value": "2,000 (sample)"
+    },
+    {
+     "label": "High risk",
+     "value": "{{fx.transformerRisk.highRisk}}"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-08",
+   "name": "Inspection Imagery & Findings",
+   "domain": "Grid",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-04"
+   ],
+   "owner": "Inspection supervisor",
+   "description": "Drone, LiDAR, thermal and patrol imagery with detected and confirmed findings.",
+   "freshness": "Daily",
+   "quality": 0.9,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Defects found per mile"
+   ],
+   "rows": {
+    "generator": "inspections"
+   },
+   "sampleKpis": [
+    {
+     "label": "Images",
+     "value": "64,000 (sample)"
+    },
+    {
+     "label": "Review time",
+     "value": "−60% (synthetic)"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GRD-09",
+   "name": "Vegetation Spans",
+   "domain": "Grid",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-05"
+   ],
+   "owner": "Vegetation program manager",
+   "description": "Span-level vegetation clearance, species, trim history and risk tier.",
+   "freshness": "Weekly",
+   "quality": 0.91,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "ADMS/OMS context panel"
+   ],
+   "certifiedKpis": [
+    "Tree-caused outages",
+    "Vegetation cost per mile"
+   ],
+   "rows": {
+    "generator": "spans"
+   },
+   "sampleKpis": [
+    {
+     "label": "Spans scored",
+     "value": "{{fx.redFlag.spansScored}}"
+    },
+    {
+     "label": "Tier 3",
+     "value": "8%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GAS-01",
+   "name": "Gas Leaks & Surveys",
+   "domain": "Gas",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-07"
+   ],
+   "owner": "Gas operations supervisor",
+   "description": "Leak indications, grades, surveys and repairs.",
+   "freshness": "Hourly",
+   "quality": 0.95,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Field mobile"
+   ],
+   "certifiedKpis": [
+    "Hazardous-leak response time",
+    "Leak backlog"
+   ],
+   "rows": {
+    "generator": "leaks"
+   },
+   "sampleKpis": [
+    {
+     "label": "Open indications",
+     "value": "3,100"
+    },
+    {
+     "label": "Grade 1 today",
+     "value": "{{fx.overnight.grade1}}"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GAS-02",
+   "name": "Pipe Segments & Integrity",
+   "domain": "Gas",
+   "classification": "CEII",
+   "agents": [
+    "UA-GO-07"
+   ],
+   "owner": "Integrity engineer",
+   "description": "Pipe segments with material, age, pressure and threat assessment.",
+   "freshness": "Weekly",
+   "quality": 0.9,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Field mobile"
+   ],
+   "certifiedKpis": [
+    "Segments with traceable records"
+   ],
+   "rows": {
+    "generator": "pipes"
+   },
+   "sampleKpis": [
+    {
+     "label": "Segments",
+     "value": "41,000 (sample)"
+    },
+    {
+     "label": "Gas main",
+     "value": "28,000 miles"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GAS-03",
+   "name": "One-Call Tickets",
+   "domain": "Gas",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-07"
+   ],
+   "owner": "Damage prevention lead",
+   "description": "One-call excavation tickets with location and damage-risk score.",
+   "freshness": "15 min",
+   "quality": 0.93,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Field mobile"
+   ],
+   "certifiedKpis": [
+    "Excavation damages per 1,000 tickets"
+   ],
+   "rows": {
+    "generator": "oneCall"
+   },
+   "sampleKpis": [
+    {
+     "label": "Tickets (30 days)",
+     "value": "9,200"
+    },
+    {
+     "label": "High risk",
+     "value": "8%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GEN-01",
+   "name": "Unit Performance",
+   "domain": "Generation",
+   "classification": "Confidential",
+   "agents": [
+    "UA-GM-01",
+    "UA-GM-03",
+    "UA-GM-04"
+   ],
+   "owner": "Fleet performance lead",
+   "description": "Unit capacity, availability, heat rate and forced outage rate across the fleet.",
+   "freshness": "Hourly",
+   "quality": 0.95,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Plant performance desk"
+   ],
+   "certifiedKpis": [
+    "Net heat rate",
+    "EFOR",
+    "Equivalent availability"
+   ],
+   "rows": {
+    "generator": "units"
+   },
+   "sampleKpis": [
+    {
+     "label": "Generation",
+     "value": "9.4 GW"
+    },
+    {
+     "label": "Units",
+     "value": "13"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GEN-02",
+   "name": "Plant Historian",
+   "domain": "Generation",
+   "classification": "CEII",
+   "agents": [
+    "UA-GM-01",
+    "UA-GM-02"
+   ],
+   "owner": "Plant systems owner",
+   "description": "Plant historian tags (vibration, temperature, pressure, flow) mapped to the asset hierarchy, delivered one way from OT.",
+   "freshness": "1 min",
+   "quality": 0.92,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Plant performance desk"
+   ],
+   "certifiedKpis": [
+    "Tag quality"
+   ],
+   "rows": {
+    "generator": "historian"
+   },
+   "sampleKpis": [
+    {
+     "label": "Tags",
+     "value": "182,000"
+    },
+    {
+     "label": "Flat-lined today",
+     "value": "{{fx.overnight.flatTags}}"
+    }
+   ]
+  },
+  {
+   "id": "UDP-GEN-03",
+   "name": "Storage Assets",
+   "domain": "Generation",
+   "classification": "Confidential",
+   "agents": [
+    "UA-GM-05"
+   ],
+   "owner": "Storage portfolio manager",
+   "description": "Battery sites with state of charge, cycles and round-trip efficiency.",
+   "freshness": "5 min",
+   "quality": 0.96,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Plant performance desk"
+   ],
+   "certifiedKpis": [
+    "Round-trip efficiency"
+   ],
+   "rows": {
+    "generator": "storage"
+   },
+   "sampleKpis": [
+    {
+     "label": "Storage",
+     "value": "0.4 GW"
+    },
+    {
+     "label": "Sites",
+     "value": "8"
+    }
+   ]
+  },
+  {
+   "id": "UDP-MKT-01",
+   "name": "Load & Weather",
+   "domain": "Markets",
+   "classification": "Internal",
+   "agents": [
+    "UA-GM-03",
+    "UA-GM-04"
+   ],
+   "owner": "Forecasting lead",
+   "description": "Hourly load, forecast, wind and solar output with weather drivers.",
+   "freshness": "Hourly",
+   "quality": 0.96,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Trading desk"
+   ],
+   "certifiedKpis": [
+    "Day-ahead load MAPE"
+   ],
+   "rows": {
+    "generator": "loadWeather"
+   },
+   "sampleKpis": [
+    {
+     "label": "Peak load",
+     "value": "13.8 GW"
+    },
+    {
+     "label": "Hours (sample)",
+     "value": "720"
+    }
+   ]
+  },
+  {
+   "id": "UDP-MKT-02",
+   "name": "Market Bids & Settlements",
+   "domain": "Markets",
+   "classification": "Market-Sensitive",
+   "agents": [
+    "UA-GM-04",
+    "UA-GM-05"
+   ],
+   "owner": "Trading desk lead",
+   "description": "Unit offers, awards and settlements by interval.",
+   "freshness": "Hourly",
+   "quality": 0.94,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Trading desk"
+   ],
+   "certifiedKpis": [
+    "Settlement disputes won"
+   ],
+   "rows": {
+    "generator": "bids"
+   },
+   "sampleKpis": [
+    {
+     "label": "Offers (30 days)",
+     "value": "9,360"
+    },
+    {
+     "label": "Disputed",
+     "value": "~33%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-ENT-02",
+   "name": "Work Orders",
+   "domain": "Enterprise",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-03",
+    "UA-GO-06",
+    "UA-GM-02",
+    "UA-DI-06",
+    "UA-EE-01"
+   ],
+   "owner": "Work management supervisor",
+   "description": "Work orders across corrective, preventive, capital, emergency and gas work.",
+   "freshness": "Hourly",
+   "quality": 0.93,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Mobile"
+   ],
+   "certifiedKpis": [
+    "Schedule attainment",
+    "Jobs per crew-day"
+   ],
+   "rows": {
+    "generator": "workOrders"
+   },
+   "sampleKpis": [
+    {
+     "label": "Work orders",
+     "value": "20,000 (sample)"
+    },
+    {
+     "label": "Truck rolls/month",
+     "value": "38,000"
+    }
+   ]
+  },
+  {
+   "id": "UDP-ENT-03",
+   "name": "Workforce & Crews",
+   "domain": "Enterprise",
+   "classification": "PII",
+   "agents": [
+    "UA-GO-01",
+    "UA-GO-06"
+   ],
+   "owner": "Workforce planning lead",
+   "description": "Crews, skills, qualifications and shift status.",
+   "freshness": "15 min",
+   "quality": 0.94,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Mobile"
+   ],
+   "certifiedKpis": [
+    "Qualified crews on shift"
+   ],
+   "rows": {
+    "generator": "crews"
+   },
+   "sampleKpis": [
+    {
+     "label": "Crews",
+     "value": "860"
+    },
+    {
+     "label": "On shift",
+     "value": "62%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-ENT-04",
+   "name": "Materials & Inventory",
+   "domain": "Enterprise",
+   "classification": "Internal",
+   "agents": [
+    "UA-GO-06",
+    "UA-EE-04"
+   ],
+   "owner": "Supply chain planner",
+   "description": "Materials, stock and lead times, including long-lead transformers.",
+   "freshness": "Daily",
+   "quality": 0.92,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Mobile"
+   ],
+   "certifiedKpis": [
+    "Critical stock-outs"
+   ],
+   "rows": {
+    "generator": "materials"
+   },
+   "sampleKpis": [
+    {
+     "label": "Items",
+     "value": "5,400"
+    },
+    {
+     "label": "LPT lead time",
+     "value": "{{fx.transformerRisk.leadTimeWeeks}} weeks"
+    }
+   ]
+  },
+  {
+   "id": "UDP-ENT-05",
+   "name": "Safety Observations & Incidents",
+   "domain": "Enterprise",
+   "classification": "Confidential",
+   "agents": [
+    "UA-EE-01"
+   ],
+   "owner": "Safety advisor",
+   "description": "Observations, near misses, incidents and SIF precursors, anonymised for analysis.",
+   "freshness": "Daily",
+   "quality": 0.9,
+   "certified": false,
+   "stage": "Certify",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Mobile"
+   ],
+   "certifiedKpis": [
+    "SIF-precursor events",
+    "Recordable incident rate"
+   ],
+   "rows": {
+    "generator": "safety"
+   },
+   "sampleKpis": [
+    {
+     "label": "Records",
+     "value": "14,000"
+    },
+    {
+     "label": "SIF precursors",
+     "value": "2%"
+    }
+   ]
+  },
+  {
+   "id": "UDP-ENT-06",
+   "name": "Capital & O&M",
+   "domain": "Enterprise",
+   "classification": "Confidential",
+   "agents": [
+    "UA-EE-02",
+    "UA-EE-04",
+    "UA-EE-05"
+   ],
+   "owner": "Capital planning director",
+   "description": "Capital projects and O&M by program and region with budgets, spend and risk reduction.",
+   "freshness": "Daily",
+   "quality": 0.95,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "BI",
+    "Agent API",
+    "Mobile"
+   ],
+   "certifiedKpis": [
+    "O&M per customer",
+    "Capex execution %"
+   ],
+   "rows": {
+    "generator": "capital"
+   },
+   "sampleKpis": [
+    {
+     "label": "Projects",
+     "value": "1,200"
+    },
+    {
+     "label": "O&M",
+     "value": "$2.9bn"
+    }
+   ]
+  },
+  {
+   "id": "UDP-AGT-01",
+   "name": "Agent Evidence Trail",
+   "domain": "Platform",
+   "classification": "Internal",
+   "agents": [],
+   "owner": "AI governance board",
+   "description": "Every agent action, approval, refusal and policy decision, immutable and replayable.",
+   "freshness": "Real time",
+   "quality": 0.99,
+   "certified": true,
+   "stage": "Operate",
+   "surfaces": [
+    "Audit console",
+    "Agent API"
+   ],
+   "certifiedKpis": [
+    "Audit completeness"
+   ],
+   "rows": {
+    "generator": "evidence"
+   },
+   "sampleKpis": [
+    {
+     "label": "Events (90 days)",
+     "value": "412,000"
+    },
+    {
+     "label": "Reversible actions",
+     "value": "97%"
+    }
+   ]
+  }
+ ]
+}

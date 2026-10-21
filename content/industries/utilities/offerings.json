@@ -1,0 +1,2951 @@
+{
+ "_note": "13 offerings (spec §9). U-O4–U-O13 are maturity: emerging and validated: false until offer owners confirm them. Teams list roles only.",
+ "offerings": [
+  {
+   "id": "U-O1",
+   "name": "Grid Reliability & Outage Intelligence",
+   "motion": "operate",
+   "promise": "Predict, locate and restore faster, and tell customers the truth about restoration times",
+   "domains": [
+    "grid",
+    "customer"
+   ],
+   "buyers": [
+    "COO",
+    "SVP T&D Operations"
+   ],
+   "maturity": "established",
+   "validated": true,
+   "kpis": [
+    {
+     "value": "−15–30%",
+     "label": "Customer minutes interrupted per sustained fault",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "{{fx.storm.etrAccuracyBefore|pct}} → {{fx.storm.etrAccuracyAfter|pct}}",
+     "label": "ETR accuracy (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "grid-ops",
+    "field-ops",
+    "customer-care"
+   ],
+   "agents": [
+    "UA-GO-02",
+    "UA-GO-06",
+    "UA-CC-01",
+    "UA-GO-01"
+   ],
+   "dataProducts": [
+    "UDP-GRD-01",
+    "UDP-GRD-02",
+    "UDP-GRD-03",
+    "UDP-CUS-05"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Grid Reliability & Outage Intelligence"
+    },
+    "pilot": {
+     "layersInScope": [
+      "ai",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 4 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "ADMS / OMS",
+       "text": "ADMS / OMS: where people meet the agents and answers of Grid Reliability & Outage Intelligence."
+      },
+      {
+       "id": "ch1",
+       "label": "AMI head-end",
+       "text": "AMI head-end: where people meet the agents and answers of Grid Reliability & Outage Intelligence."
+      },
+      {
+       "id": "ch2",
+       "label": "Control-room console",
+       "text": "Control-room console: where people meet the agents and answers of Grid Reliability & Outage Intelligence."
+      },
+      {
+       "id": "ch3",
+       "label": "Customer app & IVR",
+       "text": "Customer app & IVR: where people meet the agents and answers of Grid Reliability & Outage Intelligence."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-go-02",
+       "label": "Fault Location & Restoration Advisor",
+       "agentId": "UA-GO-02",
+       "text": "Combines AMI last-gasp, SCADA and fault indicators to locate faults and recommend isolation and restoration switching for the operator."
+      },
+      {
+       "id": "ua-go-06",
+       "label": "Work Bundling & Crew Dispatch Agent",
+       "agentId": "UA-GO-06",
+       "text": "Bundles nearby work, schedules crews by skill, permit and material availability, and dispatches emergencies to the best crew."
+      },
+      {
+       "id": "ua-cc-01",
+       "label": "Outage Communication & ETR Agent",
+       "agentId": "UA-CC-01",
+       "text": "Tells every affected customer what is happening, when power will be back and what to do, on their preferred channel."
+      },
+      {
+       "id": "ua-go-01",
+       "label": "Outage Prediction & Storm Staging Agent",
+       "agentId": "UA-GO-01",
+       "text": "Predicts where storms will cause outages and recommends crew, material and mutual-assistance staging."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-01",
+       "label": "Outage & Reliability 360",
+       "dpId": "UDP-GRD-01",
+       "text": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags."
+      },
+      {
+       "id": "udp-grd-02",
+       "label": "Network Connectivity Model",
+       "dpId": "UDP-GRD-02",
+       "text": "The as-operated electric connectivity model: segments, switches, phases and customer-to-transformer links, governed as a data product."
+      },
+      {
+       "id": "udp-grd-03",
+       "label": "Grid Events & SCADA",
+       "dpId": "UDP-GRD-03",
+       "text": "SCADA points, breaker and recloser operations, fault indicators and alarms, delivered one way from OT zones."
+      },
+      {
+       "id": "udp-cus-05",
+       "label": "Contact Preferences & Consent",
+       "dpId": "UDP-CUS-05",
+       "text": "Contact preferences, marketing consent and customer-data-sharing authorisations, propagated to every channel and agent."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Outage & Reliability 360 certified",
+     "Network Connectivity Model certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S1",
+    "U-S7"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Will an agent ever operate our switches?",
+     "a": "No. The OT safety rule caps the Fault Location & Restoration Advisor at L2: it proposes switching plans that a qualified operator checks against the as-operated model and executes. The runtime refuses any promotion above L2."
+    },
+    {
+     "q": "We already have FLISR in the ADMS — why this?",
+     "a": "The advisor works across ADMS, OMS, AMI and GIS with a governed network model, and hands off to crews and customer communications. It complements ADMS automation; it does not replace it."
+    }
+   ]
+  },
+  {
+   "id": "U-O2",
+   "name": "Agent Data Fabric for Utilities",
+   "motion": "engineer",
+   "promise": "One trusted, reusable intelligence layer across CIS, MDMS, OMS, GIS, EAM and OT",
+   "domains": [
+    "enterprise"
+   ],
+   "buyers": [
+    "CIO",
+    "CDO"
+   ],
+   "maturity": "established",
+   "validated": true,
+   "kpis": [
+    {
+     "value": "50%",
+     "label": "Fewer L1/L2 data tickets (proof from another industry — revalidate)",
+     "source": "capgemini-proof",
+     "validated": false
+    },
+    {
+     "value": "−10–20%",
+     "label": "Platform cost per outcome",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot"
+   ],
+   "agents": [
+    "UA-DI-07",
+    "UA-DI-08",
+    "UA-DI-02",
+    "UA-DI-05"
+   ],
+   "dataProducts": [
+    "UDP-GRD-01",
+    "UDP-CUS-01",
+    "UDP-GEN-02",
+    "UDP-AGT-01"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Agent Data Fabric for Utilities"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 4 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "BI",
+       "text": "BI: where people meet the agents and answers of Agent Data Fabric for Utilities."
+      },
+      {
+       "id": "ch1",
+       "label": "Agent API",
+       "text": "Agent API: where people meet the agents and answers of Agent Data Fabric for Utilities."
+      },
+      {
+       "id": "ch2",
+       "label": "Marketplace",
+       "text": "Marketplace: where people meet the agents and answers of Agent Data Fabric for Utilities."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-07",
+       "label": "Data Quality & Healing Agent",
+       "agentId": "UA-DI-07",
+       "text": "Monitors data products, detects freshness and quality breaches and applies catalogued fixes before consumers notice."
+      },
+      {
+       "id": "ua-di-08",
+       "label": "Platform FinOps Agent",
+       "agentId": "UA-DI-08",
+       "text": "Attributes compute, storage and model cost to data products, agents and outcomes and recommends savings."
+      },
+      {
+       "id": "ua-di-02",
+       "label": "Source-to-Target Mapping Agent",
+       "agentId": "UA-DI-02",
+       "text": "Maps CIS, MDMS, OMS, GIS, EAM and historian sources to the utility data model (CIM-aligned) with confidence scores."
+      },
+      {
+       "id": "ua-di-05",
+       "label": "Semantic Model Builder Agent",
+       "agentId": "UA-DI-05",
+       "text": "Builds semantic views and verified queries for certified KPIs such as SAIDI, SAIFI, CAIDI, O&M per customer and bad debt."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-01",
+       "label": "Outage & Reliability 360",
+       "dpId": "UDP-GRD-01",
+       "text": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags."
+      },
+      {
+       "id": "udp-cus-01",
+       "label": "Customer 360",
+       "dpId": "UDP-CUS-01",
+       "text": "One governed record per customer, premise and account: class, region, programs, protections flags and preferences, with masked identifiers."
+      },
+      {
+       "id": "udp-gen-02",
+       "label": "Plant Historian",
+       "dpId": "UDP-GEN-02",
+       "text": "Plant historian tags (vibration, temperature, pressure, flow) mapped to the asset hierarchy, delivered one way from OT."
+      },
+      {
+       "id": "udp-agt-01",
+       "label": "Agent Evidence Trail",
+       "dpId": "UDP-AGT-01",
+       "text": "Every agent action, approval, refusal and policy decision, immutable and replayable."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Outage & Reliability 360 certified",
+     "Customer 360 certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S7",
+    "U-S5"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Is this a new platform?",
+     "a": "No. It is platform-agnostic and sits on your existing estate (Snowflake, Databricks, BigQuery, Microsoft Fabric or AWS)."
+    },
+    {
+     "q": "How does OT data get in safely?",
+     "a": "One way, through data diodes or brokers, never with agent credentials inside OT zones."
+    }
+   ]
+  },
+  {
+   "id": "U-O3",
+   "name": "Asset Health & Inspection AI",
+   "motion": "operate",
+   "promise": "Inspect by drone and sensor, rank risk, replace by condition",
+   "domains": [
+    "grid",
+    "generation"
+   ],
+   "buyers": [
+    "COO",
+    "VP Asset Management"
+   ],
+   "maturity": "established",
+   "validated": true,
+   "kpis": [
+    {
+     "value": "−10–25%",
+     "label": "In-service failures",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "2–4×",
+     "label": "Faster image review",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "asset-mgmt",
+    "gen-maint",
+    "supply"
+   ],
+   "agents": [
+    "UA-GO-03",
+    "UA-GO-04",
+    "UA-EE-04",
+    "UA-GO-07"
+   ],
+   "dataProducts": [
+    "UDP-GRD-07",
+    "UDP-GRD-08",
+    "UDP-ENT-04",
+    "UDP-GAS-02"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Asset Health & Inspection AI"
+    },
+    "pilot": {
+     "layersInScope": [
+      "ai",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 4 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "EAM",
+       "text": "EAM: where people meet the agents and answers of Asset Health & Inspection AI."
+      },
+      {
+       "id": "ch1",
+       "label": "Inspection app",
+       "text": "Inspection app: where people meet the agents and answers of Asset Health & Inspection AI."
+      },
+      {
+       "id": "ch2",
+       "label": "Planning workbench",
+       "text": "Planning workbench: where people meet the agents and answers of Asset Health & Inspection AI."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-go-03",
+       "label": "Asset Health & Risk Agent",
+       "agentId": "UA-GO-03",
+       "text": "Scores the health and failure risk of transformers, breakers, poles and cables and ranks interventions by risk reduced per dollar."
+      },
+      {
+       "id": "ua-go-04",
+       "label": "Drone & Visual Inspection Agent",
+       "agentId": "UA-GO-04",
+       "text": "Finds defects in drone, LiDAR and thermal imagery and turns confirmed defects into prioritised work."
+      },
+      {
+       "id": "ua-ee-04",
+       "label": "Long-Lead Materials Agent",
+       "agentId": "UA-EE-04",
+       "text": "Forecasts transformer, meter, cable and switchgear demand from the capital plan, failures and storms, and re-plans when suppliers slip."
+      },
+      {
+       "id": "ua-go-07",
+       "label": "Gas Leak & Integrity Agent",
+       "agentId": "UA-GO-07",
+       "text": "Grades and prioritises leak indications, scores excavation-damage risk and ranks pipe segments by integrity threat."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-07",
+       "label": "Asset Registry & Health",
+       "dpId": "UDP-GRD-07",
+       "text": "Asset registry with condition, test results, loading and health index for transformers, breakers, poles and cables."
+      },
+      {
+       "id": "udp-grd-08",
+       "label": "Inspection Imagery & Findings",
+       "dpId": "UDP-GRD-08",
+       "text": "Drone, LiDAR, thermal and patrol imagery with detected and confirmed findings."
+      },
+      {
+       "id": "udp-ent-04",
+       "label": "Materials & Inventory",
+       "dpId": "UDP-ENT-04",
+       "text": "Materials, stock and lead times, including long-lead transformers."
+      },
+      {
+       "id": "udp-gas-02",
+       "label": "Pipe Segments & Integrity",
+       "dpId": "UDP-GAS-02",
+       "text": "Pipe segments with material, age, pressure and threat assessment."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Asset Registry & Health certified",
+     "Inspection Imagery & Findings certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S4"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Our asset data is incomplete. Can we start?",
+     "a": "Yes. Health scores show coverage and confidence; the GIS & Network Model Quality Agent and inspections close gaps over time."
+    },
+    {
+     "q": "Who decides replacements?",
+     "a": "Asset management and the capital planning cycle. Agents rank by risk reduced per dollar and explain the drivers."
+    }
+   ]
+  },
+  {
+   "id": "U-O4",
+   "name": "AI-Ready Utility Data Foundation",
+   "motion": "engineer",
+   "promise": "Governed layers, a CIM-aligned model and the network model as a data product",
+   "domains": [
+    "enterprise",
+    "grid"
+   ],
+   "buyers": [
+    "CIO",
+    "CDO"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "31",
+     "label": "Governed data products",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "1",
+     "label": "Certified definition per KPI",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot",
+    "grid-plan",
+    "asset-mgmt"
+   ],
+   "agents": [
+    "UA-DI-05",
+    "UA-DI-06",
+    "UA-DI-03"
+   ],
+   "dataProducts": [
+    "UDP-GRD-02",
+    "UDP-GRD-01",
+    "UDP-CUS-02"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for AI-Ready Utility Data Foundation"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 3 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Data platform",
+       "text": "Data platform: where people meet the agents and answers of AI-Ready Utility Data Foundation."
+      },
+      {
+       "id": "ch1",
+       "label": "Semantic layer",
+       "text": "Semantic layer: where people meet the agents and answers of AI-Ready Utility Data Foundation."
+      },
+      {
+       "id": "ch2",
+       "label": "Catalog",
+       "text": "Catalog: where people meet the agents and answers of AI-Ready Utility Data Foundation."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-05",
+       "label": "Semantic Model Builder Agent",
+       "agentId": "UA-DI-05",
+       "text": "Builds semantic views and verified queries for certified KPIs such as SAIDI, SAIFI, CAIDI, O&M per customer and bad debt."
+      },
+      {
+       "id": "ua-di-06",
+       "label": "GIS & Network Model Quality Agent",
+       "agentId": "UA-DI-06",
+       "text": "Finds connectivity, phasing and asset-record errors using AMI voltage correlation and as-built reconciliation."
+      },
+      {
+       "id": "ua-di-03",
+       "label": "Data Quality Rules Agent",
+       "agentId": "UA-DI-03",
+       "text": "Generates and backtests quality rules for critical data elements such as meter IDs, premise-to-transformer links and outage times."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-02",
+       "label": "Network Connectivity Model",
+       "dpId": "UDP-GRD-02",
+       "text": "The as-operated electric connectivity model: segments, switches, phases and customer-to-transformer links, governed as a data product."
+      },
+      {
+       "id": "udp-grd-01",
+       "label": "Outage & Reliability 360",
+       "dpId": "UDP-GRD-01",
+       "text": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags."
+      },
+      {
+       "id": "udp-cus-02",
+       "label": "AMI Interval Usage",
+       "dpId": "UDP-CUS-02",
+       "text": "15-minute AMI interval usage for electric meters, validated, estimated and edited (VEE) in the MDMS."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Network Connectivity Model certified",
+     "Outage & Reliability 360 certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S5"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Why treat the network model as a data product?",
+     "a": "Every grid agent depends on it. If customer-to-transformer links are wrong, outage, hosting-capacity and safety answers are wrong too."
+    }
+   ]
+  },
+  {
+   "id": "U-O5",
+   "name": "Utility AI Readiness Assessment",
+   "motion": "govern",
+   "promise": "Score readiness, find hard blockers (network model, OT security, consent) and sequence the fix in 4–6 weeks",
+   "domains": [
+    "enterprise"
+   ],
+   "buyers": [
+    "CEO",
+    "CIO",
+    "CDO"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "4–6 weeks",
+     "label": "To a sequenced plan",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "8 pillars",
+     "label": "12 questions, 4 hard blockers",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot",
+    "regulatory"
+   ],
+   "agents": [
+    "UA-DI-12",
+    "UA-EE-03"
+   ],
+   "dataProducts": [
+    "UDP-AGT-01"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Utility AI Readiness Assessment"
+    },
+    "pilot": {
+     "layersInScope": [
+      "trust",
+      "security",
+      "trust"
+     ],
+     "scope": "2 agents on 1 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Workshops",
+       "text": "Workshops: where people meet the agents and answers of Utility AI Readiness Assessment."
+      },
+      {
+       "id": "ch1",
+       "label": "Readiness check",
+       "text": "Readiness check: where people meet the agents and answers of Utility AI Readiness Assessment."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-12",
+       "label": "Agent Evaluation & Promotion Agent",
+       "agentId": "UA-DI-12",
+       "text": "Runs evaluation suites, tracks acceptance and recommends promoting or demoting each agent's autonomy."
+      },
+      {
+       "id": "ua-ee-03",
+       "label": "Critical-Infrastructure Compliance Evidence Agent",
+       "agentId": "UA-EE-03",
+       "text": "Collects and indexes reliability and cyber-standards evidence continuously and flags gaps before audits."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-agt-01",
+       "label": "Agent Evidence Trail",
+       "dpId": "UDP-AGT-01",
+       "text": "Every agent action, approval, refusal and policy decision, immutable and replayable."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Agent Evidence Trail certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S9"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "What do we get at the end?",
+     "a": "A readiness score against the Utility cohort, the hard blockers, and a 90-day plan that starts with the right motion."
+    }
+   ]
+  },
+  {
+   "id": "U-O6",
+   "name": "Data Product Factory",
+   "motion": "engineer",
+   "promise": "From the existing BI estate and business intent to certified data products, with BI rationalisation and KPI-lineage accelerators",
+   "domains": [
+    "enterprise"
+   ],
+   "buyers": [
+    "CDO",
+    "CIO"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "{{fx.saidiLineage.baselineWeeks}} weeks → {{fx.saidiLineage.elapsedDays}} days",
+     "label": "Intent to certified product (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    },
+    {
+     "value": "{{fx.saidiLineage.reports}}",
+     "label": "Reports rationalised in one pass",
+     "source": "synthetic",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot",
+    "regulatory"
+   ],
+   "agents": [
+    "UA-DI-01",
+    "UA-DI-02",
+    "UA-DI-03",
+    "UA-DI-04",
+    "UA-DI-05"
+   ],
+   "dataProducts": [
+    "UDP-GRD-01",
+    "UDP-ENT-06"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Data Product Factory"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 2 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Code repository",
+       "text": "Code repository: where people meet the agents and answers of Data Product Factory."
+      },
+      {
+       "id": "ch1",
+       "label": "CI",
+       "text": "CI: where people meet the agents and answers of Data Product Factory."
+      },
+      {
+       "id": "ch2",
+       "label": "Catalog",
+       "text": "Catalog: where people meet the agents and answers of Data Product Factory."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-01",
+       "label": "Data Product Discovery Agent",
+       "agentId": "UA-DI-01",
+       "text": "Turns business intent plus report and KPI lineage from the BI estate into a ranked, evidence-backed data-product backlog."
+      },
+      {
+       "id": "ua-di-02",
+       "label": "Source-to-Target Mapping Agent",
+       "agentId": "UA-DI-02",
+       "text": "Maps CIS, MDMS, OMS, GIS, EAM and historian sources to the utility data model (CIM-aligned) with confidence scores."
+      },
+      {
+       "id": "ua-di-03",
+       "label": "Data Quality Rules Agent",
+       "agentId": "UA-DI-03",
+       "text": "Generates and backtests quality rules for critical data elements such as meter IDs, premise-to-transformer links and outage times."
+      },
+      {
+       "id": "ua-di-04",
+       "label": "Pipeline & Code Generation Agent",
+       "agentId": "UA-DI-04",
+       "text": "Generates and tests transformation code from approved mappings and opens a pull request for human merge."
+      },
+      {
+       "id": "ua-di-05",
+       "label": "Semantic Model Builder Agent",
+       "agentId": "UA-DI-05",
+       "text": "Builds semantic views and verified queries for certified KPIs such as SAIDI, SAIFI, CAIDI, O&M per customer and bad debt."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-01",
+       "label": "Outage & Reliability 360",
+       "dpId": "UDP-GRD-01",
+       "text": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags."
+      },
+      {
+       "id": "udp-ent-06",
+       "label": "Capital & O&M",
+       "dpId": "UDP-ENT-06",
+       "text": "Capital projects and O&M by program and region with budgets, spend and risk reduction."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Outage & Reliability 360 certified",
+     "Capital & O&M certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S5"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Do agents push code to production?",
+     "a": "No. Every pipeline arrives as a pull request with tests and lineage; your engineering lead merges it."
+    }
+   ]
+  },
+  {
+   "id": "U-O7",
+   "name": "Enterprise Data & Agent Marketplace",
+   "motion": "decide-act",
+   "promise": "Discover, try, request and consume data products and agents",
+   "domains": [
+    "enterprise"
+   ],
+   "buyers": [
+    "CDO",
+    "CFO"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "{{fx.cfoQuestion.accessSeconds}} s",
+     "label": "Time to access (aggregate products)",
+     "source": "synthetic",
+     "validated": false
+    },
+    {
+     "value": "100%",
+     "label": "Answers with citations or refusal",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot",
+    "corporate"
+   ],
+   "agents": [
+    "UA-DI-09",
+    "UA-DI-10",
+    "UA-DI-11",
+    "UA-DI-13"
+   ],
+   "dataProducts": [
+    "UDP-GRD-01",
+    "UDP-ENT-06",
+    "UDP-AGT-01"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Enterprise Data & Agent Marketplace"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "ai",
+      "trust"
+     ],
+     "scope": "2 agents on 3 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Marketplace",
+       "text": "Marketplace: where people meet the agents and answers of Enterprise Data & Agent Marketplace."
+      },
+      {
+       "id": "ch1",
+       "label": "BI",
+       "text": "BI: where people meet the agents and answers of Enterprise Data & Agent Marketplace."
+      },
+      {
+       "id": "ch2",
+       "label": "Mobile",
+       "text": "Mobile: where people meet the agents and answers of Enterprise Data & Agent Marketplace."
+      },
+      {
+       "id": "ch3",
+       "label": "Chat",
+       "text": "Chat: where people meet the agents and answers of Enterprise Data & Agent Marketplace."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-09",
+       "label": "Ask the Utility Agent",
+       "agentId": "UA-DI-09",
+       "text": "Answers business questions over certified data products with a full 'how I answered' trace, refusing when evidence is missing."
+      },
+      {
+       "id": "ua-di-10",
+       "label": "Marketplace Concierge Agent",
+       "agentId": "UA-DI-10",
+       "text": "Helps users find, preview and request the right data product or agent."
+      },
+      {
+       "id": "ua-di-11",
+       "label": "Executive Insight Briefing Agent",
+       "agentId": "UA-DI-11",
+       "text": "Produces a weekly, cited briefing on reliability, safety, customer, cost and capital-plan KPIs with drivers and actions."
+      },
+      {
+       "id": "ua-di-13",
+       "label": "Access Request Agent",
+       "agentId": "UA-DI-13",
+       "text": "Evaluates access requests against purpose, role and classification; auto-approves within policy and routes the rest."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-01",
+       "label": "Outage & Reliability 360",
+       "dpId": "UDP-GRD-01",
+       "text": "Outage events, customers interrupted, causes, restoration steps and IEEE 1366 metrics with major-event-day flags."
+      },
+      {
+       "id": "udp-ent-06",
+       "label": "Capital & O&M",
+       "dpId": "UDP-ENT-06",
+       "text": "Capital projects and O&M by program and region with budgets, spend and risk reduction."
+      },
+      {
+       "id": "udp-agt-01",
+       "label": "Agent Evidence Trail",
+       "dpId": "UDP-AGT-01",
+       "text": "Every agent action, approval, refusal and policy decision, immutable and replayable."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Outage & Reliability 360 certified",
+     "Capital & O&M certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S6"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Will people see data they should not?",
+     "a": "No. Classification policies (PII, CEUD, CEII, Market-Sensitive) apply in every answer; restricted data needs the owner."
+    }
+   ]
+  },
+  {
+   "id": "U-O8",
+   "name": "AI Architecture Office & Control Plane",
+   "motion": "govern",
+   "promise": "AI risk tiering, the OT safety cap, evidence and agent oversight",
+   "domains": [
+    "enterprise"
+   ],
+   "buyers": [
+    "CISO",
+    "CRO",
+    "Chief Regulatory Officer"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "0",
+     "label": "OT actions by agents",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "{{fx.assured.autoEvidence|pct}}",
+     "label": "Evidence collected automatically (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "it-ot",
+    "regulatory"
+   ],
+   "agents": [
+    "UA-DI-12",
+    "UA-DI-13",
+    "UA-EE-02",
+    "UA-EE-03",
+    "UA-EE-06"
+   ],
+   "dataProducts": [
+    "UDP-AGT-01",
+    "UDP-CUS-05"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for AI Architecture Office & Control Plane"
+    },
+    "pilot": {
+     "layersInScope": [
+      "trust",
+      "security",
+      "trust"
+     ],
+     "scope": "2 agents on 2 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Audit console",
+       "text": "Audit console: where people meet the agents and answers of AI Architecture Office & Control Plane."
+      },
+      {
+       "id": "ch1",
+       "label": "Policy engine",
+       "text": "Policy engine: where people meet the agents and answers of AI Architecture Office & Control Plane."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-di-12",
+       "label": "Agent Evaluation & Promotion Agent",
+       "agentId": "UA-DI-12",
+       "text": "Runs evaluation suites, tracks acceptance and recommends promoting or demoting each agent's autonomy."
+      },
+      {
+       "id": "ua-di-13",
+       "label": "Access Request Agent",
+       "agentId": "UA-DI-13",
+       "text": "Evaluates access requests against purpose, role and classification; auto-approves within policy and routes the rest."
+      },
+      {
+       "id": "ua-ee-02",
+       "label": "Rate Case & Data Request Agent",
+       "agentId": "UA-EE-02",
+       "text": "Drafts responses to regulator data requests and checks filings for inconsistent numbers, all from certified data."
+      },
+      {
+       "id": "ua-ee-03",
+       "label": "Critical-Infrastructure Compliance Evidence Agent",
+       "agentId": "UA-EE-03",
+       "text": "Collects and indexes reliability and cyber-standards evidence continuously and flags gaps before audits."
+      },
+      {
+       "id": "ua-ee-06",
+       "label": "Customer Data Privacy & Consent Agent",
+       "agentId": "UA-EE-06",
+       "text": "Checks that consent and customer-data-sharing rules propagate to every system, partner and agent that uses customer energy data."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-agt-01",
+       "label": "Agent Evidence Trail",
+       "dpId": "UDP-AGT-01",
+       "text": "Every agent action, approval, refusal and policy decision, immutable and replayable."
+      },
+      {
+       "id": "udp-cus-05",
+       "label": "Contact Preferences & Consent",
+       "dpId": "UDP-CUS-05",
+       "text": "Contact preferences, marketing consent and customer-data-sharing authorisations, propagated to every channel and agent."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Agent Evidence Trail certified",
+     "Contact Preferences & Consent certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S9"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "How is the OT cap enforced?",
+     "a": "In the agent runtime and the control plane: OT-capped agents cannot be promoted above L2, the selector locks, and every attempt is logged."
+    }
+   ]
+  },
+  {
+   "id": "U-O9",
+   "name": "Customer Experience & Affordability Intelligence",
+   "motion": "decide-act",
+   "promise": "Explain every bill, help customers who struggle and contain more contacts",
+   "domains": [
+    "customer"
+   ],
+   "buyers": [
+    "Chief Customer Officer"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "{{fx.highBill.escalationsBefore}} → {{fx.highBill.escalationsAfter}}",
+     "label": "High-bill escalations a year (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    },
+    {
+     "value": "5–12%",
+     "label": "Lower bad debt",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "customer-care",
+    "meter-to-cash",
+    "programs"
+   ],
+   "agents": [
+    "UA-CC-02",
+    "UA-CC-03",
+    "UA-CC-04"
+   ],
+   "dataProducts": [
+    "UDP-CUS-02",
+    "UDP-CUS-03",
+    "UDP-CUS-06",
+    "UDP-CUS-07"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Customer Experience & Affordability Intelligence"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "ai",
+      "trust"
+     ],
+     "scope": "2 agents on 4 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Customer app",
+       "text": "Customer app: where people meet the agents and answers of Customer Experience & Affordability Intelligence."
+      },
+      {
+       "id": "ch1",
+       "label": "Contact-centre desktop",
+       "text": "Contact-centre desktop: where people meet the agents and answers of Customer Experience & Affordability Intelligence."
+      },
+      {
+       "id": "ch2",
+       "label": "IVR",
+       "text": "IVR: where people meet the agents and answers of Customer Experience & Affordability Intelligence."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-cc-02",
+       "label": "High-Bill & Usage Explainer Agent",
+       "agentId": "UA-CC-02",
+       "text": "Explains any bill change with interval usage, weather, rate and billing-days evidence, and suggests ways to lower the next one."
+      },
+      {
+       "id": "ua-cc-03",
+       "label": "Payment Assistance & Affordability Agent",
+       "agentId": "UA-CC-03",
+       "text": "Finds the right payment arrangement or assistance program for customers in arrears, within regulatory protections."
+      },
+      {
+       "id": "ua-cc-04",
+       "label": "Energy Program & EV Advisor Agent",
+       "agentId": "UA-CC-04",
+       "text": "Matches customers to efficiency, demand-response, EV and solar programs and rates that save them money and relieve the grid."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-cus-02",
+       "label": "AMI Interval Usage",
+       "dpId": "UDP-CUS-02",
+       "text": "15-minute AMI interval usage for electric meters, validated, estimated and edited (VEE) in the MDMS."
+      },
+      {
+       "id": "udp-cus-03",
+       "label": "Billing & Payments",
+       "dpId": "UDP-CUS-03",
+       "text": "Bills, payments, arrears and arrangements for every account, reconciled to the ledger."
+      },
+      {
+       "id": "udp-cus-06",
+       "label": "Assistance & Protections",
+       "dpId": "UDP-CUS-06",
+       "text": "Assistance enrolment, payment arrangements and disconnection protections (medical, weather, seasonal)."
+      },
+      {
+       "id": "udp-cus-07",
+       "label": "Programs & Enrolment",
+       "dpId": "UDP-CUS-07",
+       "text": "Program eligibility, enrolment, events and measured savings for efficiency, demand response and EV programs."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "AMI Interval Usage certified",
+     "Billing & Payments certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S2"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Could an agent disconnect a protected customer?",
+     "a": "No. Agents never schedule disconnections, and protections are checked on every account."
+    }
+   ]
+  },
+  {
+   "id": "U-O10",
+   "name": "Wildfire & Storm Resilience AI",
+   "motion": "decide-act",
+   "promise": "Risk-based vegetation, fire-weather decision support and storm staging",
+   "domains": [
+    "grid"
+   ],
+   "buyers": [
+    "COO",
+    "Chief Safety Officer"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "−15–30%",
+     "label": "Tree-caused outages",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "{{fx.storm.restorationHoursBefore}} h → {{fx.storm.restorationHoursAfter}} h",
+     "label": "Major-event restoration (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "resilience",
+    "field-ops"
+   ],
+   "agents": [
+    "UA-GO-05",
+    "UA-GO-01",
+    "UA-CC-01"
+   ],
+   "dataProducts": [
+    "UDP-GRD-06",
+    "UDP-GRD-09",
+    "UDP-GRD-07"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Wildfire & Storm Resilience AI"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "ai",
+      "trust"
+     ],
+     "scope": "2 agents on 3 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Emergency operations centre",
+       "text": "Emergency operations centre: where people meet the agents and answers of Wildfire & Storm Resilience AI."
+      },
+      {
+       "id": "ch1",
+       "label": "Vegetation system",
+       "text": "Vegetation system: where people meet the agents and answers of Wildfire & Storm Resilience AI."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-go-05",
+       "label": "Vegetation & Wildfire Risk Agent",
+       "agentId": "UA-GO-05",
+       "text": "Scores span-level vegetation and fire-weather risk, builds risk-based trim plans and prepares PSPS decision packs for people to decide."
+      },
+      {
+       "id": "ua-go-01",
+       "label": "Outage Prediction & Storm Staging Agent",
+       "agentId": "UA-GO-01",
+       "text": "Predicts where storms will cause outages and recommends crew, material and mutual-assistance staging."
+      },
+      {
+       "id": "ua-cc-01",
+       "label": "Outage Communication & ETR Agent",
+       "agentId": "UA-CC-01",
+       "text": "Tells every affected customer what is happening, when power will be back and what to do, on their preferred channel."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-06",
+       "label": "Weather & Fire Risk",
+       "dpId": "UDP-GRD-06",
+       "text": "Weather forecasts and fire-risk indices by region and day (synthetic weather)."
+      },
+      {
+       "id": "udp-grd-09",
+       "label": "Vegetation Spans",
+       "dpId": "UDP-GRD-09",
+       "text": "Span-level vegetation clearance, species, trim history and risk tier."
+      },
+      {
+       "id": "udp-grd-07",
+       "label": "Asset Registry & Health",
+       "dpId": "UDP-GRD-07",
+       "text": "Asset registry with condition, test results, loading and health index for transformers, breakers, poles and cables."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Weather & Fire Risk certified",
+     "Vegetation Spans certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S8",
+    "U-S1"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Does the agent decide on PSPS?",
+     "a": "No. It prepares the decision pack; authorised people decide and qualified operators execute. It is capped at L2."
+    }
+   ]
+  },
+  {
+   "id": "U-O11",
+   "name": "Large Load & Interconnection Acceleration",
+   "motion": "decide-act",
+   "promise": "Faster answers for data centres, DER and generation interconnection",
+   "domains": [
+    "customer",
+    "grid"
+   ],
+   "buyers": [
+    "CEO",
+    "VP Planning"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "{{fx.dataCentre.baselineWeeks}} weeks → {{fx.dataCentre.screenDays}} days",
+     "label": "Time to a feasibility answer (synthetic)",
+     "source": "synthetic",
+     "validated": false
+    },
+    {
+     "value": "+",
+     "label": "MW connected",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "large-load",
+    "grid-plan",
+    "corporate"
+   ],
+   "agents": [
+    "UA-CC-05",
+    "UA-EE-05"
+   ],
+   "dataProducts": [
+    "UDP-GRD-04",
+    "UDP-GRD-05",
+    "UDP-CUS-08"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Large Load & Interconnection Acceleration"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "ai",
+      "trust"
+     ],
+     "scope": "2 agents on 3 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Connection portal",
+       "text": "Connection portal: where people meet the agents and answers of Large Load & Interconnection Acceleration."
+      },
+      {
+       "id": "ch1",
+       "label": "Planning models",
+       "text": "Planning models: where people meet the agents and answers of Large Load & Interconnection Acceleration."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-cc-05",
+       "label": "Large Load & New Connection Agent",
+       "agentId": "UA-CC-05",
+       "text": "Screens new service and large-load requests (including data centres), gives a fast feasibility answer and drafts the next steps."
+      },
+      {
+       "id": "ua-ee-05",
+       "label": "Capital Plan Optimisation Agent",
+       "agentId": "UA-EE-05",
+       "text": "Ranks capital projects by risk reduced, reliability gained and customer bill impact within budget and resource limits."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-grd-04",
+       "label": "Feeder Capacity & Hosting",
+       "dpId": "UDP-GRD-04",
+       "text": "Feeder loading, hosting capacity and DER by circuit, from planning models and AMI."
+      },
+      {
+       "id": "udp-grd-05",
+       "label": "Transmission Capacity",
+       "dpId": "UDP-GRD-05",
+       "text": "Transmission paths, ratings, flows and headroom used for large-load and interconnection screening."
+      },
+      {
+       "id": "udp-cus-08",
+       "label": "Connection Requests",
+       "dpId": "UDP-CUS-08",
+       "text": "New service, DER and large-load requests from intake to energisation, with stages and ages."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Feeder Capacity & Hosting certified",
+     "Transmission Capacity certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S3"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Is the answer binding?",
+     "a": "No. Feasibility is indicative until engineering signs off; the agent never commits capacity or dates."
+    }
+   ]
+  },
+  {
+   "id": "U-O12",
+   "name": "Generation Performance & Energy Markets AI",
+   "motion": "operate",
+   "promise": "Heat rate, predictive maintenance, forecasting, bidding and storage",
+   "domains": [
+    "generation"
+   ],
+   "buyers": [
+    "VP Generation",
+    "Trading desk lead"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "0.5–1.5%",
+     "label": "Heat-rate improvement",
+     "source": "BENCH",
+     "validated": false
+    },
+    {
+     "value": "−10–25%",
+     "label": "Imbalance cost",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "gen-ops",
+    "gen-maint",
+    "trading"
+   ],
+   "agents": [
+    "UA-GM-01",
+    "UA-GM-02",
+    "UA-GM-03",
+    "UA-GM-04",
+    "UA-GM-05"
+   ],
+   "dataProducts": [
+    "UDP-GEN-01",
+    "UDP-GEN-02",
+    "UDP-GEN-03",
+    "UDP-MKT-01",
+    "UDP-MKT-02"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Generation Performance & Energy Markets AI"
+    },
+    "pilot": {
+     "layersInScope": [
+      "ai",
+      "integration",
+      "trust"
+     ],
+     "scope": "2 agents on 5 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Plant performance desk",
+       "text": "Plant performance desk: where people meet the agents and answers of Generation Performance & Energy Markets AI."
+      },
+      {
+       "id": "ch1",
+       "label": "Trading desk",
+       "text": "Trading desk: where people meet the agents and answers of Generation Performance & Energy Markets AI."
+      },
+      {
+       "id": "ch2",
+       "label": "EMS (read-only)",
+       "text": "EMS (read-only): where people meet the agents and answers of Generation Performance & Energy Markets AI."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-gm-01",
+       "label": "Plant Performance & Heat Rate Agent",
+       "agentId": "UA-GM-01",
+       "text": "Detects heat-rate drift and performance losses across the fleet and recommends corrections to operators."
+      },
+      {
+       "id": "ua-gm-02",
+       "label": "Generation Predictive Maintenance Agent",
+       "agentId": "UA-GM-02",
+       "text": "Spots early signs of equipment failure from historian data and raises evidence-backed work requests."
+      },
+      {
+       "id": "ua-gm-03",
+       "label": "Load & Renewables Forecasting Agent",
+       "agentId": "UA-GM-03",
+       "text": "Forecasts load, wind and solar output with weather, DER and electrification signals."
+      },
+      {
+       "id": "ua-gm-04",
+       "label": "Market Bidding & Settlement Agent",
+       "agentId": "UA-GM-04",
+       "text": "Prepares unit offers within the approved strategy and reconciles ISO/RTO settlements to internal data."
+      },
+      {
+       "id": "ua-gm-05",
+       "label": "Battery Storage Dispatch Agent",
+       "agentId": "UA-GM-05",
+       "text": "Optimises battery charge and discharge against prices, grid constraints and state-of-health limits."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-gen-01",
+       "label": "Unit Performance",
+       "dpId": "UDP-GEN-01",
+       "text": "Unit capacity, availability, heat rate and forced outage rate across the fleet."
+      },
+      {
+       "id": "udp-gen-02",
+       "label": "Plant Historian",
+       "dpId": "UDP-GEN-02",
+       "text": "Plant historian tags (vibration, temperature, pressure, flow) mapped to the asset hierarchy, delivered one way from OT."
+      },
+      {
+       "id": "udp-gen-03",
+       "label": "Storage Assets",
+       "dpId": "UDP-GEN-03",
+       "text": "Battery sites with state of charge, cycles and round-trip efficiency."
+      },
+      {
+       "id": "udp-mkt-01",
+       "label": "Load & Weather",
+       "dpId": "UDP-MKT-01",
+       "text": "Hourly load, forecast, wind and solar output with weather drivers."
+      },
+      {
+       "id": "udp-mkt-02",
+       "label": "Market Bids & Settlements",
+       "dpId": "UDP-MKT-02",
+       "text": "Unit offers, awards and settlements by interval."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Unit Performance certified",
+     "Plant Historian certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "One-way OT data flows"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S7"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Will agents change set-points or dispatch batteries?",
+     "a": "No. Plant performance and storage dispatch agents are capped at L2: operators and the EMS execute."
+    }
+   ]
+  },
+  {
+   "id": "U-O13",
+   "name": "Connected Worker & Field Safety AI",
+   "motion": "decide-act",
+   "promise": "Job-specific briefings, SIF-precursor insight and field knowledge on mobile",
+   "domains": [
+    "enterprise",
+    "grid"
+   ],
+   "buyers": [
+    "Chief Safety Officer",
+    "COO"
+   ],
+   "maturity": "emerging",
+   "validated": false,
+   "kpis": [
+    {
+     "value": "Fewer",
+     "label": "SIF-precursor events (synthetic until proof)",
+     "source": "synthetic",
+     "validated": false
+    },
+    {
+     "value": "100%",
+     "label": "Jobs with a tailored briefing",
+     "source": "BENCH",
+     "validated": false
+    }
+   ],
+   "areas": [
+    "safety",
+    "field-ops"
+   ],
+   "agents": [
+    "UA-EE-01",
+    "UA-GO-06"
+   ],
+   "dataProducts": [
+    "UDP-ENT-02",
+    "UDP-ENT-05",
+    "UDP-GRD-06"
+   ],
+   "options": {
+    "assess": {
+     "layersInScope": [
+      "data",
+      "trust"
+     ],
+     "scope": "Readiness, use cases and target architecture for Connected Worker & Field Safety AI"
+    },
+    "pilot": {
+     "layersInScope": [
+      "data",
+      "ai",
+      "trust"
+     ],
+     "scope": "2 agents on 3 data products at L2/L3 (OT-capped agents stay at L2)"
+    },
+    "scale": {
+     "layersInScope": [
+      "integration",
+      "data",
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "The full agent set across the domain, with the factory and the control plane"
+    },
+    "run": {
+     "layersInScope": [
+      "ai",
+      "trust",
+      "security"
+     ],
+     "scope": "Managed agent operations, evaluation, promotion decisions and FinOps"
+    }
+   },
+   "architecture": [
+    {
+     "layer": "experience",
+     "name": "Channels & experience",
+     "boxes": [
+      {
+       "id": "ch0",
+       "label": "Field mobile",
+       "text": "Field mobile: where people meet the agents and answers of Connected Worker & Field Safety AI."
+      },
+      {
+       "id": "ch1",
+       "label": "Tablet",
+       "text": "Tablet: where people meet the agents and answers of Connected Worker & Field Safety AI."
+      }
+     ]
+    },
+    {
+     "layer": "agents",
+     "name": "Agents",
+     "boxes": [
+      {
+       "id": "ua-ee-01",
+       "label": "Field Safety Briefing Agent",
+       "agentId": "UA-EE-01",
+       "text": "Builds a job-specific pre-job briefing from work type, location, weather, energy sources and past incidents, and answers crew safety questions."
+      },
+      {
+       "id": "ua-go-06",
+       "label": "Work Bundling & Crew Dispatch Agent",
+       "agentId": "UA-GO-06",
+       "text": "Bundles nearby work, schedules crews by skill, permit and material availability, and dispatches emergencies to the best crew."
+      }
+     ]
+    },
+    {
+     "layer": "products",
+     "name": "Data products",
+     "boxes": [
+      {
+       "id": "udp-ent-02",
+       "label": "Work Orders",
+       "dpId": "UDP-ENT-02",
+       "text": "Work orders across corrective, preventive, capital, emergency and gas work."
+      },
+      {
+       "id": "udp-ent-05",
+       "label": "Safety Observations & Incidents",
+       "dpId": "UDP-ENT-05",
+       "text": "Observations, near misses, incidents and SIF precursors, anonymised for analysis."
+      },
+      {
+       "id": "udp-grd-06",
+       "label": "Weather & Fire Risk",
+       "dpId": "UDP-GRD-06",
+       "text": "Weather forecasts and fire-risk indices by region and day (synthetic weather)."
+      }
+     ]
+    },
+    {
+     "layer": "foundation",
+     "name": "Foundation",
+     "boxes": [
+      {
+       "id": "integration",
+       "label": "integration",
+       "layerId": "integration"
+      },
+      {
+       "id": "data",
+       "label": "data",
+       "layerId": "data"
+      },
+      {
+       "id": "ai",
+       "label": "ai",
+       "layerId": "ai"
+      },
+      {
+       "id": "trust",
+       "label": "trust",
+       "layerId": "trust"
+      },
+      {
+       "id": "security",
+       "label": "security",
+       "layerId": "security"
+      }
+     ]
+    }
+   ],
+   "checklist": {
+    "data": [
+     "Work Orders certified",
+     "Safety Observations & Incidents certified",
+     "Critical data elements under DQ rules"
+    ],
+    "platform": [
+     "Agent runtime with the OT cap",
+     "Catalogued, reversible IT actions",
+     "Channel integration"
+    ],
+    "people": [
+     "Named approver per agent",
+     "Product owners for each data product",
+     "Adoption owner in the business"
+    ],
+    "governance": [
+     "Classification policies (PII, CEUD, CEII, Market-Sensitive) applied",
+     "Evidence trail for every agent action",
+     "Kill switch tested"
+    ],
+    "value": [
+     "Baseline KPIs agreed",
+     "Monthly value tracking against the calculator"
+    ]
+   },
+   "scenarioIds": [
+    "U-S1"
+   ],
+   "team": [
+    "Offer owner (role)",
+    "Solution architect",
+    "Utility SME (grid operations)",
+    "Data & AI lead"
+   ],
+   "objections": [
+    {
+     "q": "Does this replace the tailboard?",
+     "a": "No. It supports the crew’s own tailboard and never approves energised work."
+    }
+   ]
+  }
+ ]
+}

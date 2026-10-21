@@ -1,0 +1,169 @@
+{
+ "_note": "Spec §10.3: same 8 pillars and 12 questions, adapted for utilities. Answers score 0–3. referenceDefaults is the synthetic reference Utility's answers; the cohort band is an anonymised synthetic Utility cohort.",
+ "pillars": [
+  {
+   "id": "strategy",
+   "name": "Strategy & value"
+  },
+  {
+   "id": "data",
+   "name": "Data foundation"
+  },
+  {
+   "id": "network",
+   "name": "Network model & OT data"
+  },
+  {
+   "id": "semantic",
+   "name": "Semantics & lineage"
+  },
+  {
+   "id": "platform",
+   "name": "Platform & integration"
+  },
+  {
+   "id": "governance",
+   "name": "Governance & consent"
+  },
+  {
+   "id": "security",
+   "name": "Security & critical infrastructure"
+  },
+  {
+   "id": "people",
+   "name": "People & operations"
+  }
+ ],
+ "answers": [
+  "Not started",
+  "Ad hoc",
+  "Defined",
+  "Managed"
+ ],
+ "questions": [
+  {
+   "id": "q1",
+   "pillar": "strategy",
+   "text": "Are AI use cases tied to outcomes with baselines (SAIDI, O&M per customer, bad debt, safety)?"
+  },
+  {
+   "id": "q2",
+   "pillar": "network",
+   "text": "How accurate is the GIS network model (customer-to-transformer and phase connectivity)?",
+   "blocker": "gisUnknown",
+   "blockerAt": 0,
+   "flag": "networkModel",
+   "flagAt": 1
+  },
+  {
+   "id": "q3",
+   "pillar": "data",
+   "text": "Is AMI interval data validated, complete and available within hours?"
+  },
+  {
+   "id": "q4",
+   "pillar": "network",
+   "text": "Is there a governed route for OT data (SCADA, historian, EMS) into analytics, one way across security zones?",
+   "blocker": "noOtRoute",
+   "blockerAt": 0,
+   "flag": "governance",
+   "flagAt": 0
+  },
+  {
+   "id": "q5",
+   "pillar": "governance",
+   "text": "Does consent for customer energy usage data propagate to every system, partner and agent?",
+   "blocker": "noConsent",
+   "blockerAt": 0,
+   "flag": "governance",
+   "flagAt": 0
+  },
+  {
+   "id": "q6",
+   "pillar": "security",
+   "text": "Is critical-infrastructure information (CEII, BES Cyber System Information) classified and handled by policy?"
+  },
+  {
+   "id": "q7",
+   "pillar": "semantic",
+   "text": "Do IEEE 1366 reliability metrics have one certified definition and full lineage?",
+   "flag": "networkModel",
+   "flagAt": 0
+  },
+  {
+   "id": "q8",
+   "pillar": "semantic",
+   "text": "Has the BI estate been rationalised, with KPI lineage and stewards?"
+  },
+  {
+   "id": "q9",
+   "pillar": "platform",
+   "text": "Can agents call catalogued, reversible actions in IT systems (CIS, OMS, EAM, work management)?"
+  },
+  {
+   "id": "q10",
+   "pillar": "governance",
+   "text": "Is there an evidence trail for every agent action, approval and refusal?",
+   "blocker": "noEvidence",
+   "blockerAt": 0,
+   "flag": "governance",
+   "flagAt": 0
+  },
+  {
+   "id": "q11",
+   "pillar": "people",
+   "text": "Are agents evaluated before promotion, with approvers named and the OT cap enforced?"
+  },
+  {
+   "id": "q12",
+   "pillar": "people",
+   "text": "How automated are control-room and field processes (dispatch, switching preparation, work planning)?",
+   "answers": [
+    "Fully manual",
+    "Mostly manual",
+    "Partly automated",
+    "Largely automated"
+   ],
+   "flag": "manualOps",
+   "flagAt": 1
+  }
+ ],
+ "blockers": {
+  "gisUnknown": "GIS connectivity accuracy unknown",
+  "noOtRoute": "No governed route for OT data into analytics",
+  "noConsent": "No consent propagation for customer energy usage data",
+  "noEvidence": "No evidence trail for agent actions"
+ },
+ "blockerCap": 40,
+ "referenceDefaults": {
+  "q1": 2,
+  "q2": 1,
+  "q3": 2,
+  "q4": 1,
+  "q5": 1,
+  "q6": 2,
+  "q7": 1,
+  "q8": 1,
+  "q9": 1,
+  "q10": 1,
+  "q11": 1,
+  "q12": 2
+ },
+ "cohort": {
+  "label": "{{label.cohortLabel}}",
+  "note": "Anonymised synthetic cohort of 24 utilities",
+  "p25": 38,
+  "median": 51,
+  "p75": 64,
+  "pillars": {
+   "strategy": 58,
+   "data": 55,
+   "network": 42,
+   "semantic": 40,
+   "platform": 52,
+   "governance": 47,
+   "security": 61,
+   "people": 44
+  }
+ }
+}

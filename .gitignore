@@ -1,0 +1,6 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+content/industries/*/generated/
+.DS_Store

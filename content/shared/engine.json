@@ -1,0 +1,35 @@
+{
+  "_note": "Engine-wide content shared by every industry pack.",
+  "autonomyLevels": [
+    { "level": "L1", "name": "Observe / Assist", "who": "A person does the work; the agent informs and drafts.", "executes": "Nothing" },
+    { "level": "L2", "name": "Propose", "who": "The agent proposes; a named approver decides and a person executes.", "executes": "Nothing without a person" },
+    { "level": "L3", "name": "Act with approval", "who": "The agent executes after the approver says yes, within catalogued, reversible actions.", "executes": "Approved, reversible IT actions" },
+    { "level": "L4", "name": "Act and notify", "who": "The agent executes within policy and notifies the owner; the owner can roll back.", "executes": "Catalogued, reversible IT actions within policy" }
+  ],
+  "promotionRule": "An agent may move up one level after 8 weeks at ≥ 90% acceptance, ≥ 0.9 evaluation score and no policy violations, by decision of the AI governance board. A regression, a policy violation or a drop in evaluation demotes it automatically.",
+  "sourceTypes": {
+    "published": "Published third-party source (see the linked publication)",
+    "capgemini-proof": "Capgemini proof point (approved for this use)",
+    "BENCH": "Industry benchmark range — pending validation",
+    "synthetic": "Synthetic reference data (generated, seeded)"
+  },
+  "platforms": ["Snowflake", "Databricks", "BigQuery", "Microsoft Fabric", "AWS"],
+  "maturityLadder": ["Foundational", "Managed", "AI-ready", "Autonomous-ready"],
+  "engagementOptions": [
+    { "id": "assess", "name": "Assess", "duration": "4–6 weeks", "gets": "Readiness score, prioritised use cases, value case and target architecture", "exit": "Funded pilot backlog" },
+    { "id": "pilot", "name": "Pilot", "duration": "10–12 weeks", "gets": "1–2 agents on 3–5 data products at L2/L3", "exit": "Measured KPI movement and a promotion decision" },
+    { "id": "scale", "name": "Scale", "duration": "6–12 months", "gets": "An agent fleet across a domain, the data-product factory and the control plane", "exit": "Domain KPIs met; L3/L4 for qualifying (non-OT) agents" },
+    { "id": "run", "name": "Run", "duration": "Ongoing", "gets": "Managed agent operations, evaluation and FinOps", "exit": "SLA-based" }
+  ],
+  "checklistGroups": [
+    { "id": "data", "name": "Data" }, { "id": "platform", "name": "Platform" }, { "id": "people", "name": "People" },
+    { "id": "governance", "name": "Governance" }, { "id": "value", "name": "Value tracking" }
+  ],
+  "checklistStatuses": ["Have", "Partial", "Gap"],
+  "readinessTiers": [
+    { "id": "ready", "name": "AI-Ready", "min": 75 },
+    { "id": "capable", "name": "AI-Capable", "min": 55 },
+    { "id": "emerging", "name": "AI-Emerging", "min": 35 },
+    { "id": "risk", "name": "AI-At-Risk", "min": 0 }
+  ]
+}

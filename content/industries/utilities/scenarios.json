@@ -1,0 +1,131 @@
+{
+  "scenarios": [
+    { "id": "U-S1", "title": "Storm night", "motion": "operate", "motionLabel": "Operate → Decide & Act", "persona": "COO / SVP T&D Operations", "outcome": "reliability",
+      "summary": "Damage prediction → staging → fault location → restoration plan to the operator → ETR notices.",
+      "agents": ["UA-GO-01", "UA-GO-02", "UA-GO-06", "UA-CC-01"],
+      "steps": [
+        { "time": "T−72 h", "agentId": "UA-GO-01", "title": "Predict the damage", "narration": "Gusts of 58–74 mph forecast for the {{fx.storm.regions}} regions. The agent predicts {{fx.storm.predictedOutages}} sustained outages and a peak of {{fx.storm.peakCustomersOut}} customers out." },
+        { "time": "T−48 h", "agentId": "UA-GO-01", "title": "Recommend staging", "narration": "{{fx.storm.crewsStaged}} crews recommended, {{fx.storm.mutualAssistCrews}} from mutual assistance, in 4 yards.", "approval": { "role": "Emergency operations director", "status": "approved" } },
+        { "time": "Storm 21:40", "agentId": "UA-GO-02", "title": "Locate faults", "narration": "AMI last-gasp, SCADA and fault indicators locate faults on {{fx.storm.actualOutages}} outages. Switching plans go to the operators, who execute them — no agent operates a device.", "approval": { "role": "Distribution system operator", "status": "executes" } },
+        { "time": "Storm 23:10", "agentId": "UA-GO-06", "title": "Dispatch crews", "narration": "Crews dispatched by skill and location; damage photos classified to estimate crew-hours. Hours-of-service limits enforced." },
+        { "time": "Storm 23:30", "agentId": "UA-EE-01", "title": "Brief crews safely", "narration": "Every storm crew gets a job-specific briefing: downed conductors, back-feed from generators, traffic. Supports the crew's own tailboard." },
+        { "time": "Day 2", "agentId": "UA-CC-01", "title": "Tell customers the truth", "narration": "{{fx.storm.notices}} notices with ETRs from the restoration model; {{fx.storm.medicalBaselineFirst}} medical-baseline customers contacted first. Outage calls fall from {{fx.storm.outageCallsBefore}} to {{fx.storm.outageCallsAfter}}.", "approval": { "role": "Customer communications lead", "status": "approved" } }
+      ],
+      "kpis": [
+        { "label": "ETR accuracy", "before": "{{fx.storm.etrAccuracyBefore|pct}}", "after": "{{fx.storm.etrAccuracyAfter|pct}}" },
+        { "label": "Restoration time (major event)", "before": "{{fx.storm.restorationHoursBefore}} h", "after": "{{fx.storm.restorationHoursAfter}} h" },
+        { "label": "Outage calls", "before": "{{fx.storm.outageCallsBefore}}", "after": "{{fx.storm.outageCallsAfter}}" },
+        { "label": "Restored within 24 h", "before": "—", "after": "{{fx.storm.restored24h|pct}}" }
+      ], "fixtureRefs": ["storm"] },
+    { "id": "U-S2", "title": "Heat-wave high bill", "motion": "decide-act", "motionLabel": "Decide & Act", "persona": "Chief Customer Officer", "outcome": "customer",
+      "summary": "Explanation with interval and weather evidence → payment arrangement → program offer.",
+      "agents": ["UA-CC-02", "UA-CC-03", "UA-CC-04"],
+      "steps": [
+        { "time": "09:02", "agentId": "UA-CC-02", "title": "The customer asks", "narration": "\"Why is my July bill ${{fx.highBill.increase}} higher than last year?\" — {{fx.highBill.account}}, {{fx.highBill.region}} region, in the app." },
+        { "time": "09:02", "agentId": "UA-CC-02", "title": "Explain with evidence", "narration": "Weather +${{fx.highBill.weather}} (cooling degree days +{{fx.highBill.cddChange|pct}}), billing days +${{fx.highBill.billingDays}} ({{fx.highBill.daysThis}} vs {{fx.highBill.daysLast}}), rate step +${{fx.highBill.rate}}. Meter working normally." },
+        { "time": "09:03", "agentId": "UA-CC-03", "title": "Offer help to pay", "narration": "{{fx.highBill.installments}} instalments of ${{fx.highBill.installmentAmount}}, within tariff rules. Protections checked.", "approval": { "role": "Policy (auto, L3 within rules)", "status": "approved" } },
+        { "time": "09:04", "agentId": "UA-CC-04", "title": "Lower the next bill", "narration": "Smart-thermostat program with a ${{fx.highBill.thermostatRebate}} rebate and summer demand response; expected saving about ${{fx.highBill.predictedSaving}} a month. Consent captured." }
+      ],
+      "kpis": [
+        { "label": "Regulator escalations (high bill)", "before": "{{fx.highBill.escalationsBefore}}/yr", "after": "{{fx.highBill.escalationsAfter}}/yr" },
+        { "label": "Calls for this customer", "before": "3 (typical)", "after": "{{fx.highBill.calls}}" }
+      ], "fixtureRefs": ["highBill"] },
+    { "id": "U-S3", "title": "A 300 MW data-centre request", "motion": "decide-act", "motionLabel": "Decide & Act", "persona": "CEO", "outcome": "growth",
+      "summary": "Feasibility screen → capacity and timeline → draft agreement terms, with engineering sign-off.",
+      "agents": ["UA-CC-05", "UA-EE-05"],
+      "steps": [
+        { "time": "Day 1", "agentId": "UA-CC-05", "title": "Intake", "narration": "A {{fx.dataCentre.requestMw}} MW request in the {{fx.dataCentre.region}} region, validated and logged as REQ-LL-0001." },
+        { "time": "Day 3", "agentId": "UA-CC-05", "title": "Screen capacity", "narration": "{{fx.dataCentre.availableNowMw}} MW headroom at {{fx.dataCentre.substation}}; PATH-V-230-01 limits the rest (N-1)." },
+        { "time": "Day 6", "agentId": "UA-EE-05", "title": "Capital and bill impact", "narration": "Phase 2 needs {{fx.dataCentre.upgrade}}. The portfolio impact and bill impact by customer class are estimated, with the large-load tariff protecting other customers." },
+        { "time": "Day {{fx.dataCentre.screenDays}}", "agentId": "UA-CC-05", "title": "Feasibility answer", "narration": "{{fx.dataCentre.availableNowMw}} MW by {{fx.dataCentre.firstPhaseYear}}, {{fx.dataCentre.requestMw}} MW by {{fx.dataCentre.fullYear}}; draft terms: {{fx.dataCentre.collateralMonths}} months of collateral, {{fx.dataCentre.minimumTakePct|pct}} minimum take.", "approval": { "role": "Planning engineers", "status": "signed off" } }
+      ],
+      "kpis": [
+        { "label": "Time to a feasibility answer", "before": "{{fx.dataCentre.baselineWeeks}} weeks", "after": "{{fx.dataCentre.screenDays}} days" }
+      ], "fixtureRefs": ["dataCentre"] },
+    { "id": "U-S4", "title": "Summer transformer risk", "motion": "operate", "motionLabel": "Operate", "persona": "COO / SVP T&D Operations", "outcome": "reliability",
+      "summary": "Health scoring → replacement ranking → long-lead materials re-plan.",
+      "agents": ["UA-GO-03", "UA-EE-04", "UA-GO-06"],
+      "steps": [
+        { "time": "May 2", "agentId": "UA-GO-03", "title": "Score health", "narration": "{{fx.transformerRisk.assetsScored}} assets scored; {{fx.transformerRisk.highRisk}} high risk; {{fx.transformerRisk.summerRisk}} substation transformers likely to fail under summer loading." },
+        { "time": "May 3", "agentId": "UA-GO-03", "title": "Rank interventions", "narration": "Ranked by risk reduced per dollar: {{fx.transformerRisk.riskReduction|pct}} of fleet risk removed by the top 12 actions.", "approval": { "role": "Asset management lead", "status": "approved" } },
+        { "time": "May 4", "agentId": "UA-EE-04", "title": "Re-plan long-lead materials", "narration": "{{fx.transformerRisk.spares}} spares, {{fx.transformerRisk.leadTimeWeeks}}-week lead time: allocation re-planned across regions; one order flagged to expedite." },
+        { "time": "May 6", "agentId": "UA-GO-06", "title": "Bundle the work", "narration": "{{fx.transformerRisk.bundledOrders}} work bundles scheduled by crew, permit and outage window." }
+      ],
+      "kpis": [
+        { "label": "Fleet risk removed", "before": "—", "after": "{{fx.transformerRisk.riskReduction|pct}}" },
+        { "label": "Capex deferred by targeted replacement", "before": "—", "after": "${{fx.transformerRisk.deferredCapex}}M" }
+      ], "fixtureRefs": ["transformerRisk"] },
+    { "id": "U-S5", "title": "From SAIDI goal to certified data product", "motion": "engineer", "motionLabel": "Engineer", "persona": "CIO / CDO", "outcome": "reliability",
+      "summary": "Finds 3 conflicting SAIDI definitions across 900+ legacy reports, then maps, adds rules, builds the semantic view and certifies.",
+      "agents": ["UA-DI-01", "UA-DI-02", "UA-DI-03", "UA-DI-04", "UA-DI-05"],
+      "lifecycle": ["Identify", "Design", "Build", "Certify", "Publish", "Operate"],
+      "steps": [
+        { "time": "Day 1", "agentId": "UA-DI-01", "stage": "Identify", "title": "Intent", "narration": "The COO's goal: \"Cut SAIDI by 10 minutes in two years.\" The agent mines {{fx.saidiLineage.reports}} reports and {{fx.saidiLineage.kpis}} KPIs and finds {{fx.saidiLineage.saidiDefinitions}} conflicting SAIDI definitions. Top candidate: {{fx.saidiLineage.product}} Outage & Reliability 360 (evidence: {{fx.saidiLineage.evidenceReports}} reports, {{fx.saidiLineage.owners}} owners)." },
+        { "time": "Day 3", "agentId": "UA-DI-02", "stage": "Design", "title": "Map", "narration": "OMS, ADMS, AMI and GIS mapped to the CIM-aligned model: {{fx.saidiLineage.autoMapped|pct}} of columns auto-mapped; {{fx.saidiLineage.flaggedColumns}} flagged for review.", "approval": { "role": "Data architect", "status": "approved" } },
+        { "time": "Day 5", "agentId": "UA-DI-03", "stage": "Build", "title": "Quality rules", "narration": "{{fx.saidiLineage.dqRules}} DQ rules on CDEs (meter-to-transformer link, outage start/end, customers interrupted), backtested on {{fx.saidiLineage.backtestMonths}} months." },
+        { "time": "Day 8", "agentId": "UA-DI-04", "stage": "Build", "title": "Pipeline", "narration": "Silver-to-Gold outage model with IEEE 1366 major-event-day flags, tests and lineage, in one pull request.", "approval": { "role": "Data engineering lead", "status": "merged" } },
+        { "time": "Day 10", "agentId": "UA-DI-05", "stage": "Certify", "title": "Semantic view", "narration": "{{fx.saidiLineage.semanticView}} with {{fx.saidiLineage.verifiedQueries}} verified queries; evaluation {{fx.saidiLineage.evalScore|pct}}. One SAIDI definition certified, with and without MED.", "approval": { "role": "Semantic steward", "status": "certified" } },
+        { "time": "Day {{fx.saidiLineage.elapsedDays}}", "agentId": "UA-DI-10", "stage": "Publish", "title": "Published", "narration": "Product certified v1.0 and published to the marketplace. Elapsed {{fx.saidiLineage.elapsedDays}} days against a {{fx.saidiLineage.baselineWeeks}}-week baseline (synthetic)." }
+      ],
+      "kpis": [
+        { "label": "Intent to certified product", "before": "{{fx.saidiLineage.baselineWeeks}} weeks", "after": "{{fx.saidiLineage.elapsedDays}} days" },
+        { "label": "SAIDI definitions in use", "before": "{{fx.saidiLineage.saidiDefinitions}}", "after": "1 certified" }
+      ], "fixtureRefs": ["saidiLineage"] },
+    { "id": "U-S6", "title": "A CFO question", "motion": "decide-act", "motionLabel": "Decide & Act (consume)", "persona": "CFO", "outcome": "affordability",
+      "summary": "\"Why did O&M per customer rise in the Valley region?\" — traced answer; refuses customer-level usage; access auto-approved for an aggregate product.",
+      "agents": ["UA-DI-11", "UA-DI-09", "UA-DI-10", "UA-DI-13"],
+      "steps": [
+        { "time": "08:10", "agentId": "UA-DI-11", "title": "The question", "narration": "The CFO asks: \"Why did O&M per customer rise in the {{fx.cfoQuestion.region}} region?\"" },
+        { "time": "08:10", "agentId": "UA-DI-09", "title": "Traced answer", "narration": "${{fx.cfoQuestion.omBefore}} → ${{fx.cfoQuestion.omAfter}} (+{{fx.cfoQuestion.omChangePct|pct1}}): vegetation +${{fx.cfoQuestion.vegetation}}, storm +${{fx.cfoQuestion.storm}}, contractor rates +${{fx.cfoQuestion.contractor}}. How I answered: terms → rules → semantic model → row access → query → citation. Certified ✓" },
+        { "time": "08:12", "agentId": "UA-DI-09", "title": "A refusal", "narration": "\"Show me the interval usage of the top 100 customers.\" Refused: customer energy usage data needs consent or a cleared role. The aggregate by class is offered instead." },
+        { "time": "08:20", "agentId": "UA-DI-10", "title": "Find the product", "narration": "An analyst looks for the data behind the answer: UDP-ENT-06 Capital & O&M and UDP-GRD-01 Outage & Reliability 360." },
+        { "time": "08:20", "agentId": "UA-DI-13", "title": "Access in seconds", "narration": "Access to the aggregate product is auto-approved for a declared purpose in {{fx.cfoQuestion.accessSeconds}} seconds, time-boxed to {{fx.cfoQuestion.accessDays}} days, with the policy cited.", "approval": { "role": "Policy (auto)", "status": "approved" } }
+      ],
+      "kpis": [
+        { "label": "Time to a trusted answer", "before": "3 days (analyst)", "after": "Seconds" },
+        { "label": "Time to access", "before": "2 weeks", "after": "{{fx.cfoQuestion.accessSeconds}} s" }
+      ], "fixtureRefs": ["cfoQuestion"] },
+    { "id": "U-S7", "title": "Overnight at the Utility", "motion": "operate", "motionLabel": "Operate", "persona": "CIO / CDO", "outcome": "reliability",
+      "summary": "AMI feed late and auto-healed; gas leak indications triaged; historian tags flat-lined; FinOps saving; an agent eligible for promotion.",
+      "agents": ["UA-DI-07", "UA-GO-07", "UA-DI-08", "UA-DI-12"],
+      "steps": [
+        { "time": "{{fx.overnight.amiLate}}", "agentId": "UA-DI-07", "title": "AMI feed late", "narration": "The head-end export stalls; {{fx.overnight.amiMeters}} meters are affected. The catalogued recovery re-runs and the feed is healed at {{fx.overnight.amiHealed}}. Consumers are notified (L3 within the catalogue)." },
+        { "time": "02:40", "agentId": "UA-GO-07", "title": "Leak indications triaged", "narration": "{{fx.overnight.leakIndications}} new indications from mobile survey graded; {{fx.overnight.grade1}} potentially hazardous go straight to the emergency procedure. The supervisor dispatches a crew at {{fx.overnight.grade1Dispatched}}.", "approval": { "role": "Gas operations supervisor", "status": "dispatched" } },
+        { "time": "04:15", "agentId": "UA-DI-07", "title": "Historian tags flat-lined", "narration": "{{fx.overnight.flatTags}} historian tags at CC-1 flat-lined after a collector restart; ticket raised with plant systems and dependent models paused." },
+        { "time": "05:00", "agentId": "UA-DI-08", "title": "FinOps saving", "narration": "An over-sized warehouse for the outage-prediction model; right-sizing saves ${{fx.overnight.finopsSaving}} a month.", "approval": { "role": "Platform owner", "status": "pending" } },
+        { "time": "06:00", "agentId": "UA-DI-12", "title": "Promotion eligible", "narration": "{{fx.overnight.promotionAgent}} High-Bill Explainer: {{fx.overnight.promotionAcceptance|pct}} acceptance over {{fx.overnight.promotionWeeks}} weeks → eligible L2 → L3. Decision queued for the governance board.", "approval": { "role": "AI governance board", "status": "pending" } }
+      ],
+      "summaryCard": "{{fx.overnight.events}} events · {{fx.overnight.autonomous}} handled within guardrails · {{fx.overnight.decisionsPending}} human decisions pending · {{fx.overnight.policyViolations}} policy violations · 0 OT actions by agents",
+      "kpis": [
+        { "label": "Data incident MTTR", "before": "4 h", "after": "24 min" },
+        { "label": "Policy violations", "before": "—", "after": "{{fx.overnight.policyViolations}}" }
+      ], "fixtureRefs": ["overnight"] },
+    { "id": "U-S8", "title": "Red-flag day", "motion": "decide-act", "motionLabel": "Decide & Act", "persona": "Chief Safety Officer", "outcome": "safety",
+      "summary": "Span and circuit fire-risk tiers → PSPS decision pack for the officer → medical-baseline-first notifications after a human decision.",
+      "agents": ["UA-GO-05", "UA-CC-01"],
+      "steps": [
+        { "time": "D−2", "agentId": "UA-GO-05", "title": "Score the risk", "narration": "{{fx.redFlag.spansScored}} spans and every circuit scored for {{fx.redFlag.date}}: {{fx.redFlag.tier3Circuits}} circuits in tier 3." },
+        { "time": "D−2", "agentId": "UA-CC-01", "title": "Early notice (48 h)", "narration": "After the officer's watch decision, 48-hour notices go to {{fx.redFlag.customersOnCandidates}} customers on candidate circuits; {{fx.redFlag.medicalBaseline}} medical-baseline customers phoned first.", "approval": { "role": "Wildfire mitigation officer", "status": "approved" } },
+        { "time": "D−1", "agentId": "UA-GO-05", "title": "Decision pack", "narration": "{{fx.redFlag.candidateCircuits}} circuits meet the PSPS consideration criteria. The pack shows risk, customer impact, critical facilities and patrol plans. The agent cannot de-energise or decide (OT cap L2)." },
+        { "time": "{{fx.redFlag.decisionTime}}", "agentId": "UA-GO-05", "title": "People decide", "narration": "The {{fx.redFlag.officer}} decides; qualified operators execute any de-energisation. The decision and evidence go to the Agent Evidence Trail.", "approval": { "role": "{{fx.redFlag.officer}}", "status": "decides" } }
+      ],
+      "kpis": [
+        { "label": "Medical-baseline customers reached before any action", "before": "~80%", "after": "100%" },
+        { "label": "Decision-pack preparation", "before": "6 h", "after": "40 min" }
+      ], "fixtureRefs": ["redFlag"] },
+    { "id": "U-S9", "title": "Assured by design", "motion": "govern", "motionLabel": "Govern", "persona": "CISO / CRO", "outcome": "safety",
+      "summary": "Critical-infrastructure evidence pack, a CEII access request refused, a consent gap closed, an agent demoted, an OT-cap block shown.",
+      "agents": ["UA-EE-03", "UA-DI-13", "UA-EE-06", "UA-DI-12"],
+      "steps": [
+        { "time": "Q3 audit", "agentId": "UA-EE-03", "title": "Evidence pack", "narration": "{{fx.assured.requirements}} requirements; {{fx.assured.autoEvidence|pct}} of evidence collected automatically; 2 gaps flagged before the audit." },
+        { "time": "10:05", "agentId": "UA-DI-13", "title": "CEII access refused", "narration": "A marketing analyst requests the Network Connectivity Model. Refused: CEII is restricted to cleared operations and engineering roles; the owner is notified." },
+        { "time": "11:20", "agentId": "UA-EE-06", "title": "Consent gap closed", "narration": "{{fx.assured.consentGap}} customers who opted out were still on a campaign list. The list is blocked and remediated.", "approval": { "role": "Privacy officer", "status": "approved" } },
+        { "time": "14:00", "agentId": "UA-DI-12", "title": "An agent demoted", "narration": "{{fx.assured.demotedAgent}} evaluation fell {{fx.assured.evalDrop|pct}} after a program change: demoted {{fx.assured.demoteFrom}} → {{fx.assured.demoteTo}} automatically until re-evaluated." },
+        { "time": "15:30", "agentId": "UA-DI-12", "title": "OT-cap block", "narration": "A request to promote {{fx.assured.otBlockedAgent}} Fault Location & Restoration Advisor to L3 is blocked by the OT safety rule and logged. No agent operates grid, plant or gas devices." }
+      ],
+      "kpis": [
+        { "label": "Evidence-collection effort", "before": "100%", "after": "−50% (synthetic)" },
+        { "label": "OT actions by agents", "before": "—", "after": "0" }
+      ], "fixtureRefs": ["assured"] }
+  ]
+}

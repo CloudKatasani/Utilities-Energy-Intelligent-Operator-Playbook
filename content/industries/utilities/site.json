@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "Utilities & Energy Intelligent Operator Playbook — Demo Edition",
+    "description": "Utilities & Energy Intelligent Operator Playbook — Demo Edition. Client-neutral, offline, synthetic data for a generic reference Utility."
+  },
+  "brand": { "name": "Capgemini", "practice": "{{label.practiceLabel}}", "owner": "Insights & Data — Utilities offer team" },
+  "nav": [
+    { "id": "why", "num": "01", "label": "Why now" },
+    { "id": "future", "num": "02", "label": "{{label.boardName}}" },
+    { "id": "accelerate", "num": "03", "label": "Accelerate" },
+    { "id": "impact", "num": "04", "label": "Impact" },
+    { "id": "proof", "num": "05", "label": "Proof" }
+  ],
+  "hero": {
+    "kicker": "UTILITIES & ENERGY INTELLIGENT OPERATOR PLAYBOOK",
+    "title": "From regulated utility to intelligent energy orchestrator",
+    "lede": "How a utility meets record demand, keeps the lights on and stays affordable: engineer with AI, operate with AI, decide and act with AI — governed, secured and assured by one control plane across every layer, with people in command of the grid.",
+    "meta": "Demo operator: <b>your Utility</b> — a generic, synthetic reference profile · 3.2M electric customers, 1.1M gas customers, 9.4 GW generation, 690 substations (synthetic).",
+    "ctas": [ { "label": "Explore the {{label.boardName}}", "route": "#/future" }, { "label": "Watch an agent run", "route": "#/agent/UA-GO-02/run" } ]
+  },
+  "why": {
+    "kicker": "01 | WHY NOW",
+    "headline": "The grid is becoming the platform for growth, electrification and resilience — and it has to change faster than it ever has.",
+    "rows": [
+      { "id": "world", "title": "The world it powers", "text": "Data centres, electrification and EVs bring demand growth back after two flat decades.", "art": "world" },
+      { "id": "system", "title": "The pressure on the system", "text": "Reliability, wildfire and storms, affordability and regulation all tighten at once.", "art": "system" },
+      { "id": "inside", "title": "Inside the utility", "text": "Record capital plans, ageing assets, a retiring workforce, and data spread across CIS, MDMS, OMS, GIS, EAM and OT.", "art": "inside" }
+    ],
+    "cards": [
+      { "num": "01", "title": "The Demand", "signals": [
+        { "stat": "+224 GW", "text": "summer and <b>+246 GW</b> winter peak-demand growth forecast over 10 years in North America", "source": "nerc-ltra" },
+        { "stat": "~3%", "text": "global electricity demand growth in 2025, with data centres <b>+17%</b> and EVs <b>+38%</b>", "source": "iea-ger" },
+        { "stat": "4 → 123 GW", "text": "AI data-centre power demand, 2024 → 2035; <b>72%</b> of executives call grid capacity constraints very or extremely challenging", "source": "deloitte-dc" }
+      ] },
+      { "num": "02", "title": "The Response", "signals": [
+        { "stat": "$208 bn", "text": "planned capex by US investor-owned utilities in 2025, and <b>more than $1.1 tn</b> over five years", "source": "eei-capex", "source2": "eei-208" },
+        { "stat": "2,060+ GW", "text": "of generation and storage waiting in interconnection queues at end-2025", "source": "lbl-queued" }
+      ] },
+      { "num": "03", "title": "The Execution Gap", "signals": [
+        { "stat": "~11 h", "text": "without power per US customer in 2024, nearly double the prior-decade average; about 9 hours from major events vs about 4 hours a year in 2014–2023", "source": "eia-outage" },
+        { "stat": "27%", "text": "of energy firms have agentic AI integrated; data quality and data access are top challenges, and <b>54%</b> of firms with data-access problems say they materially hurt timelines, scope or performance", "source": "sp-451" }
+      ] }
+    ],
+    "closing": "Utilities modernised for reliability in a world of steady demand. Now they are entering a world of growth, electrification and autonomous operations — where trusted data decides how fast they can move."
+  },
+  "board": {
+    "kicker": "02 | {{label.boardName}}",
+    "title": "The operating model of the {{label.boardName}}",
+    "lede": "Every tile opens. Click an outcome to see what moves it; open a domain, a family or a foundation layer. Agents act — people decide, and qualified people operate every grid, plant and gas device.",
+    "lensLabel": "Motion lens",
+    "bands": { "outcomes": "Business outcomes", "domains": "Value-stream domains", "families": "Agent families", "foundation": "Foundation", "rail": "Govern, secure and assure with AI" },
+    "explorerTitle": "Domain explorer — the utility operating model",
+    "explorerLede": "4 domains · 19 operating areas · 53 sub-areas · 160 agent processes. Open a sub-area to see where AI agents act."
+  },
+  "accelerate": {
+    "kicker": "03 | ACCELERATE WITH AI",
+    "title": "Engineer with AI · Operate with AI · Decide and Act with AI",
+    "loop": "Usage and outcomes feed the next build",
+    "planTitle": "Acceleration plan: where should {{label.yourOrg}} start?",
+    "planCta": "Run the readiness quick check"
+  },
+  "impact": {
+    "kicker": "04 | IMPACT",
+    "title": "Business impact you can trace",
+    "lede": "Reference defaults are synthetic. Change any input or lever; every formula comes from calculator.json and every range is a benchmark pending validation.",
+    "readinessTitle": "Readiness quick check",
+    "readinessLede": "Twelve questions over eight pillars. Hard blockers cap the score. Compared with an anonymised synthetic {{label.cohortLabel}}."
+  },
+  "proof": {
+    "kicker": "05 | PROOF",
+    "title": "Offerings, demos and proof",
+    "cards": [
+      { "id": "offerings", "title": "See our offerings", "text": "Thirteen offerings mapped to the three motions and the control plane.", "route": "#/offerings" },
+      { "id": "scenarios", "title": "Demo theater", "text": "Nine scenarios on the reference Utility, every agent clickable.", "route": "#/scenarios" },
+      { "id": "cases", "title": "Case studies", "text": "Utility case studies — placeholders until approved proof is supplied.", "route": "#/cases" }
+    ]
+  },
+  "closing": {
+    "title": "People in command. Agents at work. One trusted data foundation.",
+    "text": "Start where readiness says, prove value in weeks, and scale under one control plane — with the OT safety rule built in.",
+    "cta": { "label": "Run the readiness quick check", "route": "#/impact/readiness" }
+  },
+  "footer": {
+    "version": "Demo Edition",
+    "owner": "Content owner: Insights & Data — Utilities offer team",
+    "privacy": "Runs fully offline. No logins, no network calls, no live LLM. Agent runs are scripted and replayable."
+  }
+}

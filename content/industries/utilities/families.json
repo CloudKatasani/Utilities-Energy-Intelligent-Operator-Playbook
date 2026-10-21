@@ -1,0 +1,19 @@
+{
+  "families": [
+    { "id": "customer-commercial", "name": "Customer & commercial agents", "short": "Customer & commercial", "colorToken": "--customer", "cls": "fam-customer", "processCount": 20,
+      "mission": "Resolve the customer moment with the context of the whole utility: outages, bills, payments, programs and connections.",
+      "outcomes": ["customer", "affordability", "growth"], "dataProducts": ["UDP-CUS-01", "UDP-CUS-02", "UDP-CUS-03", "UDP-CUS-05", "UDP-CUS-06", "UDP-CUS-08"] },
+    { "id": "grid-operations", "name": "Grid & asset operations agents", "short": "Grid & asset operations", "colorToken": "--network", "cls": "fam-network", "processCount": 31,
+      "mission": "Predict, locate and restore faster; inspect and replace by risk; keep crews and the gas network safe — with operators in command of every device.",
+      "outcomes": ["reliability", "safety", "affordability"], "dataProducts": ["UDP-GRD-01", "UDP-GRD-02", "UDP-GRD-03", "UDP-GRD-06", "UDP-GRD-07", "UDP-GAS-01"] },
+    { "id": "generation-markets", "name": "Generation & energy markets agents", "short": "Generation & energy markets", "colorToken": "--oss", "cls": "fam-oss", "processCount": 20,
+      "mission": "Run the fleet efficiently, forecast load and renewables, bid and settle accurately, and get more value from storage.",
+      "outcomes": ["affordability", "reliability", "growth"], "dataProducts": ["UDP-GEN-01", "UDP-GEN-02", "UDP-GEN-03", "UDP-MKT-01", "UDP-MKT-02"] },
+    { "id": "data-intelligence", "name": "Data & intelligence agents", "short": "Data & intelligence", "colorToken": "--sky", "cls": "fam-sky", "processCount": 10,
+      "mission": "Engineer trusted data products and the network model, operate the platform, and give every employee cited answers.",
+      "outcomes": ["reliability", "affordability", "customer"], "dataProducts": ["UDP-GRD-01", "UDP-GRD-02", "UDP-AGT-01"] },
+    { "id": "enterprise-enablement", "name": "Enterprise, safety & regulatory agents", "short": "Enterprise, safety & regulatory", "colorToken": "--bss", "cls": "fam-bss", "processCount": 26,
+      "mission": "Keep crews safe, the regulator answered, critical infrastructure compliant, materials on hand and capital spent where it reduces the most risk.",
+      "outcomes": ["safety", "affordability"], "dataProducts": ["UDP-ENT-02", "UDP-ENT-04", "UDP-ENT-05", "UDP-ENT-06", "UDP-CUS-05"] }
+  ]
+}

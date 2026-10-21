@@ -1,0 +1,2940 @@
+{
+ "_note": "Flagship agents from docs/utilities/utilities-content-seed.json plus build-time fields (outcomes, offering, systems, roles, value, Q&As) and the 9 hand-scripted runs (spec §7.2). Telemetry comes from the synthetic generator.",
+ "knockoutLabels": {
+  "cleansing": "Cleansing",
+  "glossary": "Glossary",
+  "semantic": "Semantic",
+  "context": "Context",
+  "networkModel": "Network model / DQ",
+  "certification": "Certification",
+  "governance": "Governance"
+ },
+ "agents": [
+  {
+   "id": "UA-CC-01",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Outage Communication & ETR Agent",
+   "mission": "Tells every affected customer what is happening, when power will be back and what to do, on their preferred channel.",
+   "trigger": "Outage created, ETR changed or restoration confirmed",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-CUS-01 Customer 360",
+    "UDP-CUS-05 Contact Preferences & Consent"
+   ],
+   "actions": [
+    "draft_notification",
+    "target_customers",
+    "update_etr",
+    "confirm_restoration"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Customer communications lead",
+   "guardrails": [
+    "Only ETRs produced by the restoration model or a dispatcher",
+    "Medical-baseline and critical-care customers contacted first"
+   ],
+   "willNot": [
+    "Promise a restoration time a dispatcher has not confirmed",
+    "Message customers who opted out"
+   ],
+   "kpis": [
+    "ETR accuracy",
+    "Outage calls per outage",
+    "Customer satisfaction during outages"
+   ],
+   "demoPrompt": "How many customers on feeder 12-04 are still out, and what have we told them?",
+   "operatingArea": "customer-care",
+   "outcomes": [
+    "customer",
+    "reliability"
+   ],
+   "offering": "U-O1",
+   "systems": [
+    "OMS",
+    "CIS",
+    "IVR",
+    "SMS/email gateway",
+    "Customer app"
+   ],
+   "roles": [
+    "Customer communications lead",
+    "Outage desk"
+   ],
+   "value": {
+    "range": "20–35% fewer outage calls",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "How many customers on feeder 12-04 are still out?",
+     "a": "{{fx.feederLockout.remainingOut}} of {{fx.feederLockout.customersOut}}. The tie from feeder {{fx.feederLockout.tieFeeder}} restored {{fx.feederLockout.restoredByTie}}. Every affected customer has had a notice with the ETR of {{fx.feederLockout.etr}}, medical-baseline customers first."
+    },
+    {
+     "q": "What happens if the dispatcher changes the ETR?",
+     "a": "I draft an update within a minute, target only the customers still out and send it on their preferred channel. At L3 the communications lead approves bulk messages; at L4 updates go out and the lead is notified."
+    }
+   ],
+   "script": {
+    "prompt": "How many customers on feeder {{fx.feederLockout.feeder}} are still out, and what have we told them?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"still out\" → active outage with no restoration confirmed; \"feeder {{fx.feederLockout.feeder}}\" → {{fx.feederLockout.circuit}}",
+      "ms": 150
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "CM-02: only ETRs from the restoration model or a dispatcher; CM-05: medical-baseline and critical-care customers are contacted first by phone",
+      "ms": 200
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "OMS: {{fx.feederLockout.customersOut}} affected, {{fx.feederLockout.restoredByTie}} restored at 14:31 after the operator closed the tie; AMI pings confirm {{fx.feederLockout.remainingOut}} still out",
+      "ms": 480
+     },
+     {
+      "title": "Target",
+      "layer": "Semantic",
+      "text": "{{fx.feederLockout.remainingOut}} customers still out; {{fx.feederLockout.medicalBaseline}} medical-baseline customers (phone first); 3 opted out of SMS (email instead)",
+      "ms": 300
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role COMMS_LEAD: contact channels permitted; usage data not needed and not shown",
+      "ms": 80
+     },
+     {
+      "title": "Act",
+      "layer": "Control plane",
+      "text": "Restoration notices sent to {{fx.feederLockout.restoredByTie}} customers (L4, notified); ETR {{fx.feederLockout.etr}} update drafted for {{fx.feederLockout.remainingOut}} customers → approved by the communications lead (L3)",
+      "ms": 260
+     }
+    ],
+    "answer": "{{fx.feederLockout.remainingOut}} customers are still out on feeder {{fx.feederLockout.feeder}}. All of them have had a notice with ETR {{fx.feederLockout.etr}}, and the {{fx.feederLockout.medicalBaseline}} medical-baseline customers were phoned first. {{fx.feederLockout.restoredByTie}} restored customers were sent a confirmation.",
+    "outcome": "ETR update approved by the customer communications lead (L3)",
+    "handoffs": [
+     "UA-GO-02"
+    ],
+    "knockouts": {
+     "context": {
+      "answer": "Your power will be back by 15:00.",
+      "wrong": "Without rule CM-02 the agent used a historical average instead of the dispatcher-confirmed ETR, and promised a time nobody had confirmed."
+     },
+     "glossary": {
+      "answer": "4,860 customers are still out.",
+      "wrong": "\"Still out\" was not resolved to \"no restoration confirmed\", so restored customers were counted and told their power was still off."
+     },
+     "governance": {
+      "answer": "Notices sent to all 1,450, including 3 by SMS …",
+      "wrong": "Opt-out preferences were ignored: 3 customers who opted out of SMS were texted."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-CC-02",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "High-Bill & Usage Explainer Agent",
+   "mission": "Explains any bill change with interval usage, weather, rate and billing-days evidence, and suggests ways to lower the next one.",
+   "trigger": "High-bill contact, complaint or mid-cycle alert",
+   "dataProducts": [
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-CUS-03 Billing & Payments",
+    "UDP-CUS-04 Rates & Tariffs"
+   ],
+   "actions": [
+    "explain_bill",
+    "compare_weather",
+    "detect_anomaly",
+    "recommend_program"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Billing supervisor (adjustments)",
+   "guardrails": [
+    "Explanations cite interval data and the rate applied",
+    "Adjustments only through billing policy"
+   ],
+   "willNot": [
+    "Change a rate or tariff",
+    "Waive charges outside policy"
+   ],
+   "kpis": [
+    "High-bill complaints",
+    "Regulator escalations",
+    "Bill-related calls"
+   ],
+   "demoPrompt": "Why is my July bill $96 higher than last year?",
+   "operatingArea": "customer-care",
+   "outcomes": [
+    "customer",
+    "affordability"
+   ],
+   "offering": "U-O9",
+   "systems": [
+    "CIS",
+    "MDMS",
+    "Rate engine",
+    "Weather service (synthetic)",
+    "Contact centre desktop"
+   ],
+   "roles": [
+    "Billing supervisor",
+    "Contact centre advisor"
+   ],
+   "value": {
+    "range": "15–30% fewer high-bill escalations",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Why is this customer's July bill $96 higher?",
+     "a": "Three drivers, all cited: hotter weather (+${{fx.highBill.weather}}, cooling degree days +{{fx.highBill.cddChange|pct}}), a longer billing period (+${{fx.highBill.billingDays}}, {{fx.highBill.daysThis}} days vs {{fx.highBill.daysLast}}) and the summer rate step (+${{fx.highBill.rate}}). No meter fault was detected."
+    },
+    {
+     "q": "Can you give the customer a credit?",
+     "a": "No. I can explain the bill and suggest programs. Any adjustment goes through billing policy and the billing supervisor approves it."
+    }
+   ],
+   "script": {
+    "prompt": "Why is my July bill ${{fx.highBill.increase}} higher than last year?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"July bill\" → bill period ending in July for {{fx.highBill.account}}; \"higher than last year\" → year-over-year comparison of the same period",
+      "ms": 150
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "BL-04: explanations must cite interval data and the rate applied; BL-09: adjustments only through billing policy",
+      "ms": 190
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "AMI intervals: +31% kWh, {{fx.highBill.peakShare|pct}} in 16:00–21:00; billing period {{fx.highBill.daysThis}} days vs {{fx.highBill.daysLast}}; cooling degree days +{{fx.highBill.cddChange|pct}}; summer tier rate step applied",
+      "ms": 640
+     },
+     {
+      "title": "Explain",
+      "layer": "AI/ML",
+      "text": "Drivers: weather and air conditioning +${{fx.highBill.weather}} · billing days +${{fx.highBill.billingDays}} · rate step +${{fx.highBill.rate}} = +${{fx.highBill.increase}}; no meter fault or estimation detected",
+      "ms": 420
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Customer is the account holder (authenticated): own interval data permitted",
+      "ms": 70
+     },
+     {
+      "title": "Recommend",
+      "layer": "Control plane",
+      "text": "Offer a {{fx.highBill.installments}}-instalment arrangement via UA-CC-03 and the smart-thermostat program (${{fx.highBill.thermostatRebate}} rebate) via UA-CC-04",
+      "ms": 240
+     }
+    ],
+    "answer": "Your July bill is ${{fx.highBill.billThisJuly}} against ${{fx.highBill.billLastJuly}} last July. The ${{fx.highBill.increase}} difference comes from: hotter weather that ran your air conditioning more (+${{fx.highBill.weather}}), {{fx.highBill.daysThis}} billing days instead of {{fx.highBill.daysLast}} (+${{fx.highBill.billingDays}}) and the summer rate step (+${{fx.highBill.rate}}). Your meter is working normally. You can spread the cost over {{fx.highBill.installments}} payments of ${{fx.highBill.installmentAmount}}, and a smart thermostat could save about ${{fx.highBill.predictedSaving}} a month.",
+    "outcome": "Explained (L2); payment arrangement offered",
+    "handoffs": [
+     "UA-CC-03",
+     "UA-CC-04"
+    ],
+    "knockouts": {
+     "cleansing": {
+      "answer": "Your usage was 180% higher.",
+      "wrong": "Duplicate interval reads from a head-end retry were not removed, so usage was double-counted and the explanation was wrong."
+     },
+     "semantic": {
+      "answer": "Your bill rose because of usage.",
+      "wrong": "Without the semantic definition of bill drivers, weather, billing days and rate effects were not separated. The explanation is vague and likely to be escalated."
+     },
+     "governance": {
+      "answer": "Your neighbour on the same transformer used 20% less.",
+      "wrong": "Another customer's energy usage data was disclosed. Customer energy usage data must not be shared without consent."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-CC-03",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Payment Assistance & Affordability Agent",
+   "mission": "Finds the right payment arrangement or assistance program for customers in arrears, within regulatory protections.",
+   "trigger": "Arrears threshold, customer request or disconnection list",
+   "dataProducts": [
+    "UDP-CUS-03 Billing & Payments",
+    "UDP-CUS-06 Assistance & Protections",
+    "UDP-CUS-01 Customer 360"
+   ],
+   "actions": [
+    "assess_eligibility",
+    "offer_arrangement",
+    "enrol_program",
+    "check_protections"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Credit & collections lead",
+   "guardrails": [
+    "Medical, weather and seasonal disconnection protections checked on every account",
+    "Arrangement terms within tariff rules"
+   ],
+   "willNot": [
+    "Schedule a disconnection",
+    "Disclose another account holder's data"
+   ],
+   "kpis": [
+    "Arrangements kept",
+    "Bad debt % of revenue",
+    "Assistance enrolment"
+   ],
+   "demoPrompt": "Which customers in arrears qualify for assistance before the next disconnection cycle?",
+   "operatingArea": "customer-care",
+   "outcomes": [
+    "affordability",
+    "customer"
+   ],
+   "offering": "U-O9",
+   "systems": [
+    "CIS",
+    "Collections system",
+    "Assistance program registry"
+   ],
+   "roles": [
+    "Credit & collections lead",
+    "Customer advocate"
+   ],
+   "value": {
+    "range": "5–12% lower bad debt",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which customers in arrears qualify for assistance?",
+     "a": "I screen every account on the next disconnection list for assistance eligibility and protections. Eligible customers get a policy-compliant arrangement or an assistance application, before any notice is issued."
+    },
+    {
+     "q": "Can a protected customer be disconnected?",
+     "a": "No. Medical, weather and seasonal protections are checked on every account. Protected accounts are removed from the list and routed to an advisor. The target is {{fx.assured.protectedDisconnections}} protected-customer disconnections."
+    }
+   ]
+  },
+  {
+   "id": "UA-CC-04",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Energy Program & EV Advisor Agent",
+   "mission": "Matches customers to efficiency, demand-response, EV and solar programs and rates that save them money and relieve the grid.",
+   "trigger": "Campaign cycle, EV detected or customer request",
+   "dataProducts": [
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-CUS-07 Programs & Enrolment",
+    "UDP-GRD-04 Feeder Capacity & Hosting"
+   ],
+   "actions": [
+    "score_fit",
+    "recommend_program",
+    "enrol_customer",
+    "forecast_impact"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Programs manager",
+   "guardrails": [
+    "Recommend only approved programs and rates",
+    "Consent required for marketing contact"
+   ],
+   "willNot": [
+    "Enrol a customer without consent",
+    "Promise savings beyond the program's measured range"
+   ],
+   "kpis": [
+    "Program enrolment yield",
+    "MW enrolled in demand response",
+    "Managed-charging share"
+   ],
+   "demoPrompt": "Which customers on constrained feeders should we invite to the EV managed-charging program?",
+   "operatingArea": "programs",
+   "outcomes": [
+    "growth",
+    "affordability"
+   ],
+   "offering": "U-O9",
+   "systems": [
+    "CIS",
+    "MDMS",
+    "Program management system",
+    "DERMS (read-only)"
+   ],
+   "roles": [
+    "Programs manager",
+    "Marketing lead"
+   ],
+   "value": {
+    "range": "1.5–3× program enrolment yield",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Who should we invite to managed EV charging?",
+     "a": "Customers with a detected EV on feeders above 80% peak loading, who consented to marketing. I rank them by expected peak relief and bill saving."
+    },
+    {
+     "q": "How do you measure program savings?",
+     "a": "From interval-data baselines with matched control groups, reported with confidence ranges. I never promise savings beyond a program's measured range."
+    }
+   ]
+  },
+  {
+   "id": "UA-CC-05",
+   "family": "customer-commercial",
+   "motion": "decide-act",
+   "name": "Large Load & New Connection Agent",
+   "mission": "Screens new service and large-load requests (including data centres), gives a fast feasibility answer and drafts the next steps.",
+   "trigger": "New service request or large-load inquiry",
+   "dataProducts": [
+    "UDP-GRD-04 Feeder Capacity & Hosting",
+    "UDP-GRD-05 Transmission Capacity",
+    "UDP-CUS-08 Connection Requests"
+   ],
+   "actions": [
+    "validate_request",
+    "screen_capacity",
+    "estimate_timeline",
+    "draft_agreement"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Large-load account manager",
+   "guardrails": [
+    "Feasibility is indicative until engineering signs off",
+    "Large-load tariff and collateral rules applied"
+   ],
+   "willNot": [
+    "Commit capacity or dates",
+    "Share other customers' requests"
+   ],
+   "kpis": [
+    "Time to feasibility answer",
+    "MW connected",
+    "Days to connect"
+   ],
+   "demoPrompt": "Can we serve a 300 MW data centre in the Valley region by 2028?",
+   "operatingArea": "large-load",
+   "outcomes": [
+    "growth",
+    "customer"
+   ],
+   "offering": "U-O11",
+   "systems": [
+    "Connection portal",
+    "GIS",
+    "Planning models",
+    "Transmission capacity data",
+    "CRM"
+   ],
+   "roles": [
+    "Large-load account manager",
+    "Distribution and transmission planning engineers"
+   ],
+   "value": {
+    "range": "Weeks → days to a feasibility answer",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Can we serve a {{fx.dataCentre.requestMw}} MW data centre in the Valley region?",
+     "a": "Indicatively yes, in two phases: {{fx.dataCentre.availableNowMw}} MW by {{fx.dataCentre.firstPhaseYear}} on existing capacity at {{fx.dataCentre.substation}}, and the full {{fx.dataCentre.requestMw}} MW by {{fx.dataCentre.fullYear}} after {{fx.dataCentre.upgrade}}. This stays indicative until engineering signs off."
+    },
+    {
+     "q": "What terms apply?",
+     "a": "The large-load tariff: {{fx.dataCentre.collateralMonths}} months of collateral and a minimum take of {{fx.dataCentre.minimumTakePct|pct}} of contracted demand. I draft the terms; the account manager and legal finalise them."
+    }
+   ],
+   "script": {
+    "prompt": "Can we serve a {{fx.dataCentre.requestMw}} MW data centre in the {{fx.dataCentre.region}} region by {{fx.dataCentre.firstPhaseYear}}?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"serve\" → firm service at the requested demand; \"{{fx.dataCentre.requestMw}} MW data centre\" → large-load request REQ-LL-0001",
+      "ms": 160
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "LL-01: requests above 75 MW need a transmission screen; LL-06: feasibility is indicative until engineering signs off; large-load tariff collateral rules",
+      "ms": 220
+     },
+     {
+      "title": "Screen",
+      "layer": "Data products",
+      "text": "{{fx.dataCentre.substation}} headroom {{fx.dataCentre.availableNowMw}} MW; path PATH-V-230-01 thermal N-1 constraint; interconnection queue position checked",
+      "ms": 720
+     },
+     {
+      "title": "Plan",
+      "layer": "AI/ML",
+      "text": "Phase 1: {{fx.dataCentre.availableNowMw}} MW by {{fx.dataCentre.firstPhaseYear}}; phase 2: full {{fx.dataCentre.requestMw}} MW by {{fx.dataCentre.fullYear}} after {{fx.dataCentre.upgrade}}",
+      "ms": 560
+     },
+     {
+      "title": "Terms",
+      "layer": "Semantic",
+      "text": "{{fx.dataCentre.collateralMonths}} months of collateral; minimum take {{fx.dataCentre.minimumTakePct|pct}}; study deposit ${{fx.dataCentre.studyCost|d1}}M",
+      "ms": 300
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role LARGE_LOAD_AM: CEII capacity data summarised (no topology detail); other customers' requests hidden",
+      "ms": 90
+     },
+     {
+      "title": "Hand-off",
+      "layer": "Control plane",
+      "text": "Draft feasibility letter and term sheet → planning engineers sign off (L2); capital impact to UA-EE-05",
+      "ms": 260
+     }
+    ],
+    "answer": "Indicatively yes, in two phases: {{fx.dataCentre.availableNowMw}} MW by {{fx.dataCentre.firstPhaseYear}} on existing capacity at {{fx.dataCentre.substation}}, and the full {{fx.dataCentre.requestMw}} MW by {{fx.dataCentre.fullYear}} after {{fx.dataCentre.upgrade}}. Screened in {{fx.dataCentre.screenDays}} days against a {{fx.dataCentre.baselineWeeks}}-week baseline. **Indicative until engineering signs off.**",
+    "outcome": "Awaiting engineering sign-off (L2)",
+    "handoffs": [
+     "UA-EE-05"
+    ],
+    "knockouts": {
+     "context": {
+      "answer": "Yes — 300 MW by 2028.",
+      "wrong": "Without rule LL-01 the transmission screen was skipped, so the answer ignores the N-1 constraint on PATH-V-230-01 and over-commits capacity."
+     },
+     "certification": {
+      "answer": "Yes — 260 MW available now.",
+      "wrong": "An uncertified hosting-capacity extract from 2024 was used. Certified products show {{fx.dataCentre.availableNowMw}} MW."
+     },
+     "governance": {
+      "answer": "Two other data centres have requested capacity at the same substation …",
+      "wrong": "Other customers' confidential requests were disclosed to the account manager."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-GO-01",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Outage Prediction & Storm Staging Agent",
+   "mission": "Predicts where storms will cause outages and recommends crew, material and mutual-assistance staging.",
+   "trigger": "Severe weather forecast 72 hours out",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-GRD-06 Weather & Fire Risk",
+    "UDP-ENT-03 Workforce & Crews"
+   ],
+   "actions": [
+    "predict_damage",
+    "recommend_staging",
+    "estimate_cost",
+    "brief_leaders"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Emergency operations director",
+   "guardrails": [
+    "Staging recommendations only; crews released by people"
+   ],
+   "willNot": [
+    "Request mutual assistance",
+    "Commit contractor spend"
+   ],
+   "kpis": [
+    "Restoration time (major events)",
+    "Crews staged vs needed",
+    "Storm cost per customer"
+   ],
+   "demoPrompt": "What damage should we expect from Thursday's storm and where should crews stage?",
+   "operatingArea": "resilience",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O10",
+   "systems": [
+    "OMS",
+    "Weather service (synthetic)",
+    "Crew management",
+    "EAM"
+   ],
+   "roles": [
+    "Emergency operations director",
+    "Storm logistics lead"
+   ],
+   "value": {
+    "range": "10–20% faster major-event restoration",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "How accurate was the last storm prediction?",
+     "a": "For the {{fx.storm.date}} storm I predicted {{fx.storm.predictedOutages}} outages and {{fx.storm.actualOutages}} occurred. Staging matched need in 5 of 6 regions."
+    },
+    {
+     "q": "Can you call in mutual assistance?",
+     "a": "No. I recommend how many crews to stage and where. The emergency operations director decides on mutual assistance and contractor spend."
+    }
+   ],
+   "script": {
+    "prompt": "What damage should we expect from Thursday's storm and where should crews stage?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"damage\" → predicted sustained outages and broken-pole events; \"Thursday's storm\" → weather event forecast for {{fx.storm.date}}",
+      "ms": 160
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "ER-03: stage crews where predicted outages per crew exceed 6; ER-08: the emergency operations director releases crews and requests mutual assistance",
+      "ms": 220
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "Gust forecasts 58–74 mph over the {{fx.storm.regions}} regions; 42% of spans there are untrimmed for more than 4 years; 2014–2025 storm history",
+      "ms": 700
+     },
+     {
+      "title": "Predict",
+      "layer": "AI/ML",
+      "text": "{{fx.storm.predictedOutages}} sustained outages (80% band ±12%), peak {{fx.storm.peakCustomersOut}} customers out",
+      "ms": 620
+     },
+     {
+      "title": "Stage",
+      "layer": "Semantic",
+      "text": "Recommend {{fx.storm.crewsStaged}} crews, {{fx.storm.mutualAssistCrews}} of them from mutual assistance, staged in 4 yards across the two regions",
+      "ms": 380
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role EOC_LEAD: crew rosters with names permitted; customer detail aggregated",
+      "ms": 80
+     },
+     {
+      "title": "Hand-off",
+      "layer": "Control plane",
+      "text": "Staging recommendation sent to the emergency operations director for decision (L2); briefing pack for leaders drafted",
+      "ms": 260
+     }
+    ],
+    "answer": "Expect about {{fx.storm.predictedOutages}} sustained outages and a peak of {{fx.storm.peakCustomersOut}} customers out, mostly in the {{fx.storm.regions}} regions. Recommended: stage {{fx.storm.crewsStaged}} crews, including {{fx.storm.mutualAssistCrews}} from mutual assistance, by Wednesday 18:00. **The emergency operations director decides.**",
+    "outcome": "Awaiting the emergency operations director (L2)",
+    "handoffs": [
+     "UA-GO-06",
+     "UA-CC-01"
+    ],
+    "knockouts": {
+     "cleansing": {
+      "answer": "Expect about 2,900 outages …",
+      "wrong": "Duplicate outage records from the 2023 OMS migration were not cleansed, so the model was trained on inflated history. Staging is over-sized by about 2×."
+     },
+     "context": {
+      "answer": "Stage 120 crews in Metro …",
+      "wrong": "Without rule ER-03 the agent staged by customer count, not predicted outages per crew, and sent crews to the wrong regions."
+     },
+     "governance": {
+      "answer": "Staging plan with each crew member's home address …",
+      "wrong": "PII of crew members was exposed to a role that only needs counts."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-GO-02",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Fault Location & Restoration Advisor",
+   "mission": "Combines AMI last-gasp, SCADA and fault indicators to locate faults and recommend isolation and restoration switching for the operator.",
+   "trigger": "Feeder lockout or AMI outage cluster",
+   "dataProducts": [
+    "UDP-GRD-01 Outage & Reliability 360",
+    "UDP-GRD-02 Network Connectivity Model",
+    "UDP-GRD-03 Grid Events & SCADA"
+   ],
+   "actions": [
+    "locate_fault",
+    "recommend_switching",
+    "estimate_cmi",
+    "update_oms"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Distribution system operator",
+   "guardrails": [
+    "Switching is always executed by a qualified operator",
+    "Plans checked against the as-operated network model"
+   ],
+   "willNot": [
+    "Operate any switch, breaker or device",
+    "Clear tags or holds"
+   ],
+   "kpis": [
+    "Customer minutes interrupted",
+    "Time to isolate",
+    "Patrol miles"
+   ],
+   "demoPrompt": "Feeder 12-04 locked out — where is the fault and how do we restore most customers fastest?",
+   "operatingArea": "grid-ops",
+   "outcomes": [
+    "reliability",
+    "safety"
+   ],
+   "offering": "U-O1",
+   "systems": [
+    "ADMS",
+    "OMS",
+    "SCADA",
+    "AMI head-end",
+    "GIS"
+   ],
+   "roles": [
+    "Distribution system operator",
+    "Control-room supervisor"
+   ],
+   "value": {
+    "range": "15–30% fewer customer minutes interrupted per sustained fault",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Where is the fault on feeder 12-04?",
+     "a": "Most likely on the segment between {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}} (probability {{fx.feederLockout.pSegment|d2}}), from {{fx.feederLockout.fciTripped}} tripped fault indicators and {{fx.feederLockout.lastGasp}} AMI last-gasp messages."
+    },
+    {
+     "q": "Will you operate the switches?",
+     "a": "No, never. I am capped at L2 by the OT safety rule. I send the switching plan to the distribution system operator, who checks it and executes it."
+    }
+   ],
+   "script": {
+    "prompt": "Feeder {{fx.feederLockout.feeder}} locked out — where is the fault and how do we restore most customers fastest?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"locked out\" → breaker lockout event; \"Feeder {{fx.feederLockout.feeder}}\" → circuit {{fx.feederLockout.circuit}}, {{fx.feederLockout.region}} region",
+      "ms": 180
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "OP-07: every switching plan is checked against the as-operated model, including tags and holds; OP-11: critical-care and medical-baseline customers are restored first where options are equal",
+      "ms": 240
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "Lockout at {{fx.feederLockout.lockoutTime}} (SCADA); {{fx.feederLockout.fciTripped}} faulted-circuit indicators tripped; {{fx.feederLockout.lastGasp}} AMI last-gasp messages between switches {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}}",
+      "ms": 620
+     },
+     {
+      "title": "Locate",
+      "layer": "AI/ML",
+      "text": "Fault on the segment between {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}} ({{fx.feederLockout.pSegment|d2}}) · lateral fuse {{fx.feederLockout.lateralFuse}} ({{fx.feederLockout.pFuse|d2}}) · other ({{fx.feederLockout.pOther|d2}})",
+      "ms": 540
+     },
+     {
+      "title": "Impact",
+      "layer": "Semantic",
+      "text": "{{fx.feederLockout.customersOut}} customers out, including {{fx.feederLockout.medicalBaseline}} medical-baseline and {{fx.feederLockout.hospitals}} hospital on an automatic alternate feed; about {{fx.feederLockout.customersOut}} customer minutes interrupted per minute",
+      "ms": 380
+     },
+     {
+      "title": "Plan",
+      "layer": "Network model",
+      "text": "Open {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}}; close tie {{fx.feederLockout.tieSwitch}} from feeder {{fx.feederLockout.tieFeeder}} → restores {{fx.feederLockout.restoredByTie}} customers; feeder {{fx.feederLockout.tieFeeder}} loading goes from {{fx.feederLockout.loadingBefore}}% to {{fx.feederLockout.loadingAfter}}% of rating, within limits",
+      "ms": 460
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role DSO_OPERATOR: CEII permitted; customer names masked, medical-baseline shown as a count",
+      "ms": 90
+     },
+     {
+      "title": "Hand-off",
+      "layer": "Control plane",
+      "text": "Plan sent to the operator to review and execute — the agent does not operate devices (OT cap L2). Patrol crew requested via UA-GO-06; outage notices and ETR {{fx.feederLockout.etr}} via UA-CC-01",
+      "ms": 280
+     }
+    ],
+    "answer": "The fault is most likely on the segment between {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}} ({{fx.feederLockout.pSegment|pct}}). Proposed plan for the operator: open {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}}, then close tie {{fx.feederLockout.tieSwitch}}. That restores {{fx.feederLockout.restoredByTie}} of {{fx.feederLockout.customersOut}} customers in about {{fx.feederLockout.planMinutes}} minutes of planning (baseline {{fx.feederLockout.baselinePlanMinutes}}). {{fx.feederLockout.remainingOut}} customers on the faulted segment wait for the patrol crew. ETR {{fx.feederLockout.etr}}. **The operator reviews and executes; the agent operates nothing.**",
+    "outcome": "Awaiting the distribution system operator (L2 · OT cap)",
+    "handoffs": [
+     "UA-GO-06",
+     "UA-CC-01"
+    ],
+    "knockouts": {
+     "context": {
+      "answer": "Plan: open {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}}, close {{fx.feederLockout.tieSwitch}} …",
+      "wrong": "Plan would operate a tagged device. Without the context layer the agent did not see that {{fx.feederLockout.tieSwitch}} is tagged out for maintenance (OP-07). The operator's check catches it, but the plan is unusable."
+     },
+     "networkModel": {
+      "answer": "Isolate between {{fx.feederLockout.isolateA}} and {{fx.feederLockout.isolateB}}; {{fx.feederLockout.misassigned}} more customers left out than necessary.",
+      "wrong": "{{fx.feederLockout.misassigned}} customers are mis-assigned to the wrong segment in an uncorrected network model, so the isolation leaves them out unnecessarily."
+     },
+     "governance": {
+      "answer": "Plan as above — with a customer list including names and addresses.",
+      "wrong": "Customer names appear to the operations role. Row and column policies were not applied (PII shown to DSO_OPERATOR)."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-GO-03",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Asset Health & Risk Agent",
+   "mission": "Scores the health and failure risk of transformers, breakers, poles and cables and ranks interventions by risk reduced per dollar.",
+   "trigger": "New inspection, test result or loading event",
+   "dataProducts": [
+    "UDP-GRD-07 Asset Registry & Health",
+    "UDP-GRD-03 Grid Events & SCADA",
+    "UDP-ENT-02 Work Orders"
+   ],
+   "actions": [
+    "score_health",
+    "forecast_failure",
+    "rank_interventions",
+    "create_work_request"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Asset management lead",
+   "guardrails": [
+    "Every score explains its drivers",
+    "Capital changes go through the planning cycle"
+   ],
+   "willNot": [
+    "Defer safety-critical work",
+    "Change capital budgets"
+   ],
+   "kpis": [
+    "In-service failures",
+    "Risk reduced per $",
+    "Health index coverage"
+   ],
+   "demoPrompt": "Which substation transformers are most likely to fail this summer?",
+   "operatingArea": "asset-mgmt",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O3",
+   "systems": [
+    "EAM",
+    "SCADA",
+    "DGA and test results",
+    "Asset registry"
+   ],
+   "roles": [
+    "Asset management lead",
+    "Reliability engineer"
+   ],
+   "value": {
+    "range": "10–25% fewer in-service failures",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which transformers are most at risk this summer?",
+     "a": "{{fx.transformerRisk.summerRisk}} substation transformers combine poor dissolved-gas results with forecast loading above 95%. All {{fx.transformerRisk.highRisk}} high-risk assets are listed with their drivers."
+    },
+    {
+     "q": "Can you move money in the capital plan?",
+     "a": "No. I rank interventions by risk reduced per dollar and create work requests. Capital changes go through the planning cycle."
+    }
+   ]
+  },
+  {
+   "id": "UA-GO-04",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Drone & Visual Inspection Agent",
+   "mission": "Finds defects in drone, LiDAR and thermal imagery and turns confirmed defects into prioritised work.",
+   "trigger": "Imagery uploaded from an inspection flight",
+   "dataProducts": [
+    "UDP-GRD-08 Inspection Imagery & Findings",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "detect_defects",
+    "rank_severity",
+    "request_review",
+    "create_work_order"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Inspection supervisor",
+   "guardrails": [
+    "High-severity findings reviewed by a qualified inspector",
+    "Images stored with location and time stamp"
+   ],
+   "willNot": [
+    "Close a defect without inspector review"
+   ],
+   "kpis": [
+    "Defects found per mile",
+    "Image review time",
+    "Defect-to-repair days"
+   ],
+   "demoPrompt": "What did last week's transmission line flights find on the Coastal 230 kV line?",
+   "operatingArea": "asset-mgmt",
+   "outcomes": [
+    "reliability",
+    "safety"
+   ],
+   "offering": "U-O3",
+   "systems": [
+    "Imagery store",
+    "EAM",
+    "GIS",
+    "Inspection app"
+   ],
+   "roles": [
+    "Inspection supervisor",
+    "Qualified inspector"
+   ],
+   "value": {
+    "range": "2–4× faster image review",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What did the last flights find?",
+     "a": "On the Coastal 230 kV line: 3 cracked insulators, 1 hot connection on thermal imagery and 2 woodpecker-damaged structures. The hot connection is high severity and waiting for inspector review."
+    },
+    {
+     "q": "Can a defect be closed automatically?",
+     "a": "No. High-severity findings are always reviewed by a qualified inspector, and no defect is closed without that review."
+    }
+   ]
+  },
+  {
+   "id": "UA-GO-05",
+   "family": "grid-operations",
+   "motion": "decide-act",
+   "name": "Vegetation & Wildfire Risk Agent",
+   "mission": "Scores span-level vegetation and fire-weather risk, builds risk-based trim plans and prepares PSPS decision packs for people to decide.",
+   "trigger": "Fire-weather forecast, new imagery or plan cycle",
+   "dataProducts": [
+    "UDP-GRD-06 Weather & Fire Risk",
+    "UDP-GRD-09 Vegetation Spans",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "score_span_risk",
+    "build_trim_plan",
+    "prepare_psps_pack",
+    "plan_patrols"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Wildfire mitigation officer",
+   "guardrails": [
+    "De-energisation decisions are made only by authorised people",
+    "Customer impact (incl. medical baseline) shown in every pack"
+   ],
+   "willNot": [
+    "Recommend or execute de-energisation on its own",
+    "Change fire-weather thresholds"
+   ],
+   "kpis": [
+    "Tree-caused outages",
+    "Ignitions",
+    "Vegetation cost per mile"
+   ],
+   "demoPrompt": "Which circuits are in the highest fire-risk tier for tomorrow's red-flag warning?",
+   "operatingArea": "resilience",
+   "outcomes": [
+    "safety",
+    "reliability"
+   ],
+   "offering": "U-O10",
+   "systems": [
+    "GIS",
+    "Vegetation management system",
+    "Weather service (synthetic)",
+    "EAM",
+    "OMS"
+   ],
+   "roles": [
+    "Wildfire mitigation officer",
+    "Vegetation program manager"
+   ],
+   "value": {
+    "range": "15–30% fewer tree-caused outages",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which circuits are in the top fire-risk tier for tomorrow?",
+     "a": "{{fx.redFlag.tier3Circuits}} circuits are in tier 3. {{fx.redFlag.candidateCircuits}} meet the PSPS consideration criteria, serving {{fx.redFlag.customersOnCandidates}} customers ({{fx.redFlag.medicalBaseline}} medical-baseline)."
+    },
+    {
+     "q": "Do you decide on de-energisation?",
+     "a": "No. I prepare the decision pack. De-energisation is decided by authorised people and executed by qualified operators. I am capped at L2 by the OT safety rule."
+    }
+   ],
+   "script": {
+    "prompt": "Which circuits are in the highest fire-risk tier for tomorrow's red-flag warning?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"highest fire-risk tier\" → tier 3 in the utility's fire-risk model; \"tomorrow\" → {{fx.redFlag.date}}",
+      "ms": 150
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "WF-02: PSPS is considered only when tier-3 conditions and a red-flag warning coincide; WF-05: decisions are made by the wildfire mitigation officer; medical-baseline customers are notified first",
+      "ms": 240
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "{{fx.redFlag.spansScored}} spans scored from LiDAR, imagery and trim history; humidity 6–11% and gusts to 55 mph in the Valley and Mountain regions; open asset conditions",
+      "ms": 760
+     },
+     {
+      "title": "Score",
+      "layer": "AI/ML",
+      "text": "{{fx.redFlag.tier3Circuits}} circuits in tier 3; {{fx.redFlag.candidateCircuits}} meet the PSPS consideration criteria",
+      "ms": 520
+     },
+     {
+      "title": "Impact",
+      "layer": "Semantic",
+      "text": "{{fx.redFlag.customersOnCandidates}} customers on candidate circuits, {{fx.redFlag.medicalBaseline}} medical-baseline, 4 critical facilities",
+      "ms": 360
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role WILDFIRE_OFFICER: CEII permitted; medical-baseline shown as counts until a decision is made",
+      "ms": 80
+     },
+     {
+      "title": "Hand-off",
+      "layer": "Control plane",
+      "text": "PSPS decision pack sent to the wildfire mitigation officer for a decision at {{fx.redFlag.decisionTime}} — the agent cannot de-energise or recommend it on its own (OT cap L2); notices via UA-CC-01 only after the human decision",
+      "ms": 300
+     }
+    ],
+    "answer": "{{fx.redFlag.tier3Circuits}} circuits are in tier 3 for {{fx.redFlag.date}}. {{fx.redFlag.candidateCircuits}} meet the PSPS consideration criteria, serving {{fx.redFlag.customersOnCandidates}} customers, {{fx.redFlag.medicalBaseline}} of them medical-baseline. The decision pack, with patrol plans and customer impact, is with the wildfire mitigation officer. **People decide and execute any de-energisation.**",
+    "outcome": "Decision pack with the wildfire mitigation officer (L2 · OT cap)",
+    "handoffs": [
+     "UA-CC-01"
+    ],
+    "knockouts": {
+     "cleansing": {
+      "answer": "31 circuits in tier 3 …",
+      "wrong": "Stale LiDAR spans from before the 2025 trim cycle were not filtered out, which inflated the risk scores."
+     },
+     "context": {
+      "answer": "Notify 61,200 customers of a PSPS now.",
+      "wrong": "Without rule WF-05 the agent treated its own score as a decision and drafted notices before any human decision. Blocked by the control plane."
+     },
+     "governance": {
+      "answer": "Pack includes names and medical conditions of 1,140 customers …",
+      "wrong": "Medical-baseline details were shown before a decision was made and to a role that needs only counts."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-GO-06",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Work Bundling & Crew Dispatch Agent",
+   "mission": "Bundles nearby work, schedules crews by skill, permit and material availability, and dispatches emergencies to the best crew.",
+   "trigger": "Weekly schedule or new emergency job",
+   "dataProducts": [
+    "UDP-ENT-02 Work Orders",
+    "UDP-ENT-03 Workforce & Crews",
+    "UDP-ENT-04 Materials & Inventory"
+   ],
+   "actions": [
+    "bundle_work",
+    "schedule_crews",
+    "dispatch_emergency",
+    "brief_crew"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Work management supervisor",
+   "guardrails": [
+    "Crew qualifications and hours-of-service limits enforced"
+   ],
+   "willNot": [
+    "Override safety holds",
+    "Dispatch an unqualified crew"
+   ],
+   "kpis": [
+    "Jobs per crew-day",
+    "Schedule attainment",
+    "Emergency response time"
+   ],
+   "demoPrompt": "Bundle next week's pole replacements in the Central region by crew and permits.",
+   "operatingArea": "field-ops",
+   "outcomes": [
+    "affordability",
+    "safety"
+   ],
+   "offering": "U-O1",
+   "systems": [
+    "Work management",
+    "Mobile workforce",
+    "EAM",
+    "Permitting"
+   ],
+   "roles": [
+    "Work management supervisor",
+    "Dispatcher"
+   ],
+   "value": {
+    "range": "10–20% more jobs per crew-day",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "How did you bundle next week's pole replacements?",
+     "a": "By location, crew skill, permits and materials on hand. That gives {{fx.transformerRisk.bundledOrders}} bundles and cuts drive time. Two jobs wait for permits."
+    },
+    {
+     "q": "Can you send an unqualified crew?",
+     "a": "No. Qualifications and hours-of-service limits are enforced on every assignment."
+    }
+   ]
+  },
+  {
+   "id": "UA-GO-07",
+   "family": "grid-operations",
+   "motion": "operate",
+   "name": "Gas Leak & Integrity Agent",
+   "mission": "Grades and prioritises leak indications, scores excavation-damage risk and ranks pipe segments by integrity threat.",
+   "trigger": "Leak survey upload or one-call ticket",
+   "dataProducts": [
+    "UDP-GAS-01 Gas Leaks & Surveys",
+    "UDP-GAS-02 Pipe Segments & Integrity",
+    "UDP-GAS-03 One-Call Tickets"
+   ],
+   "actions": [
+    "grade_leak",
+    "prioritise_repairs",
+    "score_ticket_risk",
+    "rank_segments"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Gas operations supervisor",
+   "guardrails": [
+    "Hazardous leak response follows the emergency procedure, not the agent",
+    "Grading reviewed by a qualified technician"
+   ],
+   "willNot": [
+    "Downgrade a hazardous leak",
+    "Close a ticket"
+   ],
+   "kpis": [
+    "Hazardous leak response time",
+    "Leak backlog",
+    "Excavation damages per 1,000 tickets"
+   ],
+   "demoPrompt": "Which open leaks and excavation tickets need attention first today?",
+   "operatingArea": "gas-ops",
+   "outcomes": [
+    "safety",
+    "reliability"
+   ],
+   "offering": "U-O3",
+   "systems": [
+    "Leak survey system",
+    "GIS",
+    "One-call system",
+    "Integrity management system"
+   ],
+   "roles": [
+    "Gas operations supervisor",
+    "Qualified leak technician"
+   ],
+   "value": {
+    "range": "20–40% faster leak prioritisation",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What needs attention first today?",
+     "a": "{{fx.overnight.grade1}} indications graded as potentially hazardous. They follow the emergency procedure and a crew was dispatched by the supervisor at {{fx.overnight.grade1Dispatched}}. After that, the high-risk excavation tickets near mains."
+    },
+    {
+     "q": "Can you downgrade a hazardous leak?",
+     "a": "No. Grading is reviewed by a qualified technician, and the emergency procedure governs hazardous leaks, not the agent."
+    }
+   ]
+  },
+  {
+   "id": "UA-GM-01",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Plant Performance & Heat Rate Agent",
+   "mission": "Detects heat-rate drift and performance losses across the fleet and recommends corrections to operators.",
+   "trigger": "Heat-rate deviation or daily performance run",
+   "dataProducts": [
+    "UDP-GEN-01 Unit Performance",
+    "UDP-GEN-02 Plant Historian"
+   ],
+   "actions": [
+    "detect_drift",
+    "explain_losses",
+    "recommend_setpoint"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Plant operations manager",
+   "guardrails": [
+    "Set-point changes made by operators within operating limits"
+   ],
+   "willNot": [
+    "Change control-system set-points"
+   ],
+   "kpis": [
+    "Net heat rate",
+    "Fuel cost per MWh",
+    "Equivalent availability"
+   ],
+   "demoPrompt": "Why did Unit 2's heat rate rise this week?",
+   "operatingArea": "gen-ops",
+   "outcomes": [
+    "affordability",
+    "growth"
+   ],
+   "offering": "U-O12",
+   "systems": [
+    "Plant historian",
+    "Performance monitoring",
+    "DCS (read-only)"
+   ],
+   "roles": [
+    "Plant operations manager",
+    "Performance engineer"
+   ],
+   "value": {
+    "range": "0.5–1.5% heat-rate improvement",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Why did Unit 2's heat rate rise this week?",
+     "a": "Condenser backpressure rose by 0.4 inHg after cooling-tower fan 3 tripped. That explains about 70% of the 1.8% heat-rate increase. Compressor fouling explains the rest."
+    },
+    {
+     "q": "Will you change the set-points?",
+     "a": "No. I recommend corrections. Operators make set-point changes within operating limits. I am capped at L2 by the OT safety rule."
+    }
+   ]
+  },
+  {
+   "id": "UA-GM-02",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Generation Predictive Maintenance Agent",
+   "mission": "Spots early signs of equipment failure from historian data and raises evidence-backed work requests.",
+   "trigger": "Anomaly score above threshold",
+   "dataProducts": [
+    "UDP-GEN-02 Plant Historian",
+    "UDP-ENT-02 Work Orders",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "detect_anomaly",
+    "diagnose",
+    "create_work_request"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Plant maintenance manager",
+   "guardrails": [
+    "Work requests carry the sensor evidence"
+   ],
+   "willNot": [
+    "Take a unit offline"
+   ],
+   "kpis": [
+    "Forced outage rate",
+    "Unplanned outage hours",
+    "Maintenance cost per MWh"
+   ],
+   "demoPrompt": "Which rotating equipment is trending toward failure across the fleet?",
+   "operatingArea": "gen-maint",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O12",
+   "systems": [
+    "Plant historian",
+    "EAM",
+    "Vibration monitoring"
+   ],
+   "roles": [
+    "Plant maintenance manager",
+    "Rotating-equipment engineer"
+   ],
+   "value": {
+    "range": "10–20% fewer forced outages",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What is trending toward failure?",
+     "a": "Boiler feed pump B on ST-4 (bearing vibration rising for 9 days) and the CC-1 gas turbine inlet guide vanes. Both have evidence-backed work requests."
+    },
+    {
+     "q": "Will you take a unit offline?",
+     "a": "No. I raise work requests with sensor evidence. Unit decisions are made by plant operations."
+    }
+   ]
+  },
+  {
+   "id": "UA-GM-03",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Load & Renewables Forecasting Agent",
+   "mission": "Forecasts load, wind and solar output with weather, DER and electrification signals.",
+   "trigger": "Forecast cycle or weather update",
+   "dataProducts": [
+    "UDP-MKT-01 Load & Weather",
+    "UDP-GEN-01 Unit Performance",
+    "UDP-CUS-02 AMI Interval Usage"
+   ],
+   "actions": [
+    "forecast_load",
+    "forecast_renewables",
+    "explain_error"
+   ],
+   "autonomyDefault": "L4",
+   "autonomyMax": "L4",
+   "approver": "Forecasting lead",
+   "guardrails": [
+    "Forecasts published with confidence bands",
+    "Human review on extreme-weather days"
+   ],
+   "willNot": [
+    "Submit market bids"
+   ],
+   "kpis": [
+    "Day-ahead load MAPE",
+    "Renewable forecast error",
+    "Imbalance cost"
+   ],
+   "demoPrompt": "What is tomorrow's peak load forecast and how confident are we?",
+   "operatingArea": "trading",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O12",
+   "systems": [
+    "EMS (read-only)",
+    "Weather service (synthetic)",
+    "MDMS",
+    "DERMS (read-only)"
+   ],
+   "roles": [
+    "Forecasting lead",
+    "System operator"
+   ],
+   "value": {
+    "range": "10–25% lower imbalance cost",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What is tomorrow's peak forecast?",
+     "a": "12.9 GW at 17:00, with an 80% band of 12.5–13.3 GW. The profile peak is 13.8 GW."
+    },
+    {
+     "q": "Why can this agent run at L4?",
+     "a": "It publishes forecasts only and never changes a device or submits a bid, so the OT cap does not apply. People review it on extreme-weather days."
+    }
+   ]
+  },
+  {
+   "id": "UA-GM-04",
+   "family": "generation-markets",
+   "motion": "decide-act",
+   "name": "Market Bidding & Settlement Agent",
+   "mission": "Prepares unit offers within the approved strategy and reconciles ISO/RTO settlements to internal data.",
+   "trigger": "Bid window or settlement statement",
+   "dataProducts": [
+    "UDP-MKT-02 Market Bids & Settlements",
+    "UDP-GEN-01 Unit Performance",
+    "UDP-MKT-01 Load & Weather"
+   ],
+   "actions": [
+    "prepare_offers",
+    "check_constraints",
+    "reconcile_settlement",
+    "raise_dispute"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Trading desk lead",
+   "guardrails": [
+    "Offers within approved risk limits and market rules",
+    "Disputes filed by people"
+   ],
+   "willNot": [
+    "Submit offers outside strategy",
+    "Trade on its own account"
+   ],
+   "kpis": [
+    "Settlement disputes won",
+    "Market margin vs plan",
+    "Bid compliance"
+   ],
+   "demoPrompt": "Where did last month's settlement differ from our meter data?",
+   "operatingArea": "trading",
+   "outcomes": [
+    "affordability"
+   ],
+   "offering": "U-O12",
+   "systems": [
+    "Bidding system",
+    "Settlement system",
+    "Meter data",
+    "ISO/RTO market interface"
+   ],
+   "roles": [
+    "Trading desk lead",
+    "Settlement analyst",
+    "Risk officer"
+   ],
+   "value": {
+    "range": "0.5–1% of market revenue recovered",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Where did settlement differ from our meter data?",
+     "a": "On 6 intervals at WF-9, where the market used estimated meter values. That is worth about $84,000 (synthetic). I drafted the dispute; a settlement analyst files it."
+    },
+    {
+     "q": "Who sees our bids?",
+     "a": "Bids and positions are market-sensitive. Only the trading desk and its risk officers can see them."
+    }
+   ]
+  },
+  {
+   "id": "UA-GM-05",
+   "family": "generation-markets",
+   "motion": "operate",
+   "name": "Battery Storage Dispatch Agent",
+   "mission": "Optimises battery charge and discharge against prices, grid constraints and state-of-health limits.",
+   "trigger": "Day-ahead and real-time price updates",
+   "dataProducts": [
+    "UDP-GEN-03 Storage Assets",
+    "UDP-MKT-02 Market Bids & Settlements",
+    "UDP-GRD-04 Feeder Capacity & Hosting"
+   ],
+   "actions": [
+    "propose_schedule",
+    "respect_soh_limits",
+    "report_value"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Storage portfolio manager",
+   "guardrails": [
+    "Schedules executed by the EMS/operator, not the agent",
+    "Degradation limits always respected"
+   ],
+   "willNot": [
+    "Exceed warranty cycle limits"
+   ],
+   "kpis": [
+    "Arbitrage revenue",
+    "Availability",
+    "Degradation vs plan"
+   ],
+   "demoPrompt": "How much value did our batteries capture during last week's heat wave?",
+   "operatingArea": "gen-ops",
+   "outcomes": [
+    "affordability",
+    "growth"
+   ],
+   "offering": "U-O12",
+   "systems": [
+    "EMS",
+    "Battery management system",
+    "Market interface"
+   ],
+   "roles": [
+    "Storage portfolio manager",
+    "EMS operator"
+   ],
+   "value": {
+    "range": "5–15% more arbitrage value",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "How much value did the batteries capture in the heat wave?",
+     "a": "About $1.9M over 5 days (synthetic), charging overnight and discharging 17:00–21:00, within state-of-health limits."
+    },
+    {
+     "q": "Who executes the schedule?",
+     "a": "The EMS and the operator. I propose schedules and am capped at L2 by the OT safety rule."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-01",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Data Product Discovery Agent",
+   "mission": "Turns business intent plus report and KPI lineage from the BI estate into a ranked, evidence-backed data-product backlog.",
+   "trigger": "New intent or BI rationalisation run",
+   "dataProducts": [
+    "Report & KPI lineage",
+    "Catalog metadata",
+    "Business glossary"
+   ],
+   "actions": [
+    "parse_intent",
+    "mine_kpi_lineage",
+    "rank_candidates",
+    "draft_product_spec"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Data product portfolio lead",
+   "guardrails": [
+    "Propose-only",
+    "Every recommendation cites lineage evidence"
+   ],
+   "willNot": [
+    "Publish products",
+    "Create pipelines"
+   ],
+   "kpis": [
+    "Intent-to-product time",
+    "Duplicate KPI definitions retired"
+   ],
+   "demoPrompt": "We need to cut SAIDI — which data products do we need?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O6",
+   "systems": [
+    "BI estate metadata",
+    "Catalog",
+    "Glossary"
+   ],
+   "roles": [
+    "Data product portfolio lead",
+    "Reliability engineering"
+   ],
+   "value": {
+    "range": "30–40% faster intent-to-insight (Capgemini proof from another industry — revalidate)",
+    "source": "capgemini-proof",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "We need to cut SAIDI — which data products do we need?",
+     "a": "Start with {{fx.saidiLineage.product}} Outage & Reliability 360. It is used by {{fx.saidiLineage.evidenceReports}} of {{fx.saidiLineage.reports}} reports, and those reports use {{fx.saidiLineage.saidiDefinitions}} conflicting SAIDI definitions that need one certified version."
+    },
+    {
+     "q": "Do you build the product?",
+     "a": "No. I propose a ranked backlog with evidence. The portfolio lead decides, and the build agents take it from there."
+    }
+   ],
+   "script": {
+    "prompt": "We need to cut SAIDI — which data products do we need?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"cut SAIDI\" → improve the System Average Interruption Duration Index (IEEE 1366); intent registered: reliability goal",
+      "ms": 170
+     },
+     {
+      "title": "Mine",
+      "layer": "Data products",
+      "text": "{{fx.saidiLineage.reports}} reports and {{fx.saidiLineage.kpis}} KPIs scanned in the BI estate; {{fx.saidiLineage.evidenceReports}} reports use SAIDI",
+      "ms": 820
+     },
+     {
+      "title": "Conflicts",
+      "layer": "Semantic",
+      "text": "{{fx.saidiLineage.saidiDefinitions}} conflicting SAIDI definitions (with and without major event days, with and without planned outages); {{fx.saidiLineage.brokenLineage}} reports with broken lineage; {{fx.saidiLineage.missingStewards}} without a steward",
+      "ms": 520
+     },
+     {
+      "title": "Rank",
+      "layer": "AI/ML",
+      "text": "Top candidate: {{fx.saidiLineage.product}} Outage & Reliability 360 (evidence: {{fx.saidiLineage.evidenceReports}} reports, {{fx.saidiLineage.owners}} owners); next: Network Connectivity Model, Grid Events & SCADA",
+      "ms": 460
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Lineage metadata only — no customer data read",
+      "ms": 60
+     },
+     {
+      "title": "Hand-off",
+      "layer": "Control plane",
+      "text": "Backlog proposed to the data product portfolio lead (L2); mapping handed to UA-DI-02",
+      "ms": 220
+     }
+    ],
+    "answer": "Build {{fx.saidiLineage.product}} Outage & Reliability 360 first, with one certified SAIDI definition (IEEE 1366, with and without major event days). It retires {{fx.saidiLineage.saidiDefinitions}} conflicting definitions used by {{fx.saidiLineage.evidenceReports}} reports. Then the Network Connectivity Model, which fixes customer counts per device, and Grid Events & SCADA.",
+    "outcome": "Backlog proposed to the portfolio lead (L2)",
+    "handoffs": [
+     "UA-DI-02",
+     "UA-DI-03",
+     "UA-DI-04",
+     "UA-DI-05"
+    ],
+    "knockouts": {
+     "glossary": {
+      "answer": "SAIDI is 395 minutes; SAIDI is 128 minutes; SAIDI is 211 minutes …",
+      "wrong": "Without the glossary, the three SAIDI definitions were treated as one KPI and the agent reported three different numbers."
+     },
+     "certification": {
+      "answer": "Use the 'Reliability Dashboard v3' extract.",
+      "wrong": "An uncertified extract with broken lineage was recommended as the source of truth."
+     },
+     "context": {
+      "answer": "Top candidate: Customer 360.",
+      "wrong": "Without the intent context (a reliability goal), the agent ranked by report popularity instead of relevance to SAIDI."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-DI-02",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Source-to-Target Mapping Agent",
+   "mission": "Maps CIS, MDMS, OMS, GIS, EAM and historian sources to the utility data model (CIM-aligned) with confidence scores.",
+   "trigger": "New source or schema drift",
+   "dataProducts": [
+    "Source schemas (CIS, MDMS, OMS, ADMS, GIS, EAM, historian)",
+    "Utility canonical model (CIM-aligned)",
+    "Glossary"
+   ],
+   "actions": [
+    "profile_source",
+    "propose_mapping",
+    "classify_sensitive"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data architect",
+   "guardrails": [
+    "Mappings below 0.8 confidence need review",
+    "Customer energy usage data and CEII auto-classified"
+   ],
+   "willNot": [
+    "Deploy pipelines",
+    "Change the canonical model"
+   ],
+   "kpis": [
+    "Mapping effort hours",
+    "Mapping acceptance rate"
+   ],
+   "demoPrompt": "Map the new MDMS interval feed to Customer 360 and the outage data product.",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability"
+   ],
+   "offering": "U-O6",
+   "systems": [
+    "CIS",
+    "MDMS",
+    "OMS",
+    "ADMS",
+    "GIS",
+    "EAM",
+    "Historian"
+   ],
+   "roles": [
+    "Data architect"
+   ],
+   "value": {
+    "range": "60–80% of mappings auto-proposed",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "How much of the MDMS feed did you map?",
+     "a": "{{fx.saidiLineage.autoMapped|pct}} of columns automatically. {{fx.saidiLineage.flaggedColumns}} columns are flagged below 0.8 confidence for the architect."
+    },
+    {
+     "q": "What about sensitive columns?",
+     "a": "Customer energy usage data and CEII are classified automatically on the way in, so policies apply from the first load."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-03",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Data Quality Rules Agent",
+   "mission": "Generates and backtests quality rules for critical data elements such as meter IDs, premise-to-transformer links and outage times.",
+   "trigger": "New product, CDE or quality incident",
+   "dataProducts": [
+    "Profiling results",
+    "CDE register",
+    "Business rules"
+   ],
+   "actions": [
+    "profile_data",
+    "generate_rules",
+    "backtest_rules"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data steward",
+   "guardrails": [
+    "Rules backtested on 13 months before activation"
+   ],
+   "willNot": [
+    "Silently relax thresholds"
+   ],
+   "kpis": [
+    "CDE rule coverage",
+    "False-positive rate"
+   ],
+   "demoPrompt": "Create quality rules for meter-to-transformer connectivity and outage start/end times.",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability"
+   ],
+   "offering": "U-O6",
+   "systems": [
+    "Data platform",
+    "CDE register"
+   ],
+   "roles": [
+    "Data steward"
+   ],
+   "value": {
+    "range": "2–3× rule coverage on CDEs",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which rules did you create?",
+     "a": "{{fx.saidiLineage.dqRules}} rules on critical data elements, including meter-to-transformer links, outage start before end, and customer counts that match the connectivity model. All were backtested on {{fx.saidiLineage.backtestMonths}} months."
+    },
+    {
+     "q": "Can a rule be relaxed?",
+     "a": "Only by the data steward, with a reason recorded. I never relax thresholds silently."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-04",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Pipeline & Code Generation Agent",
+   "mission": "Generates and tests transformation code from approved mappings and opens a pull request for human merge.",
+   "trigger": "Mapping approved",
+   "dataProducts": [
+    "Approved mappings",
+    "Target model",
+    "Coding standards"
+   ],
+   "actions": [
+    "generate_code",
+    "generate_tests",
+    "open_pull_request"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Data engineering lead",
+   "guardrails": [
+    "Human-approved pull requests only",
+    "CI tests must pass"
+   ],
+   "willNot": [
+    "Push to production directly"
+   ],
+   "kpis": [
+    "Build cycle time",
+    "Test coverage"
+   ],
+   "demoPrompt": "Generate the Silver-to-Gold model for outage events with major-event-day flags.",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability"
+   ],
+   "offering": "U-O6",
+   "systems": [
+    "Code repository",
+    "CI",
+    "Data platform"
+   ],
+   "roles": [
+    "Data engineering lead"
+   ],
+   "value": {
+    "range": "Build cycle weeks → days",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What did you generate for outage events?",
+     "a": "The Silver-to-Gold model with major-event-day flags (IEEE 1366 2.5β method), tests and lineage, in one pull request."
+    },
+    {
+     "q": "Can you deploy to production?",
+     "a": "No. A person merges the pull request after CI passes."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-05",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "Semantic Model Builder Agent",
+   "mission": "Builds semantic views and verified queries for certified KPIs such as SAIDI, SAIFI, CAIDI, O&M per customer and bad debt.",
+   "trigger": "KPI certified or product published",
+   "dataProducts": [
+    "Certified KPIs",
+    "Gold models",
+    "Glossary"
+   ],
+   "actions": [
+    "draft_semantic_view",
+    "add_synonyms",
+    "generate_verified_queries",
+    "evaluate_questions"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Semantic steward",
+   "guardrails": [
+    "Every metric references a certified KPI definition (e.g. IEEE 1366)"
+   ],
+   "willNot": [
+    "Publish uncertified metrics"
+   ],
+   "kpis": [
+    "Evaluation accuracy",
+    "Time to semantic view"
+   ],
+   "demoPrompt": "Build the semantic view for reliability metrics with and without major event days.",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O4",
+   "systems": [
+    "Semantic layer",
+    "Glossary",
+    "Data platform"
+   ],
+   "roles": [
+    "Semantic steward"
+   ],
+   "value": {
+    "range": "Evaluation accuracy above 90%",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What is in the reliability view?",
+     "a": "{{fx.saidiLineage.semanticView}}: SAIDI, SAIFI and CAIDI by region, cause and major-event-day flag, with {{fx.saidiLineage.verifiedQueries}} verified queries. It scored {{fx.saidiLineage.evalScore|pct}} on evaluation."
+    },
+    {
+     "q": "Can you publish an uncertified metric?",
+     "a": "No. Every metric references a certified KPI definition."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-06",
+   "family": "data-intelligence",
+   "motion": "engineer",
+   "name": "GIS & Network Model Quality Agent",
+   "mission": "Finds connectivity, phasing and asset-record errors using AMI voltage correlation and as-built reconciliation.",
+   "trigger": "Nightly model check or work order closed",
+   "dataProducts": [
+    "UDP-GRD-02 Network Connectivity Model",
+    "UDP-CUS-02 AMI Interval Usage",
+    "UDP-ENT-02 Work Orders"
+   ],
+   "actions": [
+    "correlate_voltage",
+    "detect_errors",
+    "propose_fix",
+    "open_gis_task"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "GIS manager",
+   "guardrails": [
+    "Fixes applied by GIS editors after review"
+   ],
+   "willNot": [
+    "Edit the operational model directly"
+   ],
+   "kpis": [
+    "Connectivity errors open",
+    "Phase accuracy",
+    "As-built backlog"
+   ],
+   "demoPrompt": "Which meters are probably connected to the wrong transformer in the Metro region?",
+   "operatingArea": "asset-mgmt",
+   "outcomes": [
+    "reliability",
+    "growth"
+   ],
+   "offering": "U-O4",
+   "systems": [
+    "GIS",
+    "MDMS",
+    "AMI head-end",
+    "EAM"
+   ],
+   "roles": [
+    "GIS manager",
+    "GIS editors"
+   ],
+   "value": {
+    "range": "30–50% fewer connectivity errors",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which meters are probably on the wrong transformer?",
+     "a": "In the Metro region, 1,180 meters have voltage profiles that match a neighbouring transformer better than the recorded one. That includes the {{fx.feederLockout.misassigned}} on feeder 12-04."
+    },
+    {
+     "q": "Do you edit the model?",
+     "a": "No. I open GIS tasks with evidence, and GIS editors apply the fixes after review."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-07",
+   "family": "data-intelligence",
+   "motion": "operate",
+   "name": "Data Quality & Healing Agent",
+   "mission": "Monitors data products, detects freshness and quality breaches and applies catalogued fixes before consumers notice.",
+   "trigger": "Freshness SLA miss, rule breach or schema drift",
+   "dataProducts": [
+    "Data product observability",
+    "Pipeline metadata",
+    "Lineage graph"
+   ],
+   "actions": [
+    "detect_anomaly",
+    "trace_lineage",
+    "apply_fix",
+    "notify_owner"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Data product owner",
+   "guardrails": [
+    "Auto-fix only for catalogued patterns",
+    "Consumers notified"
+   ],
+   "willNot": [
+    "Delete data",
+    "Bypass certification"
+   ],
+   "kpis": [
+    "Data incident MTTR",
+    "L1/L2 tickets avoided"
+   ],
+   "demoPrompt": "The AMI interval feed is late this morning — what broke and who is affected?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability",
+    "customer"
+   ],
+   "offering": "U-O2",
+   "systems": [
+    "Data observability",
+    "Pipeline orchestrator",
+    "Lineage graph"
+   ],
+   "roles": [
+    "Data product owner"
+   ],
+   "value": {
+    "range": "50% fewer L1/L2 data tickets (Capgemini proof from another industry — revalidate)",
+    "source": "capgemini-proof",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Why was the AMI feed late this morning?",
+     "a": "The head-end export stalled at {{fx.overnight.amiLate}}. I re-ran the catalogued recovery and the feed was healed at {{fx.overnight.amiHealed}}. {{fx.overnight.amiMeters}} meters were affected and consumers were notified."
+    },
+    {
+     "q": "Can you change the data?",
+     "a": "Only through catalogued fixes. I never delete data or bypass certification."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-08",
+   "family": "data-intelligence",
+   "motion": "operate",
+   "name": "Platform FinOps Agent",
+   "mission": "Attributes compute, storage and model cost to data products, agents and outcomes and recommends savings.",
+   "trigger": "Daily cost run or budget threshold",
+   "dataProducts": [
+    "Platform usage metadata",
+    "Agent run logs"
+   ],
+   "actions": [
+    "attribute_cost",
+    "detect_waste",
+    "recommend_rightsizing"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Platform owner",
+   "guardrails": [
+    "Changes within approved budget envelopes"
+   ],
+   "willNot": [
+    "Suspend production workloads"
+   ],
+   "kpis": [
+    "Cost per outcome",
+    "Idle compute",
+    "Savings realised"
+   ],
+   "demoPrompt": "Which workloads cost the most per outage restored this month?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "affordability"
+   ],
+   "offering": "U-O2",
+   "systems": [
+    "Platform billing data",
+    "Agent run logs"
+   ],
+   "roles": [
+    "Platform owner"
+   ],
+   "value": {
+    "range": "10–20% platform cost saved",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What saving did you find?",
+     "a": "An over-sized warehouse for the outage-prediction model. Right-sizing saves ${{fx.overnight.finopsSaving}} a month and is waiting for the platform owner."
+    },
+    {
+     "q": "Can you suspend workloads?",
+     "a": "No. Changes stay within approved budget envelopes and the owner approves them."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-09",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Ask the Utility Agent",
+   "mission": "Answers business questions over certified data products with a full 'how I answered' trace, refusing when evidence is missing.",
+   "trigger": "Question in chat, BI or mobile",
+   "dataProducts": [
+    "Certified data products",
+    "Semantic views",
+    "Context layer"
+   ],
+   "actions": [
+    "resolve_terms",
+    "apply_rules",
+    "generate_sql",
+    "check_access",
+    "cite_sources"
+   ],
+   "autonomyDefault": "L1",
+   "autonomyMax": "L2",
+   "approver": "n/a (read-only)",
+   "guardrails": [
+    "Row and column policies applied",
+    "Refuses rather than answers without evidence"
+   ],
+   "willNot": [
+    "Answer from uncertified sources",
+    "Reveal customer energy usage data or CEII to uncleared roles"
+   ],
+   "kpis": [
+    "Questions answered with citations",
+    "Refusal rate",
+    "Analyst hours deflected"
+   ],
+   "demoPrompt": "What was SAIDI excluding major event days last quarter by region?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "reliability",
+    "affordability",
+    "customer"
+   ],
+   "offering": "U-O7",
+   "systems": [
+    "Semantic layer",
+    "Data products",
+    "BI",
+    "Mobile"
+   ],
+   "roles": [
+    "Any employee (read-only)"
+   ],
+   "value": {
+    "range": "Analyst hours deflected (synthetic)",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What was SAIDI excluding major event days last quarter?",
+     "a": "Trailing 12 months: {{syn.reliability.saidiExMed}} minutes system-wide, SAIFI {{syn.reliability.saifi|d2}} and CAIDI {{syn.reliability.caidi|d1}} minutes. Including major event days, SAIDI is {{syn.reliability.saidiInclMed}} minutes. Certified, from {{fx.saidiLineage.semanticView}}."
+    },
+    {
+     "q": "Can I see a customer's interval usage?",
+     "a": "Not without consent or a cleared role. Customer energy usage data is shown only in aggregate. I can give you the feeder or region aggregate instead."
+    }
+   ],
+   "script": {
+    "prompt": "What was SAIDI excluding major event days over the last 12 months, by region?",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"SAIDI excluding major event days\" → certified KPI REL-001 (IEEE 1366, 2.5β method); \"last 12 months\" → Oct 2025–Sep 2026",
+      "ms": 160
+     },
+     {
+      "title": "Rules",
+      "layer": "Context",
+      "text": "Major event days flagged per IEEE 1366; momentary interruptions (≤ 5 min) excluded",
+      "ms": 150
+     },
+     {
+      "title": "Model",
+      "layer": "Semantic",
+      "text": "{{fx.saidiLineage.semanticView}} · measure SAIDI_EX_MED · dimension region",
+      "ms": 220
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role ANALYST: aggregate reliability permitted; no customer-level data",
+      "ms": 70
+     },
+     {
+      "title": "Query",
+      "layer": "Data products",
+      "text": "Verified query VQ-REL-03 over {{fx.saidiLineage.product}} (certified v1.0, freshness 15 min)",
+      "ms": 540
+     },
+     {
+      "title": "Cite",
+      "layer": "Control plane",
+      "text": "Answer cites REL-001, VQ-REL-03 and the certification record",
+      "ms": 120
+     }
+    ],
+    "answer": "SAIDI excluding major event days, trailing 12 months: **{{syn.reliability.saidiExMed}} minutes** system-wide (SAIFI {{syn.reliability.saifi|d2}}, CAIDI {{syn.reliability.caidi|d1}} minutes = SAIDI ÷ SAIFI). Including major event days it is {{syn.reliability.saidiInclMed}} minutes. Mountain is highest and Metro lowest. Certified ✓",
+    "outcome": "Answered with citations (L1)",
+    "handoffs": [
+     "UA-DI-10"
+    ],
+    "knockouts": {
+     "glossary": {
+      "answer": "SAIDI was 395 minutes.",
+      "wrong": "\"Excluding major event days\" was not resolved, so the answer used the definition that includes them."
+     },
+     "semantic": {
+      "answer": "SAIDI: 1,537 minutes (sum of monthly values by region).",
+      "wrong": "Without the semantic model, regional SAIDI was summed instead of weighted by customers served."
+     },
+     "certification": {
+      "answer": "SAIDI was 211 minutes.",
+      "wrong": "An uncertified report using the third SAIDI definition (excludes planned outages, includes MED) answered the question."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-DI-10",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Marketplace Concierge Agent",
+   "mission": "Helps users find, preview and request the right data product or agent.",
+   "trigger": "Marketplace search or data question",
+   "dataProducts": [
+    "Data product registry",
+    "Agent registry",
+    "Glossary"
+   ],
+   "actions": [
+    "search_catalog",
+    "preview_sample",
+    "start_request"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "n/a (self-service)",
+   "guardrails": [
+    "Previews use masked samples only"
+   ],
+   "willNot": [
+    "Grant access"
+   ],
+   "kpis": [
+    "Time to find data",
+    "Self-service request rate"
+   ],
+   "demoPrompt": "I need feeder loading by month for the Valley region — where do I get it?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "customer"
+   ],
+   "offering": "U-O7",
+   "systems": [
+    "Marketplace",
+    "Catalog"
+   ],
+   "roles": [
+    "Any employee"
+   ],
+   "value": {
+    "range": "Time to find data: days → minutes",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Where do I get monthly feeder loading for the Valley region?",
+     "a": "UDP-GRD-04 Feeder Capacity & Hosting. It is classified CEII, so access needs a cleared role. I have started the request for you."
+    },
+    {
+     "q": "Can I preview it?",
+     "a": "Yes, with masked samples only."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-11",
+   "family": "data-intelligence",
+   "motion": "decide-act",
+   "name": "Executive Insight Briefing Agent",
+   "mission": "Produces a weekly, cited briefing on reliability, safety, customer, cost and capital-plan KPIs with drivers and actions.",
+   "trigger": "Weekly schedule or KPI threshold breach",
+   "dataProducts": [
+    "Certified KPIs",
+    "Semantic views",
+    "Agent outcomes"
+   ],
+   "actions": [
+    "detect_movements",
+    "explain_drivers",
+    "draft_briefing"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Chief of staff",
+   "guardrails": [
+    "Certified KPIs only; every claim cited"
+   ],
+   "willNot": [
+    "Speculate beyond evidence"
+   ],
+   "kpis": [
+    "Briefing prep time",
+    "Executive adoption"
+   ],
+   "demoPrompt": "Brief me on reliability, safety and O&M per customer last week.",
+   "operatingArea": "corporate",
+   "outcomes": [
+    "reliability",
+    "affordability",
+    "safety"
+   ],
+   "offering": "U-O7",
+   "systems": [
+    "Semantic layer",
+    "Agent outcomes"
+   ],
+   "roles": [
+    "Chief of staff",
+    "Executives"
+   ],
+   "value": {
+    "range": "Briefing prep: days → minutes",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Why did O&M per customer rise in the Valley region?",
+     "a": "From ${{fx.cfoQuestion.omBefore}} to ${{fx.cfoQuestion.omAfter}} (+{{fx.cfoQuestion.omChangePct|pct1}}): vegetation +${{fx.cfoQuestion.vegetation}}, storm +${{fx.cfoQuestion.storm}} and contractor rates +${{fx.cfoQuestion.contractor}} per customer."
+    },
+    {
+     "q": "Is every claim cited?",
+     "a": "Yes. Certified KPIs only, and each claim links to its source."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-12",
+   "family": "data-intelligence",
+   "motion": "govern",
+   "name": "Agent Evaluation & Promotion Agent",
+   "mission": "Runs evaluation suites, tracks acceptance and recommends promoting or demoting each agent's autonomy.",
+   "trigger": "Nightly evaluation or threshold crossed",
+   "dataProducts": [
+    "Agent evidence trail",
+    "Evaluation suites",
+    "Approval decisions"
+   ],
+   "actions": [
+    "run_evals",
+    "compute_acceptance",
+    "recommend_promotion"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "AI governance board",
+   "guardrails": [
+    "Promotion by human decision only",
+    "OT-facing agents capped at L2"
+   ],
+   "willNot": [
+    "Change an agent's autonomy itself"
+   ],
+   "kpis": [
+    "Agents at target autonomy",
+    "Regressions caught"
+   ],
+   "demoPrompt": "Which agents are eligible for promotion this month?",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "safety"
+   ],
+   "offering": "U-O8",
+   "systems": [
+    "Evaluation harness",
+    "Agent evidence trail"
+   ],
+   "roles": [
+    "AI governance board"
+   ],
+   "value": {
+    "range": "Regressions caught before customers notice",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Which agents are eligible for promotion?",
+     "a": "{{fx.overnight.promotionAgent}} High-Bill Explainer: {{fx.overnight.promotionAcceptance|pct}} acceptance over {{fx.overnight.promotionWeeks}} weeks, eligible L2 → L3. The governance board decides."
+    },
+    {
+     "q": "Could the Fault Location Advisor be promoted?",
+     "a": "No. {{fx.assured.otBlockedAgent}} is capped at L2 by the OT safety rule. A promotion request is blocked automatically and the attempt is logged."
+    }
+   ]
+  },
+  {
+   "id": "UA-DI-13",
+   "family": "data-intelligence",
+   "motion": "govern",
+   "name": "Access Request Agent",
+   "mission": "Evaluates access requests against purpose, role and classification; auto-approves within policy and routes the rest.",
+   "trigger": "Access request submitted",
+   "dataProducts": [
+    "Access policies",
+    "Data classification",
+    "Role catalog"
+   ],
+   "actions": [
+    "evaluate_purpose",
+    "auto_approve",
+    "route_to_owner",
+    "provision_access"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L4",
+   "approver": "Data product owner (exceptions)",
+   "guardrails": [
+    "Customer energy usage data, CEII and critical-infrastructure data always need owner approval",
+    "Access time-boxed"
+   ],
+   "willNot": [
+    "Approve restricted data without the owner"
+   ],
+   "kpis": [
+    "Median time to access",
+    "Policy exceptions"
+   ],
+   "demoPrompt": "Request read access to Outage & Reliability 360 for a performance report.",
+   "operatingArea": "it-ot",
+   "outcomes": [
+    "safety"
+   ],
+   "offering": "U-O7",
+   "systems": [
+    "Policy engine",
+    "IAM",
+    "Catalog"
+   ],
+   "roles": [
+    "Data product owner"
+   ],
+   "value": {
+    "range": "Median time to access: weeks → minutes",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Can I get Outage & Reliability 360 for a performance report?",
+     "a": "Yes. It is internal, aggregate data and your purpose fits policy, so access is auto-approved for {{fx.cfoQuestion.accessDays}} days."
+    },
+    {
+     "q": "What about the Network Connectivity Model?",
+     "a": "It is CEII, so the data product owner must approve. I have routed your request with your stated purpose."
+    }
+   ]
+  },
+  {
+   "id": "UA-EE-01",
+   "family": "enterprise-enablement",
+   "motion": "decide-act",
+   "name": "Field Safety Briefing Agent",
+   "mission": "Builds a job-specific pre-job briefing from work type, location, weather, energy sources and past incidents, and answers crew safety questions.",
+   "trigger": "Job dispatched or crew question",
+   "dataProducts": [
+    "UDP-ENT-02 Work Orders",
+    "UDP-ENT-05 Safety Observations & Incidents",
+    "UDP-GRD-06 Weather & Fire Risk"
+   ],
+   "actions": [
+    "identify_hazards",
+    "draft_briefing",
+    "recall_lessons",
+    "answer_question"
+   ],
+   "autonomyDefault": "L1",
+   "autonomyMax": "L2",
+   "approver": "Crew leader",
+   "guardrails": [
+    "Briefing supports, never replaces, the crew's own tailboard",
+    "High-energy hazards always listed first"
+   ],
+   "willNot": [
+    "Approve energised work",
+    "Waive a safety procedure"
+   ],
+   "kpis": [
+    "SIF-precursor events",
+    "Tailboard completeness",
+    "Recordable incident rate"
+   ],
+   "demoPrompt": "Brief my crew on tomorrow's underground cable splice at Main and 4th.",
+   "operatingArea": "safety",
+   "outcomes": [
+    "safety"
+   ],
+   "offering": "U-O13",
+   "systems": [
+    "Work management",
+    "Mobile workforce",
+    "Safety incident system",
+    "Weather service (synthetic)"
+   ],
+   "roles": [
+    "Crew leader",
+    "Safety advisor"
+   ],
+   "value": {
+    "range": "Fewer SIF-precursor events (synthetic until proof)",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What are the top hazards for an underground cable splice?",
+     "a": "Stored and induced energy (test before touch, ground per procedure), confined-space atmosphere in the vault, traffic at the intersection, and heat stress (forecast 96°F)."
+    },
+    {
+     "q": "Can you approve energised work?",
+     "a": "No. My briefing supports the crew's own tailboard. The crew leader and procedures decide."
+    }
+   ],
+   "script": {
+    "prompt": "Brief my crew on tomorrow's underground cable splice at Main and 4th.",
+    "steps": [
+     {
+      "title": "Understand",
+      "layer": "Glossary",
+      "text": "\"cable splice\" → work type UG-SPLICE-15kV; \"tomorrow\" → job WO-104233, 07:00 start",
+      "ms": 140
+     },
+     {
+      "title": "Context",
+      "layer": "Context",
+      "text": "SF-01: high-energy hazards are listed first; SF-04: test before touch and grounding per procedure; the briefing supports the crew's own tailboard",
+      "ms": 200
+     },
+     {
+      "title": "Correlate",
+      "layer": "Data products",
+      "text": "Vault V-4471 (confined space); traffic count high; forecast 96°F; 2 near misses on similar jobs in 24 months (induced voltage, heat)",
+      "ms": 560
+     },
+     {
+      "title": "Hazards",
+      "layer": "AI/ML",
+      "text": "1 Stored/induced energy · 2 Confined-space atmosphere · 3 Traffic · 4 Heat stress — with controls for each",
+      "ms": 380
+     },
+     {
+      "title": "Access",
+      "layer": "Governance",
+      "text": "Role CREW_LEADER: job and safety history permitted; individuals in past incidents anonymised",
+      "ms": 70
+     },
+     {
+      "title": "Brief",
+      "layer": "Control plane",
+      "text": "Briefing sent to the crew leader's tablet (L1, assist) — the crew completes its own tailboard",
+      "ms": 160
+     }
+    ],
+    "answer": "Top hazards for WO-104233: (1) stored and induced energy — test before touch, ground per procedure; (2) confined-space atmosphere in vault V-4471 — monitor before entry; (3) traffic at Main and 4th — set up the work zone; (4) heat stress at a forecast 96°F — hydration and rest cycles. Two similar jobs had near misses from induced voltage. **This supports, not replaces, your tailboard.**",
+    "outcome": "Briefing delivered (L1)",
+    "handoffs": [],
+    "knockouts": {
+     "context": {
+      "answer": "Hazards: traffic, heat, confined space.",
+      "wrong": "Without rule SF-01 the high-energy hazard was not listed first. It was missing from the top of the briefing."
+     },
+     "cleansing": {
+      "answer": "No similar incidents found.",
+      "wrong": "Free-text incident reports were not cleansed or classified, so the two induced-voltage near misses were missed."
+     },
+     "governance": {
+      "answer": "Near miss in 2025 involving J. Doe …",
+      "wrong": "Names of individuals in past incidents were shown. They must be anonymised."
+     }
+    }
+   }
+  },
+  {
+   "id": "UA-EE-02",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Rate Case & Data Request Agent",
+   "mission": "Drafts responses to regulator data requests and checks filings for inconsistent numbers, all from certified data.",
+   "trigger": "Data request or filing draft",
+   "dataProducts": [
+    "Certified KPIs",
+    "Prior responses library",
+    "UDP-ENT-06 Capital & O&M"
+   ],
+   "actions": [
+    "find_evidence",
+    "draft_response",
+    "check_consistency"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Regulatory affairs lead",
+   "guardrails": [
+    "Every figure traces to a certified source",
+    "Responses reviewed by the witness"
+   ],
+   "willNot": [
+    "Submit filings"
+   ],
+   "kpis": [
+    "Data request cycle time",
+    "Errata filed"
+   ],
+   "demoPrompt": "Draft the response to staff's data request on vegetation spend per mile since 2022.",
+   "operatingArea": "regulatory",
+   "outcomes": [
+    "safety",
+    "affordability"
+   ],
+   "offering": "U-O8",
+   "systems": [
+    "Regulatory filing system",
+    "Data products",
+    "Document management"
+   ],
+   "roles": [
+    "Regulatory affairs lead",
+    "Witnesses"
+   ],
+   "value": {
+    "range": "30–50% faster data-request responses",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Can you answer staff's question on vegetation spend per mile?",
+     "a": "Yes. I drafted it from certified data, with the 2022–2026 series from Capital & O&M and the line-mile base from the asset registry. Every figure is traced, and the witness reviews it."
+    },
+    {
+     "q": "Do you submit filings?",
+     "a": "No. Responses are reviewed by the witness and submitted by regulatory affairs."
+    }
+   ]
+  },
+  {
+   "id": "UA-EE-03",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Critical-Infrastructure Compliance Evidence Agent",
+   "mission": "Collects and indexes reliability and cyber-standards evidence continuously and flags gaps before audits.",
+   "trigger": "Control test cycle or configuration change",
+   "dataProducts": [
+    "Compliance evidence store",
+    "Access logs",
+    "Change records"
+   ],
+   "actions": [
+    "collect_evidence",
+    "test_controls",
+    "flag_gaps"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Compliance officer",
+   "guardrails": [
+    "Read-only on critical-infrastructure systems",
+    "Evidence handled under information-protection rules"
+   ],
+   "willNot": [
+    "Change system configurations"
+   ],
+   "kpis": [
+    "Evidence collection effort",
+    "Potential non-compliance findings"
+   ],
+   "demoPrompt": "Are we audit-ready for the critical-infrastructure protection controls this quarter?",
+   "operatingArea": "regulatory",
+   "outcomes": [
+    "safety"
+   ],
+   "offering": "U-O8",
+   "systems": [
+    "Compliance evidence store",
+    "Access logs",
+    "Change management"
+   ],
+   "roles": [
+    "Compliance officer"
+   ],
+   "value": {
+    "range": "40–60% less evidence-collection effort",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Are we audit-ready this quarter?",
+     "a": "{{fx.assured.autoEvidence|pct}} of evidence for {{fx.assured.requirements}} requirements was collected automatically. Two gaps remain: one quarterly access review is overdue and one patch assessment is unsigned."
+    },
+    {
+     "q": "Can you change configurations?",
+     "a": "No. I am read-only on critical-infrastructure systems."
+    }
+   ]
+  },
+  {
+   "id": "UA-EE-04",
+   "family": "enterprise-enablement",
+   "motion": "operate",
+   "name": "Long-Lead Materials Agent",
+   "mission": "Forecasts transformer, meter, cable and switchgear demand from the capital plan, failures and storms, and re-plans when suppliers slip.",
+   "trigger": "Planning cycle or supplier delay",
+   "dataProducts": [
+    "UDP-ENT-04 Materials & Inventory",
+    "UDP-ENT-06 Capital & O&M",
+    "UDP-GRD-07 Asset Registry & Health"
+   ],
+   "actions": [
+    "forecast_demand",
+    "monitor_suppliers",
+    "replan_allocation"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L3",
+   "approver": "Supply chain planner",
+   "guardrails": [
+    "Allocation changes within budget"
+   ],
+   "willNot": [
+    "Place purchase orders"
+   ],
+   "kpis": [
+    "Critical stock-outs",
+    "Jobs delayed for materials"
+   ],
+   "demoPrompt": "Will we have enough pad-mount transformers for the Q1 new-service backlog?",
+   "operatingArea": "supply",
+   "outcomes": [
+    "reliability",
+    "affordability"
+   ],
+   "offering": "U-O3",
+   "systems": [
+    "ERP",
+    "EAM",
+    "Supplier portal",
+    "Capital plan"
+   ],
+   "roles": [
+    "Supply chain planner"
+   ],
+   "value": {
+    "range": "20–40% fewer jobs delayed for materials",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Do we have enough large power transformers?",
+     "a": "We have {{fx.transformerRisk.spares}} spares against {{fx.transformerRisk.summerRisk}} high-risk units, with a {{fx.transformerRisk.leadTimeWeeks}}-week lead time. I re-planned the allocation and flagged one order to expedite."
+    },
+    {
+     "q": "Can you place purchase orders?",
+     "a": "No. I recommend allocations within budget, and planners place the orders."
+    }
+   ]
+  },
+  {
+   "id": "UA-EE-05",
+   "family": "enterprise-enablement",
+   "motion": "decide-act",
+   "name": "Capital Plan Optimisation Agent",
+   "mission": "Ranks capital projects by risk reduced, reliability gained and customer bill impact within budget and resource limits.",
+   "trigger": "Capital planning cycle",
+   "dataProducts": [
+    "UDP-ENT-06 Capital & O&M",
+    "UDP-GRD-07 Asset Registry & Health",
+    "UDP-GRD-01 Outage & Reliability 360"
+   ],
+   "actions": [
+    "score_projects",
+    "optimise_portfolio",
+    "estimate_bill_impact"
+   ],
+   "autonomyDefault": "L2",
+   "autonomyMax": "L2",
+   "approver": "Capital planning director",
+   "guardrails": [
+    "Portfolio decisions made by the investment committee"
+   ],
+   "willNot": [
+    "Approve spend"
+   ],
+   "kpis": [
+    "Risk reduced per $",
+    "Capital plan execution",
+    "Bill impact"
+   ],
+   "demoPrompt": "What portfolio gives the most SAIDI improvement for the same capital budget?",
+   "operatingArea": "corporate",
+   "outcomes": [
+    "affordability",
+    "reliability",
+    "growth"
+   ],
+   "offering": "U-O11",
+   "systems": [
+    "Capital planning",
+    "EAM",
+    "OMS",
+    "Financial model"
+   ],
+   "roles": [
+    "Capital planning director",
+    "Investment committee"
+   ],
+   "value": {
+    "range": "5–15% more risk reduced per $",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "What portfolio gives the most SAIDI improvement for the same budget?",
+     "a": "Shifting 6% of spend from age-based to risk-based replacement improves SAIDI by about 4 minutes for the same budget and defers ${{fx.transformerRisk.deferredCapex}}M of capex."
+    },
+    {
+     "q": "Do you approve spend?",
+     "a": "No. The investment committee decides the portfolio."
+    }
+   ]
+  },
+  {
+   "id": "UA-EE-06",
+   "family": "enterprise-enablement",
+   "motion": "govern",
+   "name": "Customer Data Privacy & Consent Agent",
+   "mission": "Checks that consent and customer-data-sharing rules propagate to every system, partner and agent that uses customer energy data.",
+   "trigger": "Consent change or new data use",
+   "dataProducts": [
+    "UDP-CUS-05 Contact Preferences & Consent",
+    "Data access logs",
+    "Third-party sharing register"
+   ],
+   "actions": [
+    "trace_consent",
+    "detect_violation",
+    "open_remediation"
+   ],
+   "autonomyDefault": "L3",
+   "autonomyMax": "L3",
+   "approver": "Privacy officer",
+   "guardrails": [
+    "Read-only on customer records"
+   ],
+   "willNot": [
+    "Change a customer's consent"
+   ],
+   "kpis": [
+    "Consent violations",
+    "Time to propagate"
+   ],
+   "demoPrompt": "Has every system honoured the data-sharing opt-outs received last week?",
+   "operatingArea": "regulatory",
+   "outcomes": [
+    "customer",
+    "safety"
+   ],
+   "offering": "U-O8",
+   "systems": [
+    "Consent store",
+    "CIS",
+    "Data-sharing register",
+    "Access logs"
+   ],
+   "roles": [
+    "Privacy officer"
+   ],
+   "value": {
+    "range": "Zero consent violations reaching customers",
+    "source": "BENCH",
+    "validated": false
+   },
+   "pilotWeeks": "10–12 weeks",
+   "qa": [
+    {
+     "q": "Has every system honoured last week's opt-outs?",
+     "a": "All but one: a campaign list in the programs system still holds {{fx.assured.consentGap}} customers who opted out. I opened a remediation and the list is blocked until it is fixed."
+    },
+    {
+     "q": "Can you change a customer's consent?",
+     "a": "No. I am read-only on customer records."
+    }
+   ]
+  }
+ ]
+}

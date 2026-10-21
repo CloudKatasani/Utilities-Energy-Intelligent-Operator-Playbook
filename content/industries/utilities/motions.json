@@ -1,0 +1,71 @@
+{
+  "message": "Most utilities have modernised CIS, AMI, OMS and GIS. The fastest way to get value from them is to apply AI to the whole data-and-AI lifecycle, not only the end use case. Engineer with AI so data products, the network model and agents arrive in weeks, not quarters. Operate with AI so grid, plant, gas, data and agent operations run and heal under control, with operators in command of every device. Decide and act with AI so customers, crews, planners and executives get trusted answers first and then act on them. One control plane governs, secures and assures it all.",
+  "motions": [
+    { "id": "engineer", "name": "Engineer with AI", "short": "Engineer", "cls": "m-engineer",
+      "promise": "AI builds the utility's data products, network model quality, semantic layer and agents.",
+      "accelerates": ["Intent → data-product backlog from BI and KPI lineage", "CIS/MDMS/OMS/GIS/EAM/historian mapping to a CIM-aligned model", "DQ rules on critical data elements", "GIS connectivity fixes from AMI voltage correlation", "Semantic views for IEEE 1366 metrics", "Agents from templates"],
+      "agentIds": ["UA-DI-01", "UA-DI-02", "UA-DI-03", "UA-DI-04", "UA-DI-05", "UA-DI-06"],
+      "kpis": [
+        { "value": "30–40%", "label": "Faster intent-to-insight", "source": "capgemini-proof", "note": "Capgemini proof from another industry — revalidate for Utilities", "validated": false },
+        { "value": "{{fx.saidiLineage.elapsedDays}} days", "label": "SAIDI goal to certified product (vs {{fx.saidiLineage.baselineWeeks}}-week baseline)", "source": "synthetic", "validated": false },
+        { "value": "−30–50%", "label": "GIS connectivity errors", "source": "synthetic", "validated": false }
+      ],
+      "whatItTakes": ["Canonical utility model (CIM-aligned)", "CDE register", "BI and KPI lineage extracts", "Human-approved merges"],
+      "checkpoints": ["Architect approves mappings", "Steward approves rules and definitions", "Engineering lead merges pull requests", "GIS editors apply connectivity fixes"],
+      "offeringIds": ["U-O2", "U-O4", "U-O6"], "scenarioId": "U-S5" },
+    { "id": "operate", "name": "Operate with AI", "short": "Operate", "cls": "m-operate",
+      "promise": "AI runs, heals and optimises grid, plant, gas, data and agent operations, with operators in command.",
+      "accelerates": ["Outage prediction and storm staging", "Fault location advice (operator executes)", "Asset health and drone inspection", "Work bundling and dispatch", "Gas leak triage", "Plant performance and forecasting", "DataOps and FinOps"],
+      "agentIds": ["UA-GO-01", "UA-GO-02", "UA-GO-03", "UA-GO-04", "UA-GO-06", "UA-GO-07", "UA-GM-01", "UA-GM-02", "UA-GM-03", "UA-GM-05", "UA-DI-07", "UA-DI-08", "UA-EE-04"],
+      "kpis": [
+        { "value": "−15–30%", "label": "Customer minutes interrupted per sustained fault", "source": "synthetic", "validated": false },
+        { "value": "−10–20%", "label": "Forced outage rate", "source": "synthetic", "validated": false },
+        { "value": "50%", "label": "Fewer L1/L2 data tickets", "source": "capgemini-proof", "note": "Capgemini proof from another industry — revalidate for Utilities", "validated": false }
+      ],
+      "whatItTakes": ["Historian and SCADA access in OT security zones (one way)", "Catalogued runbooks with rollback", "Evaluation suites", "Approval matrix and the OT cap"],
+      "checkpoints": ["Operators execute every switching plan and set-point", "Approver per L3 action", "Governance board decides promotions"],
+      "offeringIds": ["U-O1", "U-O3", "U-O12"], "scenarioId": "U-S7" },
+    { "id": "decide-act", "name": "Decide and Act with AI", "short": "Decide & Act", "cls": "m-decide",
+      "promise": "Trusted answers first, then decisions and actions for customers, crews, planners and executives.",
+      "stages": [
+        { "id": "consume", "name": "Consume", "text": "Cited answers from certified products: Ask the Utility, the marketplace, executive briefings", "scenarioId": "U-S6" },
+        { "id": "act", "name": "Decide & Act", "text": "Outage communications, high-bill explanations, payment help, programs, large-load answers, field safety", "scenarioId": "U-S2" }
+      ],
+      "accelerates": ["Outage communications and ETR", "High-bill explanations", "Payment assistance", "Program targeting", "Large-load feasibility", "Capital portfolio", "Executive briefings", "Ask the Utility"],
+      "agentIds": ["UA-CC-01", "UA-CC-02", "UA-CC-03", "UA-CC-04", "UA-CC-05", "UA-GO-05", "UA-GM-04", "UA-DI-09", "UA-DI-10", "UA-DI-11", "UA-EE-01", "UA-EE-05"],
+      "kpis": [
+        { "value": "+10–20 pts", "label": "Self-service containment", "source": "synthetic", "validated": false },
+        { "value": "{{fx.highBill.escalationsBefore}} → {{fx.highBill.escalationsAfter}}", "label": "High-bill regulator escalations a year", "source": "synthetic", "validated": false },
+        { "value": "{{fx.dataCentre.baselineWeeks}} weeks → {{fx.dataCentre.screenDays}} days", "label": "Time to a large-load answer", "source": "synthetic", "validated": false }
+      ],
+      "whatItTakes": ["Certified products and semantic layer", "Consent propagation", "Channel integration (IVR, app, field mobile, BI)"],
+      "checkpoints": ["Data owner approves CEUD and CEII access", "Agents refuse without evidence", "Communications lead approves bulk notices"],
+      "offeringIds": ["U-O7", "U-O9", "U-O10", "U-O11", "U-O13"], "scenarioId": "U-S2" },
+    { "id": "govern", "name": "Govern, secure and assure with AI", "short": "Govern", "cls": "m-govern", "controlPlane": true,
+      "promise": "Every agent, dataset and action is safe, compliant, evidenced and reversible.",
+      "accelerates": ["The OT safety cap", "Consent and customer-data sharing", "Critical-infrastructure evidence", "Rate-case data requests", "Access to CEII", "Agent evaluation and promotion"],
+      "agentIds": ["UA-DI-12", "UA-DI-13", "UA-EE-02", "UA-EE-03", "UA-EE-06"],
+      "kpis": [
+        { "value": "−40–60%", "label": "Evidence-collection effort", "source": "synthetic", "validated": false },
+        { "value": "{{fx.assured.protectedDisconnections}}", "label": "Protected-customer disconnections", "source": "synthetic", "validated": false },
+        { "value": "0", "label": "OT actions by agents", "source": "synthetic", "validated": false }
+      ],
+      "whatItTakes": ["Policy engine", "CEII and critical-infrastructure information handling", "Audit trail", "Kill switches"],
+      "checkpoints": ["AI governance board decides promotions", "Privacy officer owns consent", "Compliance officer signs evidence"],
+      "offeringIds": ["U-O5", "U-O8"], "scenarioId": "U-S9" }
+  ],
+  "plan": {
+    "rules": [
+      { "if": "governance", "start": "govern", "why": "A governance or OT-security hard blocker comes first: the control plane is put in place before agents act." },
+      { "if": "networkModel", "start": "engineer", "why": "GIS connectivity accuracy is low or unknown, so agents would act on the wrong customers and devices. Engineer the network model and core products first." },
+      { "if": "manualOps", "start": "operate", "why": "Products exist but control-room and field processes are manual. Operate with AI next." },
+      { "if": "default", "start": "decide-act", "why": "Certified products and a semantic layer are in place. Start with Decide and Act." }
+    ],
+    "first90": {
+      "govern": "Control plane in 6 weeks: policy engine, OT cap, CEII handling, evidence trail; then an Engineer pilot",
+      "engineer": "Assess (4–6 weeks) → Data Product Factory pilot on Outage & Reliability 360 and the Network Connectivity Model",
+      "operate": "Pilot DataOps healing plus the Fault Location Advisor at L2 with one control room",
+      "decide-act": "Marketplace + Ask the Utility + the Outage Communication & ETR Agent"
+    }
+  }
+}
