@@ -1,5 +1,5 @@
 // 05 Proof: offerings catalog and offering pages (F7), the demo theater (F8) and case studies (F9).
-import { D, IDX, esc, rich, attr, sectionHead, closeBtn, motionBadge, srcAttr, agentChip, dpChip, clientMode } from '../core/util.js';
+import { D, IDX, esc, rich, attr, sectionHead, closeBtn, motionBadge, srcAttr, agentChip, dpChip, clientMode, relabel } from '../core/util.js';
 import { state, set, walk } from '../core/state.js';
 import { icon } from '../core/icons.js';
 import { scenarioView } from './scenarios.js';
@@ -47,7 +47,7 @@ export function bindOfferings(node) {
     const b = e.target.closest('[data-filter]');
     if (!b) return;
     filters = { ...filters, [b.dataset.filter]: b.dataset.value };
-    node.innerHTML = offeringsPage();
+    node.innerHTML = relabel(offeringsPage());
     bindOfferings(node);
   });
 }
@@ -103,7 +103,7 @@ export function bindOfferingPage(node) {
     cur[b.dataset.check] = cur[b.dataset.check] === b.dataset.status ? undefined : b.dataset.status;
     set({ checklist: { ...state.checklist, [id]: cur } }, { silent: true });
     const st = node.scrollTop;
-    node.innerHTML = offeringPage({ id });
+    node.innerHTML = relabel(offeringPage({ id }));
     node.scrollTop = st;
     bindOfferingPage(node);
   });
@@ -173,7 +173,7 @@ export function bindCases(node) {
     const b = e.target.closest('[data-cfilter]');
     if (!b) return;
     caseFilters = { ...caseFilters, [b.dataset.cfilter]: b.dataset.value };
-    node.innerHTML = casesPage();
+    node.innerHTML = relabel(casesPage());
     bindCases(node);
   });
 }

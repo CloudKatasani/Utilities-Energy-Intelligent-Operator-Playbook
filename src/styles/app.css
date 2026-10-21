@@ -463,6 +463,8 @@ code { font-family: var(--font); font-size: 13px; background: var(--blue-10); pa
 .calc-head { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
 .calc-head h3, .readiness > h3 { font-size: 24px; font-weight: 800; letter-spacing: -.02em; margin-right: auto; }
 .calc-grid { display: grid; grid-template-columns: 340px 1fr; gap: 28px; }
+.calc-grid > *, .ready-grid > *, .acc-grid > * { min-width: 0; }
+.calc-out { overflow-x: auto; }
 .calc-inputs { display: grid; gap: 6px; align-content: start; }
 .calc-in { display: grid; grid-template-columns: 1fr 140px; gap: 8px; align-items: center; font-size: 13px; }
 .calc-in input, .num { width: 90px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; }
@@ -629,6 +631,28 @@ code { font-family: var(--font); font-size: 13px; background: var(--blue-10); pa
   .nav { display: none; }
   .trace-step { grid-template-columns: 1fr; }
   .roadmap, .opt-card, .stat-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .wrap, .topbar-inner, .page-content, .full { padding-left: 16px; padding-right: 16px; }
+  .topbar-inner { gap: 10px; }
+  .practice span:last-child { font-size: 13px; white-space: normal; line-height: 1.2; }
+  .logo img { height: 18px; }
+  .board { grid-template-columns: 1fr; padding: 14px; }
+  .rail { writing-mode: horizontal-tb; transform: none; flex-direction: column; gap: 4px; }
+  .band-tiles.five, .band-tiles.four, .outcome-cols, .roadmap, .opt-card, .stat-row, .acc-kpis, .telemetry, .ramp { grid-template-columns: 1fr; }
+  .arch { grid-template-columns: 1fr; }
+  .arch-row { grid-template-columns: 1fr; }
+  .calc-in { grid-template-columns: 1fr; }
+  .bar-row { grid-template-columns: 1fr 70px; }
+  .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; }
+  .facts { grid-template-columns: 1fr; }
+  .fv-head { grid-template-columns: 1fr; padding-right: 48px; }
+  .drawer { padding: 0 16px 40px; }
+  .menu { left: 8px; right: 8px; width: auto; }
+  .flow-loop { margin-left: 0; }
+  .checklist { grid-template-columns: 1fr; }
+  .check-item { flex-wrap: wrap; }
+  .calc, .readiness, .plan, .acc-panel { padding: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

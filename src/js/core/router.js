@@ -39,7 +39,10 @@ function setVisible(l, on) {
   el.setAttribute('aria-hidden', on ? 'false' : 'true');
   if (on) el.removeAttribute('inert'); else el.setAttribute('inert', '');
   document.body.classList.toggle(`has-${l}`, on);
-  document.body.classList.toggle('layer-open', Boolean(open.page || open.drawer || open.full));
+  const any = Boolean(open.page || open.drawer || open.full);
+  document.body.classList.toggle('layer-open', any);
+  // The story behind an open layer is inert, so keyboard focus stays in the dialog.
+  ['main', 'footer'].forEach((id) => { const n = document.getElementById(id); if (any) n.setAttribute('inert', ''); else n.removeAttribute('inert'); });
 }
 
 function paint(l, m, { keepScroll = false } = {}) {
@@ -49,6 +52,8 @@ function paint(l, m, { keepScroll = false } = {}) {
   el.innerHTML = relabel(String(m.render(m.params) ?? ''));
   el.dataset.route = m.hash;
   el.scrollTop = keepScroll ? top : 0;
+  const title = el.querySelector('h1, h2');
+  if (title) layerEl(l).setAttribute('aria-label', title.textContent.trim());
   setVisible(l, true);
   document.dispatchEvent(new CustomEvent('layer-rendered', { detail: { layer: l, route: m.hash, node: el, ms: performance.now() - t0, params: m.params } }));
   if (!keepScroll) {
@@ -87,8 +92,6 @@ export function apply(hash = location.hash) {
     if (m.parent) {
       const ph = m.parent(m.params);
       if (open.page !== ph) { const pm = match(ph); open.page = ph; paint('page', pm); }
-    } else if (open.page && !open.drawer) {
-      // a drawer opened from a page stays over it
     }
     if (open.drawer !== m.hash) { open.drawer = m.hash; paint('drawer', m); }
   } else if (m.kind === 'full') {

@@ -181,5 +181,5 @@ export function highlight(route) {
     o.families.forEach((f) => mark(`[data-family="${f}"]`));
   }
   if (kind === 'family') IDX.families[id].outcomes.forEach((o) => mark(`[data-outcome="${o}"]`));
-  if (kind === 'layer') IDX.layers[id].motions.forEach(() => mark('[data-rail]'));
+  if (kind === 'layer') mark('[data-rail]');
 }

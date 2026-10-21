@@ -1,7 +1,7 @@
 // Presenter menu (F10): audience lens, run sheets, Client/Presenter mode, operator name (session only),
 // as-of shift, notes and edit modes (saved as JSON in this browser), presentation mode, attract mode,
 // reset, and the executive briefing (print / PDF or standalone HTML).
-import { D, IDX, esc, rich, attr, closeBtn, toast, download, money, $, $$ } from '../core/util.js';
+import { D, IDX, esc, rich, attr, closeBtn, toast, download, money, reducedMotion, $, $$ } from '../core/util.js';
 import { state, set, reset, store } from '../core/state.js';
 import { go, current } from '../core/router.js';
 import { icon } from '../core/icons.js';
@@ -121,7 +121,7 @@ export function briefingPage() {
       <div class="no-print"><button class="btn primary" data-print>Print / Save as PDF</button> <button class="btn" data-brief-html>Download HTML</button></div></header>
     <section><h2>Outcome in focus</h2><p>${outcome ? esc(outcome.label) : esc(IDX.outcomes[aud?.outcome || 'reliability'].name)}</p></section>
     <section><h2>Where to start</h2><p><b>${esc(IDX.motions[r.start].name)}.</b> ${rich(r.why)}</p><p>Readiness ${r.score}/100 (${esc(r.tier.name)})${r.blockers.length ? ` · hard blockers: ${r.blockers.map(esc).join('; ')}` : ''}. First 90 days: ${esc(D.motions.plan.first90[r.start])}. Throughout: ${esc(D.layers.controlPlane.name)}, with the OT safety rule.</p></section>
-    <section><h2>Value</h2><p>${money(calc.derived.total)} a year at full run rate (${esc(state.calcCase)} case); ${C3(calc)}. Ranges are benchmarks pending validation.</p></section>
+    <section><h2>Value</h2><p>${money(calc.derived.total)} a year at full run rate (${esc(state.calcCase)} case); ${rampText(calc)}. Ranges are benchmarks pending validation.</p></section>
     <section><h2>Agents seen</h2>${agents.length ? `<ul>${[...new Map(agents.map((a) => [a.id, a])).values()].map((a) => `<li>${esc(IDX.agents[a.id]?.name || a.label)} (${esc(a.id)})</li>`).join('')}</ul>` : '<p>None yet — open any agent to add it.</p>'}</section>
     <section><h2>Offerings and options</h2>${offerings.length ? `<ul>${offerings.map((o) => `<li>${esc(o.label)}</li>`).join('')}</ul>` : '<p>None yet.</p>'}</section>
     <section><h2>Path walked</h2><ol>${path.map((p) => `<li>${esc(p.label)}</li>`).join('') || '<li>Nothing yet.</li>'}</ol></section>
@@ -129,7 +129,7 @@ export function briefingPage() {
   </div>`;
 }
 
-const C3 = (calc) => calc.ramp.map((v, i) => `${D.calculator.rampLabels[i]} ${money(v)}`).join(', ');
+const rampText = (calc) => calc.ramp.map((v, i) => `${D.calculator.rampLabels[i]} ${money(v)}`).join(', ');
 
 export function bindBriefing(node) {
   const root = node.querySelector('[data-briefing]');
@@ -159,7 +159,7 @@ function startAttract() {
   const stops = ['why', 'future', 'accelerate', 'impact', 'proof'];
   let i = 0;
   clearInterval(attractTimer);
-  attractTimer = setInterval(() => { i = (i + 1) % stops.length; document.getElementById(stops[i])?.scrollIntoView({ behavior: 'smooth' }); }, 6000);
+  attractTimer = setInterval(() => { i = (i + 1) % stops.length; document.getElementById(stops[i])?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' }); }, 6000);
 }
 export function armIdle() {
   clearTimeout(idle);

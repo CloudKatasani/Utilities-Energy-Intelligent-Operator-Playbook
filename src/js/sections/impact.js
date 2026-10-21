@@ -1,6 +1,6 @@
 // 04 Impact (F5): outcomes, the value calculator (formulas from calculator.json, evaluated by the safe
 // expression parser) and the readiness quick check with hard blockers, tiers and the cohort band.
-import { D, IDX, esc, rich, sectionHead, srcAttr, agentChip, fmt, money, $, $$ } from '../core/util.js';
+import { D, IDX, esc, rich, sectionHead, srcAttr, agentChip, fmt, money, relabel, $, $$ } from '../core/util.js';
 import { state, set, walk } from '../core/state.js';
 import { compile } from '../core/expr.js';
 import { icon } from '../core/icons.js';
@@ -30,7 +30,6 @@ function bars(map, labelOf, cls) {
 
 function calcOutputs() {
   const r = calculate();
-  walk('calculator', 'value', `Value calculator: ${money(r.derived.total, 0)} a year (${state.calcCase})`);
   return `<div class="calc-total" ${srcAttr('BENCH', 'Formulas in calculator.json')}><span>Total annual value at full run rate</span><b data-calc-total>${money(r.derived.total)}</b><small>${fmt(r.derived.omShare, 1)}% of O&M · $${fmt(r.derived.perCustomer, 0)} per customer a year</small></div>
     <div class="ramp">${r.ramp.map((v, i) => `<div><span>${esc(C.rampLabels[i])}</span><b>${money(v)}</b></div>`).join('')}</div>
     <h4>By outcome</h4>${bars(r.byOutcome, (k) => IDX.outcomes[k].name, (k) => `bar-o-${k}`)}
@@ -63,12 +62,12 @@ export function readinessResult(answers) {
 }
 
 function radar(pillars, cohort) {
-  const n = R.pillars.length, cx = 150, cy = 140, rad = 110;
+  const n = R.pillars.length, cx = 150, cy = 155, rad = 110;
   const pt = (i, v) => { const ang = -Math.PI / 2 + (i / n) * 2 * Math.PI; return [cx + Math.cos(ang) * rad * v / 100, cy + Math.sin(ang) * rad * v / 100]; };
   const poly = (vals) => vals.map((v, i) => pt(i, v).map((x) => x.toFixed(1)).join(',')).join(' ');
   const grid = [25, 50, 75, 100].map((g) => `<polygon class="radar-grid" points="${poly(R.pillars.map(() => g))}"/>`).join('');
   const labels = R.pillars.map((p, i) => { const [x, y] = pt(i, 122); return `<text class="radar-label" x="${x.toFixed(0)}" y="${y.toFixed(0)}" text-anchor="${x < cx - 5 ? 'end' : x > cx + 5 ? 'start' : 'middle'}">${esc(p.name)}</text>`; }).join('');
-  return `<svg class="radar" viewBox="-90 0 480 290" role="img" aria-label="Readiness by pillar">${grid}
+  return `<svg class="radar" viewBox="-130 0 560 310" role="img" aria-label="Readiness by pillar">${grid}
     <polygon class="radar-cohort" points="${poly(R.pillars.map((p) => cohort[p.id]))}"/>
     <polygon class="radar-you" points="${poly(R.pillars.map((p) => pillars[p.id]))}"/>${labels}</svg>`;
 }
@@ -118,7 +117,10 @@ export function renderImpact() {
 
 export function bindImpact(root, { onReadiness } = {}) {
   const sec = root.querySelector('#impact');
-  const redrawCalc = () => { $('[data-calc-out]', sec).innerHTML = calcOutputs(); };
+  const redrawCalc = () => {
+    $('[data-calc-out]', sec).innerHTML = relabel(calcOutputs());
+    walk('calculator', 'value', `Value calculator: ${money(calculate().derived.total, 0)} a year (${state.calcCase} case)`);
+  };
   sec.addEventListener('input', (e) => {
     const inp = e.target.closest('[data-input]');
     const f = e.target.closest('[data-factor]');
@@ -145,7 +147,7 @@ export function bindImpact(root, { onReadiness } = {}) {
     }
     if (e.target.closest('[data-calc-reset]')) {
       set({ calc: {}, calcCase: 'expected' }, { silent: true });
-      $('[data-calc-inputs]', sec).innerHTML = calcInputs();
+      $('[data-calc-inputs]', sec).innerHTML = relabel(calcInputs());
       $$('[data-case]', sec).forEach((b) => b.classList.toggle('on', b.dataset.case === 'expected'));
       redrawCalc();
       return;
@@ -155,13 +157,13 @@ export function bindImpact(root, { onReadiness } = {}) {
       set({ readiness: { ...(state.readiness || R.referenceDefaults), [q.dataset.q]: Number(q.dataset.v) } }, { silent: true });
       const r = readinessResult(state.readiness);
       walk('readiness', 'readiness', `Readiness: ${r.score}/100 (${r.tier.name}), start with ${IDX.motions[r.start].name}`);
-      $('[data-ready]', sec).innerHTML = readinessPanel();
+      $('[data-ready]', sec).innerHTML = relabel(readinessPanel());
       onReadiness?.();
       return;
     }
     if (e.target.closest('[data-ready-reset]')) {
       set({ readiness: null }, { silent: true });
-      $('[data-ready]', sec).innerHTML = readinessPanel();
+      $('[data-ready]', sec).innerHTML = relabel(readinessPanel());
       onReadiness?.();
     }
   });

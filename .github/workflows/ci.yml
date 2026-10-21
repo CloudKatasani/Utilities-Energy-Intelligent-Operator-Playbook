@@ -1,0 +1,43 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        industry: [utilities]   # add a pack here when content/industries/<id>/ lands (e.g. telco)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Lint (design tokens, neutrality, contrast)
+        run: |
+          node scripts/lint-tokens.mjs
+          node scripts/lint-neutrality.mjs --industry=${{ matrix.industry }}
+          node scripts/check-contrast.mjs
+      - name: Validate content (synthetic data reconciliation + content checks)
+        run: node scripts/generate-synthetic.mjs --industry=${{ matrix.industry }} && node scripts/validate-content.mjs --industry=${{ matrix.industry }}
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Build (single file + static site), size budget, neutrality on the built file
+        run: |
+          node scripts/build.mjs --industry=${{ matrix.industry }}
+          node scripts/check-size.mjs --industry=${{ matrix.industry }} | tee -a "$GITHUB_STEP_SUMMARY"
+          node scripts/lint-neutrality.mjs --industry=${{ matrix.industry }}
+      - run: npx playwright install --with-deps chromium
+      - name: Smoke suite
+        run: node scripts/test.mjs --industry=${{ matrix.industry }}
+        env:
+          CI: '1'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playbook-${{ matrix.industry }}
+          path: |
+            dist/
+            playwright-report/

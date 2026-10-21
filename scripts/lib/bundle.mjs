@@ -6,7 +6,7 @@
 // Each module becomes a factory in a small registry; exports are getters, so values are read on use.
 // Modules must not import each other in a cycle (checked).
 import { readFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, relative, resolve } from 'node:path';
 
 const IMPORT_RE = /^import\s+(?:\{([^}]*)\}|\*\s+as\s+([\w$]+))\s+from\s+['"]([^'"]+)['"];?\s*$/;
 
@@ -61,10 +61,3 @@ export function bundle(entry, root) {
   const runtime = 'const __m = {}, __f = {};\nconst __d = (id, fn) => { __f[id] = fn; };\nconst __r = (id) => { if (!__m[id]) { __m[id] = {}; __f[id](__m[id], __r); } return __m[id]; };';
   return `(function () {\n'use strict';\n${runtime}\n${defs}\n__r(${JSON.stringify(relative(root, resolve(entry)))});\n})();\n`;
 }
-
-export const moduleFiles = (entry, root) => {
-  const seen = new Set();
-  const visit = (f) => { if (seen.has(f)) return; seen.add(f); transform(f, root).deps.forEach(visit); };
-  visit(resolve(entry));
-  return [...seen].map((f) => join(relative(root, f)));
-};

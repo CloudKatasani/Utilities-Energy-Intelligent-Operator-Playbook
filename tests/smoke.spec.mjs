@@ -344,6 +344,14 @@ test.describe('presenter', () => {
     await expect(page.locator('.motion-btn.on')).toHaveText('Engineer with AI');
   });
 
+  test('Chief Safety Officer preselects the crew-safety step of the storm scenario', async ({ page }) => {
+    await open(page);
+    await page.click('#menu-btn');
+    await page.click('[data-audience="cso"]');
+    await go(page, '#/scenario/U-S1');
+    await expect(page.locator('#page-content .tl-step.current')).toContainText('Brief crews safely');
+  });
+
   test('every run sheet walks end to end', async ({ page }) => {
     await open(page);
     for (const rs of DATA.presenter.runSheets) {

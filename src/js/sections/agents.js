@@ -1,6 +1,6 @@
 // Agent families (F3), agent drawers and the agent full view (F4): what it does, Watch it run
 // (trace + knockouts), guardrails and autonomy (with the OT safety lock), what it takes, Ask the agent.
-import { D, IDX, OT, esc, rich, attr, closeBtn, autonomyBadge, motionBadge, dpRef, offeringLink, srcAttr, agentChip, isOtCapped, maxLevel, LEVELS, levelNum, fmt, pct, familyCls, $, $$ } from '../core/util.js';
+import { D, IDX, OT, esc, rich, attr, closeBtn, autonomyBadge, motionBadge, dpRef, offeringLink, srcAttr, agentChip, isOtCapped, maxLevel, LEVELS, levelNum, fmt, pct, familyCls, relabel, reducedMotion, $, $$ } from '../core/util.js';
 import { state, set, walk } from '../core/state.js';
 import { Player } from '../core/player.js';
 import { icon } from '../core/icons.js';
@@ -199,12 +199,12 @@ export function bindFull(node) {
       if (lv.getAttribute('aria-disabled') === 'true') { lv.classList.add('shake'); setTimeout(() => lv.classList.remove('shake'), 400); return; }
       set({ autonomy: { ...state.autonomy, [a.id]: lv.dataset.level } }, { silent: true });
       const sec = $('#fv-guardrails', root);
-      sec.outerHTML = guardrails(a);
+      sec.outerHTML = relabel(guardrails(a));
       $('[data-cur-level]', root).innerHTML = autonomyBadge(lv.dataset.level, { capped: isOtCapped(a.id) });
       return;
     }
     const j = e.target.closest('[data-jump]');
-    if (j) { e.preventDefault(); $(j.getAttribute('href'), root)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    if (j) { e.preventDefault(); $(j.getAttribute('href'), root)?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' }); }
   });
   root.addEventListener('change', (e) => { if (e.target.matches('[data-ko]')) { player.show(-1); player.play(); } });
   if (root.hasAttribute('data-scroll-run')) {

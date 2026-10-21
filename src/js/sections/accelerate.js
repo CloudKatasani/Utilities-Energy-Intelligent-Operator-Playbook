@@ -1,6 +1,6 @@
 // 03 Accelerate with AI: Engineer · Operate · Decide and Act, with the control plane beneath, one
 // "Watch it" demo per motion, and the acceleration plan.
-import { D, IDX, esc, rich, sectionHead, offeringLink, srcAttr, $ } from '../core/util.js';
+import { D, IDX, esc, rich, sectionHead, offeringLink, srcAttr, relabel, $ } from '../core/util.js';
 import { state, set, walk } from '../core/state.js';
 import { icon } from '../core/icons.js';
 import { agentCard } from './agents.js';
@@ -71,7 +71,7 @@ export function bindAccelerate(root) {
   const draw = () => {
     demo?.destroy();
     const m = IDX.motions[state.motion] || FLOW[0];
-    $('[data-acc-panel]', sec).innerHTML = panel(m);
+    $('[data-acc-panel]', sec).innerHTML = relabel(panel(m));
     sec.querySelectorAll('[data-motion]').forEach((b) => { const on = b.dataset.motion === m.id; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
     demo = bindScenario($('[data-acc-panel]', sec));
   };
@@ -88,5 +88,5 @@ export function bindAccelerate(root) {
     if (s) { stage = s.dataset.dstage; draw(); }
   });
   demo = bindScenario($('[data-acc-panel]', sec));
-  return { draw, refreshPlan: () => { $('[data-plan]', sec).innerHTML = planCard(); } };
+  return { draw, refreshPlan: () => { $('[data-plan]', sec).innerHTML = relabel(planCard()); } };
 }

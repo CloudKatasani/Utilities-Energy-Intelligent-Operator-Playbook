@@ -1,6 +1,6 @@
 // Bootstrap: render the story, register routes, wire the three interaction patterns (drawer, full view,
 // segmented controls), keyboard, tooltips and presenter tools.
-import { D, $, $$, relabel, toast, IDX } from './core/util.js';
+import { $, $$, relabel, toast, IDX, reducedMotion } from './core/util.js';
 import { state, set, onChange } from './core/state.js';
 import { route, start, apply, popTop, go, refresh, afterRoute, current } from './core/router.js';
 import { ROUTES } from './core/route-table.js';
@@ -36,7 +36,7 @@ function chrome() {
 // ---------------------------------------------------------------- routes
 const scrollTo = (id) => () => {
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: document.body.dataset.ready ? 'smooth' : 'auto', block: 'start' });
+  if (el) el.scrollIntoView({ behavior: document.body.dataset.ready && !reducedMotion() ? 'smooth' : 'auto', block: 'start' });
 };
 const HANDLERS = {
   '/': () => window.scrollTo({ top: 0 }),
@@ -61,7 +61,12 @@ document.addEventListener('layer-rendered', (e) => {
   if (layer === 'full') { layerPlayer?.destroy?.(); layerPlayer = bindFull(node) || null; bindDpFull(node); }
   if (layer === 'page') {
     bindOfferings(node); bindOfferingPage(node); bindCases(node); bindBriefing(node);
-    if (node.querySelector('[data-scenario]')) bindScenario(node, { autoplay: !isRefresh && Boolean(state.runSheet) });
+    if (node.querySelector('[data-scenario]')) {
+      const player = bindScenario(node, { autoplay: !isRefresh && Boolean(state.runSheet) });
+      // An audience can preselect a step (e.g. Chief Safety Officer → the crew-safety step of U-S1).
+      const aud = IDX.audiences[state.audience];
+      if (!isRefresh && aud?.scenarioStep && node.querySelector(`[data-scenario="${aud.scenario}"]`)) player.show(aud.scenarioStep - 1);
+    }
   }
   if (layer === 'drawer') bindStack(node);
   applyEdits();
@@ -125,7 +130,8 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'PageDown' || e.key === 'PageUp') {
     const d = e.key === 'ArrowRight' || e.key === 'PageDown' ? 1 : -1;
     const p = activePlayer();
-    const playerVisible = p && document.querySelector('.layer.open [data-scenario], .layer.open [data-trace], #accelerate [data-scenario]');
+    const inView = (el) => { const r = el?.getBoundingClientRect(); return r && r.bottom > 0 && r.top < window.innerHeight; };
+    const playerVisible = p && (document.querySelector('.layer.open [data-scenario], .layer.open [data-trace]') || (!current().page && !current().drawer && inView(document.querySelector('#accelerate [data-scenario]'))));
     if (state.runSheet && !(p && current().page?.startsWith('#/scenario/'))) { e.preventDefault(); runSheetStep(d); return; }
     if (playerVisible) { e.preventDefault(); if (d > 0) p.next(); else p.prev(); }
     return;
@@ -160,6 +166,7 @@ onChange((patch) => {
   const y = window.scrollY;
   chrome();
   renderStory();
+  observeSections();
   window.scrollTo(0, y);
   refresh();
 });
@@ -169,10 +176,12 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach((en) => { if (en.isIntersecting) $$('[data-nav]').forEach((a) => a.classList.toggle('on', a.dataset.nav === en.target.id)); });
 }, { rootMargin: '-45% 0px -50% 0px' });
 
+const observeSections = () => { io.disconnect(); ['why', 'future', 'accelerate', 'impact', 'proof'].forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); }); };
+
 chrome();
 renderStory();
 bindMenu();
-['why', 'future', 'accelerate', 'impact', 'proof'].forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+observeSections();
 runBar();
 start();
 document.body.dataset.ready = '1';
