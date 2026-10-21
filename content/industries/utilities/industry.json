@@ -1,0 +1,117 @@
+{
+  "id": "utilities",
+  "name": "Utilities & Energy",
+  "labels": {
+    "org": "Utility",
+    "orgLower": "utility",
+    "yourOrg": "your Utility",
+    "theOrg": "the Utility",
+    "boardName": "Future Utility",
+    "practiceLabel": "Insights & Data | Utilities",
+    "practiceShort": "Utilities",
+    "cohortLabel": "Utility cohort",
+    "askAgent": "Ask the Utility",
+    "customers": "customers",
+    "playbookName": "Utilities & Energy Intelligent Operator Playbook"
+  },
+  "subAreaTags": {
+    "electric": "Electric",
+    "gas": "Gas",
+    "both": "Electric + gas"
+  },
+  "classifications": [
+    {
+      "id": "PII",
+      "label": "PII",
+      "restricted": true,
+      "refusal": "Customer-level records need a cleared role and a declared purpose."
+    },
+    {
+      "id": "PII-Sensitive",
+      "label": "PII · sensitive",
+      "restricted": true,
+      "refusal": "Medical-baseline, assistance and protection flags are shown only as counts unless the role is cleared for customer protections."
+    },
+    {
+      "id": "CEUD",
+      "label": "Customer energy usage data",
+      "restricted": true,
+      "refusal": "Interval usage is shown only in aggregate unless the customer consented or the role is cleared."
+    },
+    {
+      "id": "CEII",
+      "label": "Critical infrastructure info",
+      "restricted": true,
+      "refusal": "Grid and plant topology, capacity and SCADA detail are restricted to cleared operations and engineering roles."
+    },
+    {
+      "id": "Market-Sensitive",
+      "label": "Market-sensitive",
+      "restricted": true,
+      "refusal": "Bids and positions are restricted to the trading desk and its risk officers."
+    },
+    {
+      "id": "Confidential",
+      "label": "Confidential",
+      "restricted": false,
+      "refusal": "Confidential business data is available to internal roles with a business need."
+    },
+    {
+      "id": "Internal",
+      "label": "Internal",
+      "restricted": false,
+      "refusal": ""
+    }
+  ],
+  "heroArt": "grid",
+  "otSafety": {
+    "capLevel": "L2",
+    "title": "OT safety rule",
+    "rule": "No agent operates, or can be promoted to operate, grid, plant or gas control devices: switching, breakers, reclosers, set-points, valves or de-energisation. Any agent or process whose recommendation would change a grid, plant, storage or gas device is capped at L2 (Propose). Every switching plan, PSPS decision and hazardous-leak response is made and executed by qualified people.",
+    "tooltip": "Locked at L2 by the OT safety rule: this agent's recommendations would change a grid, plant, storage or gas device, so qualified people review and execute them. No agent operates control devices.",
+    "agentsCapped": [
+      "UA-GO-02",
+      "UA-GO-05",
+      "UA-GM-01",
+      "UA-GM-05"
+    ],
+    "processPatterns": [
+      "Volt/VAR",
+      "DER flexibility",
+      "Storage dispatch",
+      "FLISR",
+      "set-point"
+    ]
+  },
+  "kpiChipsByOutcome": true,
+  "synthetic": {
+    "disclosure": "Synthetic data · generic reference Utility · seed {{fx.seed|raw}} · as of {{fx.asOf}}",
+    "profileLine": "3.2M electric customers, 1.1M gas customers, 9.4 GW generation, 690 substations (synthetic)"
+  },
+  "expectedCounts": {
+    "domains": 4,
+    "areas": 19,
+    "subAreas": 53,
+    "processesMin": 150,
+    "families": 5,
+    "agents": 36,
+    "products": 31,
+    "offerings": 13,
+    "scenarios": 9,
+    "layers": 5,
+    "outcomes": 5,
+    "audiences": 8,
+    "scriptedAgents": 9
+  },
+  "scriptedAgents": [
+    "UA-GO-02",
+    "UA-GO-01",
+    "UA-CC-01",
+    "UA-CC-02",
+    "UA-CC-05",
+    "UA-GO-05",
+    "UA-DI-01",
+    "UA-DI-09",
+    "UA-EE-01"
+  ]
+}

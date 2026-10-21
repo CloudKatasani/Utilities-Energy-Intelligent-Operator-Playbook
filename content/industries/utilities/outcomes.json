@@ -1,0 +1,56 @@
+{
+  "outcomes": [
+    { "id": "reliability", "name": "Reliability & resilience", "icon": "bolt",
+      "definition": "Keep the lights on and the gas flowing, restore faster after storms, and tell customers the truth about restoration times.",
+      "kpis": [
+        { "name": "SAIDI (excl. MED)", "value": "{{syn.reliability.saidiExMed}} min", "source": "synthetic" },
+        { "name": "SAIFI", "value": "{{syn.reliability.saifi|d2}}", "source": "synthetic" },
+        { "name": "CAIDI", "value": "{{syn.reliability.caidi|d1}} min", "source": "synthetic" },
+        { "name": "SAIDI (incl. MED)", "value": "{{syn.reliability.saidiInclMed}} min", "source": "synthetic" },
+        { "name": "Customer minutes interrupted", "source": "synthetic" },
+        { "name": "ETR accuracy", "value": "{{fx.storm.etrAccuracyBefore|pct}}", "source": "synthetic" },
+        { "name": "Restoration time in major events", "value": "{{fx.storm.restorationHoursBefore}} h", "source": "synthetic" }
+      ],
+      "domains": ["grid", "generation"], "families": ["grid-operations", "generation-markets"], "offerings": ["U-O1", "U-O3", "U-O10"], "motion": "operate", "scenario": "U-S1" },
+    { "id": "affordability", "name": "Affordability & cost to serve", "icon": "coin",
+      "definition": "Keep bills affordable while capital plans grow: lower O&M per customer, cost per contact, bad debt and storm cost.",
+      "kpis": [
+        { "name": "O&M per customer", "source": "synthetic" },
+        { "name": "Cost per contact", "value": "$6.80", "source": "synthetic" },
+        { "name": "Bad debt % of revenue", "value": "0.9%", "source": "synthetic" },
+        { "name": "Storm cost per customer", "source": "synthetic" },
+        { "name": "Capex execution %", "source": "synthetic" }
+      ],
+      "domains": ["customer", "enterprise", "generation"], "families": ["customer-commercial", "enterprise-enablement", "generation-markets"], "offerings": ["U-O9", "U-O12", "U-O5"], "motion": "decide-act", "scenario": "U-S6" },
+    { "id": "safety", "name": "Safety & compliance", "icon": "shield",
+      "definition": "Send every crew home safe, prevent ignitions and gas incidents, and stay audit-ready for reliability, cyber and environmental rules.",
+      "kpis": [
+        { "name": "SIF and SIF-precursor events", "source": "synthetic" },
+        { "name": "Recordable incident rate", "source": "synthetic" },
+        { "name": "Ignitions", "source": "synthetic" },
+        { "name": "Hazardous-leak response time", "source": "synthetic" },
+        { "name": "Potential non-compliance findings", "source": "synthetic" }
+      ],
+      "domains": ["enterprise", "grid"], "families": ["enterprise-enablement", "grid-operations"], "offerings": ["U-O13", "U-O8", "U-O10"], "motion": "govern", "scenario": "U-S9" },
+    { "id": "customer", "name": "Customer trust & experience", "icon": "user",
+      "definition": "Explain every bill, contain more contacts in self-service, help customers who struggle, and earn the regulator's and the customer's trust.",
+      "kpis": [
+        { "name": "Self-service containment", "source": "synthetic" },
+        { "name": "First-contact resolution", "source": "synthetic" },
+        { "name": "High-bill complaints", "source": "synthetic" },
+        { "name": "Regulator escalations", "value": "{{fx.highBill.escalationsBefore}}/yr", "source": "synthetic" },
+        { "name": "Estimated bills %", "value": "2.4%", "source": "synthetic" }
+      ],
+      "domains": ["customer"], "families": ["customer-commercial", "data-intelligence"], "offerings": ["U-O9", "U-O1", "U-O7"], "motion": "decide-act", "scenario": "U-S2" },
+    { "id": "growth", "name": "Growth & energy transition", "icon": "leaf",
+      "definition": "Connect large loads and DER faster, plan for electrification and enrol customers in programs that relieve the grid.",
+      "kpis": [
+        { "name": "MW of large load connected", "source": "synthetic" },
+        { "name": "Time to feasibility answer", "value": "{{fx.dataCentre.baselineWeeks}} weeks", "source": "synthetic" },
+        { "name": "Interconnection queue time", "source": "synthetic" },
+        { "name": "DER hosting capacity", "source": "synthetic" },
+        { "name": "Program MW enrolled", "source": "synthetic" }
+      ],
+      "domains": ["customer", "grid", "generation"], "families": ["customer-commercial", "grid-operations", "generation-markets"], "offerings": ["U-O11", "U-O12", "U-O4"], "motion": "decide-act", "scenario": "U-S3" }
+  ]
+}

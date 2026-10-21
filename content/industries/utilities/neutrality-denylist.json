@@ -1,0 +1,14 @@
+{
+  "_note": "Spec §14. The neutrality lint fails on any of these terms in the built output (case-insensitive, whole words) outside the sources list and the spec documents. Names of investor-owned utilities, cooperatives, municipal utilities, generation companies, ISOs/RTOs and state commissions as organisation names; ISO/RTO and NERC appear only as generic terms in narrative text and in source citations.",
+  "terms": [
+    "Pacific Gas", "PG&E", "Southern California Edison", "SCE&G", "San Diego Gas", "SDG&E", "Duke Energy", "Dominion Energy", "Southern Company", "Georgia Power", "Alabama Power", "Florida Power & Light", "FPL", "NextEra", "Xcel", "Exelon", "ComEd", "PECO", "BGE", "Pepco", "Con Edison", "ConEd", "National Grid", "Eversource", "Avangrid", "PPL", "FirstEnergy", "AEP", "American Electric Power", "Entergy", "Ameren", "Evergy", "CenterPoint", "Oncor", "Vistra", "NRG", "Constellation", "Sempra", "Edison International", "PacifiCorp", "Berkshire Hathaway Energy", "Puget Sound Energy", "Portland General", "Hawaiian Electric", "Arizona Public Service", "Salt River Project", "TVA", "Tennessee Valley Authority", "Bonneville", "LADWP", "SMUD", "CPS Energy", "Austin Energy", "DTE", "Consumers Energy", "WEC Energy", "Alliant", "NiSource", "Atmos", "Southwest Gas", "Spire", "ONE Gas", "Enel", "E.ON", "EDF", "Engie", "Iberdrola", "RWE", "Vattenfall", "Orsted", "Ørsted", "SSE", "Centrica", "Octopus Energy", "EnBW", "Fortum", "Endesa", "Hydro-Québec", "Hydro One", "Ontario Power Generation", "Fortis", "Emera", "TransAlta", "Tokyo Electric", "TEPCO", "KEPCO", "AGL", "Origin Energy",
+    "CAISO", "ERCOT", "PJM", "MISO", "NYISO", "ISO-NE", "ISO New England", "SPP", "Southwest Power Pool", "AESO", "IESO",
+    "CPUC", "Public Utility Commission of Texas", "PUCT", "NYPSC", "Ofgem", "FERC Docket",
+    "Telco", "your Telco", "subscriber", "MSISDN", "IMEI", "ARPU", "CPNI", "cell site"
+  ],
+  "patterns": [
+    { "id": "latlong", "re": "-?\\d{1,3}\\.\\d{4,},\\s*-?\\d{1,3}\\.\\d{4,}", "why": "lat/long coordinates" },
+    { "id": "docket", "re": "\\bDocket (No\\.?|Number) ?\\d", "why": "docket numbers" }
+  ],
+  "allowedContexts": ["sources", "_note"]
+}

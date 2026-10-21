@@ -1,0 +1,13 @@
+{
+  "sources": [
+    { "id": "nerc-ltra", "label": "NERC 2025 Long-Term Reliability Assessment (Jan 2026), as reported by Power Engineering", "url": "https://www.power-eng.com/business/policy-and-regulation/nerc-warns-reliability-risk-is-rising-as-load-growth-outpaces-infrastructure/", "type": "published", "checked": "2026-10-20" },
+    { "id": "iea-ger", "label": "IEA Global Energy Review (Apr 2026), as reported by Bloomberg Law", "url": "https://news.bloomberglaw.com/environment-and-energy/global-2025-power-demand-rose-as-ev-data-centers-grew-iea-says", "type": "published", "checked": "2026-10-20" },
+    { "id": "deloitte-dc", "label": "Deloitte (Jul 2025), as reported by T&D World", "url": "https://www.tdworld.com/utility-business/news/55301471/deloitte-report-ai-data-center-power-demand-to-surge-30x-by-2035", "type": "published", "checked": "2026-10-20" },
+    { "id": "eei-capex", "label": "EEI (Oct 2025), as reported by POWER", "url": "https://www.powermag.com/investor-owned-utilities-to-spend-1-1t-in-grid-boost-as-power-demand-spirals/", "type": "published", "checked": "2026-10-20" },
+    { "id": "eei-208", "label": "EEI: Electric companies to invest nearly $208B in 2025", "url": "https://www.eei.org/News/news/All/electric-companies-to-invest-nearly-$208b-in-2025-to-strengthen-grid-and-drive-economic-growth", "type": "published", "checked": "2026-10-20" },
+    { "id": "lbl-queued", "label": "Berkeley Lab, Queued Up 2026 edition (Jul 2026)", "url": "https://emp.lbl.gov/queued-2026-edition-characteristics-power-plants-seeking-transmission-interconnection-end-2025", "type": "published", "checked": "2026-10-20" },
+    { "id": "eia-outage", "label": "US EIA, Today in Energy (Dec 2025)", "url": "https://www.eia.gov/todayinenergy/detail.php?id=66744", "type": "published", "checked": "2026-10-20" },
+    { "id": "sp-451", "label": "451 Research / S&P Global (Mar 2026)", "url": "https://www.spglobal.com/market-intelligence/en/news-insights/research/2026/03/energy-and-utilities-firms-investing-aggressively-in-ai-despite-mixed-returns", "type": "published", "checked": "2026-10-20" }
+  ],
+  "note": "All Why-now figures were checked against the cited publications or their reporting on 2026-10-20 and are marked published. Re-confirm against the primary PDFs before external use (F11). Links are shown as text: the demo makes no network calls."
+}
