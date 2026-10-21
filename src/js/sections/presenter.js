@@ -13,11 +13,12 @@ export function menuHtml() {
   const aud = state.audience ? IDX.audiences[state.audience] : null;
   return `<div class="menu-inner" role="menu" aria-label="Presenter menu">
     <div class="menu-head"><b>Presenter menu</b><button class="close" data-menu-close aria-label="Close menu">×</button></div>
-    <div class="menu-group"><h4>Audience</h4><div class="chips">${P.audiences.map((a) => `<button class="chip-btn${state.audience === a.id ? ' on' : ''}" data-audience="${a.id}" aria-pressed="${state.audience === a.id}">${esc(a.name)}</button>`).join('')}</div>
-      ${aud ? `<p class="small">${esc(aud.emphasis)}</p>` : ''}</div>
-    <div class="menu-group"><h4>Run sheets</h4><div class="chips">${P.runSheets.map((r) => `<button class="chip-btn" data-runsheet="${r.id}">${esc(r.name)}</button>`).join('')}</div></div>
     <div class="menu-group"><h4>Mode</h4><div class="seg seg-small" role="group" aria-label="Mode">${['presenter', 'client'].map((m) => `<button class="seg-btn${state.mode === m ? ' on' : ''}" data-mode="${m}" aria-pressed="${state.mode === m}">${m === 'client' ? 'Client' : 'Presenter'}</button>`).join('')}</div>
       <p class="small muted">Client mode hides offer teams, objections, notes, unvalidated offer mappings and unapproved case studies.</p></div>
+    <div class="menu-group"><div class="menu-group-head"><h4>Audience lens</h4>${aud ? '<button class="link-btn" data-audience-clear>Clear</button>' : ''}</div>
+      <div class="chips">${P.audiences.map((a) => `<button class="chip-btn${state.audience === a.id ? ' on' : ''}" data-audience="${a.id}" aria-pressed="${state.audience === a.id}">${esc(a.name)}</button>`).join('')}</div>
+      <p class="small${aud ? '' : ' muted'}">${aud ? esc(aud.emphasis) : 'No audience selected. Pick one to preselect an outcome, motion, scenario and offerings; click it again or Clear to unselect.'}</p></div>
+    <div class="menu-group"><h4>Run sheets</h4><div class="chips">${P.runSheets.map((r) => `<button class="chip-btn" data-runsheet="${r.id}">${esc(r.name)}</button>`).join('')}</div></div>
     <div class="menu-group"><h4>Operator name <small class="muted">(this session only, never saved)</small></h4>
       <input type="text" data-opname value="${attr(state.operatorName)}" placeholder="${attr(D.industry.labels.yourOrg)}" aria-label="Operator name"></div>
     <div class="menu-group"><h4>As-of date shift</h4><div class="seg seg-small" role="group" aria-label="As-of shift">${[-3, 0, 3, 6].map((k) => `<button class="seg-btn${state.anchorShift === k ? ' on' : ''}" data-shift="${k}">${k > 0 ? `+${k}` : k} mo</button>`).join('')}</div></div>
@@ -37,6 +38,11 @@ export function openMenu(open = true) {
   m.hidden = !open;
   if (open) { m.innerHTML = menuHtml(); $('[data-menu-close]', m).focus(); }
   $('#menu-btn')?.setAttribute('aria-expanded', open);
+}
+
+function clearAudience() {
+  set({ audience: null, lens: 'all' });
+  toast('Audience cleared');
 }
 
 function applyAudience(id) {
@@ -166,18 +172,26 @@ export function armIdle() {
   if (state.mode === 'presenter') idle = setTimeout(startAttract, 5 * 60 * 1000);
 }
 
+// Re-render the open menu in place and keep keyboard focus on the control that was used.
+function redrawMenu(focusSel) {
+  const m = $('#menu');
+  m.innerHTML = menuHtml();
+  (m.querySelector(focusSel) || m.querySelector('[data-menu-close]')).focus({ preventScroll: true });
+}
+
 export function bindMenu() {
   const m = $('#menu');
   m.addEventListener('click', (e) => {
     if (e.target.closest('[data-menu-close]')) { openMenu(false); return; }
     const a = e.target.closest('[data-audience]');
-    if (a) { applyAudience(a.dataset.audience); m.innerHTML = menuHtml(); return; }
+    if (a) { if (state.audience === a.dataset.audience) clearAudience(); else applyAudience(a.dataset.audience); redrawMenu(`[data-audience="${a.dataset.audience}"]`); return; }
+    if (e.target.closest('[data-audience-clear]')) { clearAudience(); redrawMenu('[data-audience]'); return; }
     const rs = e.target.closest('[data-runsheet]');
     if (rs) { startRunSheet(rs.dataset.runsheet); return; }
     const md = e.target.closest('[data-mode]');
-    if (md) { set({ mode: md.dataset.mode }); m.innerHTML = menuHtml(); toast(md.dataset.mode === 'client' ? 'Client mode' : 'Presenter mode'); return; }
+    if (md) { set({ mode: md.dataset.mode }); redrawMenu(`[data-mode="${md.dataset.mode}"]`); toast(md.dataset.mode === 'client' ? 'Client mode' : 'Presenter mode'); return; }
     const sh = e.target.closest('[data-shift]');
-    if (sh) { set({ anchorShift: Number(sh.dataset.shift) }); m.innerHTML = menuHtml(); return; }
+    if (sh) { set({ anchorShift: Number(sh.dataset.shift) }); redrawMenu(`[data-shift="${sh.dataset.shift}"]`); return; }
     const act = e.target.closest('[data-act]')?.dataset.act;
     if (!act) return;
     if (act === 'present') { document.body.classList.toggle('presenting'); openMenu(false); }

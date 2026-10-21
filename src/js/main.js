@@ -85,7 +85,9 @@ let clickTimer = null;
 document.addEventListener('click', (e) => {
   if (e.target.closest('[data-close]')) { e.preventDefault(); popTop(); return; }
   if (e.target.closest('#menu-btn')) { openMenu($('#menu').hidden); return; }
-  if (!$('#menu').hidden && !e.target.closest('#menu')) openMenu(false);
+  // composedPath() is captured at dispatch, so a click inside the menu still counts as inside even
+  // when the menu re-rendered (and detached the clicked button) before this handler runs.
+  if (!$('#menu').hidden && !e.composedPath().some((n) => n.id === 'menu')) openMenu(false);
   const el = e.target.closest('[data-agent], [data-dp]');
   if (!el || e.target.closest('button, input, label, summary') || (el.tagName !== 'A' && e.target.closest('a'))) return;
   e.preventDefault();

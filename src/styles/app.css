@@ -583,6 +583,9 @@ code { font-family: var(--font); font-size: 13px; background: var(--blue-10); pa
 .menu-head .close { position: static; }
 .menu-group { border-top: 1px solid var(--line); padding: 10px 0; }
 .menu-group h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); margin-bottom: 8px; }
+.menu-group-head { display: flex; justify-content: space-between; align-items: baseline; }
+.menu-group .chips + p { margin-top: 8px; }
+.link-btn { font-size: 13px; font-weight: 700; color: var(--blue); text-decoration: underline; }
 .menu-group input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; }
 .menu-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .menu-actions .btn { padding: 7px 12px; font-size: 13px; }
